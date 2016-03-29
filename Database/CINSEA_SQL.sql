@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     29.03.2016 13:30:21                          */
+/* Created on:     29.03.2016 14:15:24                          */
 /*==============================================================*/
 
 
@@ -174,8 +174,7 @@ ID_Scenarist
 create table Genre_related (
    ID_Genre             INT4                 not null,
    ID_movie             INT4                 not null,
-   "Cover image"        TEXT                 not null,
-   constraint PK_GENRE_RELATED primary key (ID_Genre, ID_movie, "Cover image")
+   constraint PK_GENRE_RELATED primary key (ID_Genre, ID_movie)
 );
 
 /*==============================================================*/
@@ -183,8 +182,7 @@ create table Genre_related (
 /*==============================================================*/
 create unique index Genre_related_PK on Genre_related (
 ID_Genre,
-ID_movie,
-"Cover image"
+ID_movie
 );
 
 /*==============================================================*/
@@ -243,8 +241,7 @@ ID_movie
 create table Plays (
    ID_Actor             INT4                 not null,
    ID_movie             INT4                 not null,
-   "Cover image"        TEXT                 not null,
-   constraint PK_PLAYS primary key (ID_Actor, ID_movie, "Cover image")
+   constraint PK_PLAYS primary key (ID_Actor, ID_movie)
 );
 
 /*==============================================================*/
@@ -252,8 +249,7 @@ create table Plays (
 /*==============================================================*/
 create unique index Plays_PK on Plays (
 ID_Actor,
-ID_movie,
-"Cover image"
+ID_movie
 );
 
 /*==============================================================*/
@@ -300,8 +296,7 @@ ID_User
 create table Rating_related (
    ID_Rate              INT4                 not null,
    ID_movie             INT4                 not null,
-   "Cover image"        TEXT                 not null,
-   constraint PK_RATING_RELATED primary key (ID_Rate, ID_movie, "Cover image")
+   constraint PK_RATING_RELATED primary key (ID_Rate, ID_movie)
 );
 
 /*==============================================================*/
@@ -309,8 +304,7 @@ create table Rating_related (
 /*==============================================================*/
 create unique index Rating_related_PK on Rating_related (
 ID_Rate,
-ID_movie,
-"Cover image"
+ID_movie
 );
 
 /*==============================================================*/
@@ -368,8 +362,7 @@ ID_Director
 create table Screenplay (
    ID_Scenarist         INT4                 not null,
    ID_movie             INT4                 not null,
-   "Cover image"        TEXT                 not null,
-   constraint PK_SCREENPLAY primary key (ID_Scenarist, ID_movie, "Cover image")
+   constraint PK_SCREENPLAY primary key (ID_Scenarist, ID_movie)
 );
 
 /*==============================================================*/
@@ -377,8 +370,7 @@ create table Screenplay (
 /*==============================================================*/
 create unique index Screenplay_PK on Screenplay (
 ID_Scenarist,
-ID_movie,
-"Cover image"
+ID_movie
 );
 
 /*==============================================================*/
@@ -401,8 +393,7 @@ ID_Scenarist
 create table Shoots (
    ID_Director          INT4                 not null,
    ID_movie             INT4                 not null,
-   "Cover image"        TEXT                 not null,
-   constraint PK_SHOOTS primary key (ID_Director, ID_movie, "Cover image")
+   constraint PK_SHOOTS primary key (ID_Director, ID_movie)
 );
 
 /*==============================================================*/
@@ -410,8 +401,7 @@ create table Shoots (
 /*==============================================================*/
 create unique index Shoots_PK on Shoots (
 ID_Director,
-ID_movie,
-"Cover image"
+ID_movie
 );
 
 /*==============================================================*/
@@ -434,8 +424,7 @@ ID_Director
 create table Tag_related (
    ID_Tag               INT4                 not null,
    ID_movie             INT4                 not null,
-   "Cover image"        TEXT                 not null,
-   constraint PK_TAG_RELATED primary key (ID_Tag, ID_movie, "Cover image")
+   constraint PK_TAG_RELATED primary key (ID_Tag, ID_movie)
 );
 
 /*==============================================================*/
@@ -443,8 +432,7 @@ create table Tag_related (
 /*==============================================================*/
 create unique index Tag_related_PK on Tag_related (
 ID_Tag,
-ID_movie,
-"Cover image"
+ID_movie
 );
 
 /*==============================================================*/
