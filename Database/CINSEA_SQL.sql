@@ -37,19 +37,11 @@ create table Genre_related (
    ID_movie             INT4                 not null,
    constraint PK_GENRE_RELATED primary key (ID_Genre, ID_movie)
 );
-
-/*==============================================================*/
-/* Index: Genre_related_PK                                      */
-/*==============================================================*/
-create unique index Genre_related_PK on Genre_related (
-ID_Genre,
-ID_movie
-);
 /*==============================================================*/
 /* Table: Genres                                                */
 /*==============================================================*/
 create table Genres (
-   ID_Genre             INT4                 not null,
+   ID_Genre             INT4,
    Type                 TEXT                 not null,
    constraint PK_GENRES primary key (ID_Genre)
 );
@@ -57,7 +49,7 @@ create table Genres (
 /* Table: Movie                                                 */
 /*==============================================================*/
 create table Movie (
-   ID_movie             INT4                 not null,
+   ID_movie             INT4,
    "Cover image"        TEXT                 not null,
    NameCZ               TEXT                 not null,
    NameEN               TEXT                 not null,
@@ -75,18 +67,10 @@ create table Plays (
 );
 
 /*==============================================================*/
-/* Index: Plays_PK                                              */
-/*==============================================================*/
-create unique index Plays_PK on Plays (
-ID_Actor,
-ID_movie
-);
-
-/*==============================================================*/
 /* Table: Rating                                                */
 /*==============================================================*/
 create table Rating (
-   ID_Rate              INT4                 not null,
+   ID_Rate              INT4,
    ID_User              INT4                 not null,
    Stars                INT2                 not null,
    constraint PK_RATING primary key (ID_Rate)
@@ -102,18 +86,10 @@ create table Rating_related (
 );
 
 /*==============================================================*/
-/* Index: Rating_related_PK                                     */
-/*==============================================================*/
-create unique index Rating_related_PK on Rating_related (
-ID_Rate,
-ID_movie
-);
-
-/*==============================================================*/
 /* Table: Scenarist                                             */
 /*==============================================================*/
 create table Scenarist (
-   ID_Scenarist         INT4                 not null,
+   ID_Scenarist         INT4,
    ID_Actor             INT4                 null,
    ID_Director          INT4                 null,
    Name                 TEXT                 not null,
@@ -133,14 +109,6 @@ create table Screenplay (
 );
 
 /*==============================================================*/
-/* Index: Screenplay_PK                                         */
-/*==============================================================*/
-create unique index Screenplay_PK on Screenplay (
-ID_Scenarist,
-ID_movie
-);
-
-/*==============================================================*/
 /* Table: Shoots                                                */
 /*==============================================================*/
 create table Shoots (
@@ -148,15 +116,6 @@ create table Shoots (
    ID_movie             INT4                 not null,
    constraint PK_SHOOTS primary key (ID_Director, ID_movie)
 );
-
-/*==============================================================*/
-/* Index: Shoots_PK                                             */
-/*==============================================================*/
-create unique index Shoots_PK on Shoots (
-ID_Director,
-ID_movie
-);
-
 /*==============================================================*/
 /* Table: Tag_related                                           */
 /*==============================================================*/
@@ -167,18 +126,10 @@ create table Tag_related (
 );
 
 /*==============================================================*/
-/* Index: Tag_related_PK                                        */
-/*==============================================================*/
-create unique index Tag_related_PK on Tag_related (
-ID_Tag,
-ID_movie
-);
-
-/*==============================================================*/
 /* Table: Tags                                                  */
 /*==============================================================*/
 create table Tags (
-   ID_Tag               INT4                 not null,
+   ID_Tag               INT4,
    Type                 TEXT                 not null,
    constraint PK_TAGS primary key (ID_Tag)
 );
@@ -186,7 +137,7 @@ create table Tags (
 /* Table: "User"                                                */
 /*==============================================================*/
 create table "User" (
-   ID_User              INT4                 not null,
+   ID_User              INT4,
    Nickname             TEXT                 not null,
    Password             TEXT                 not null,
    isAdmin              BOOL                 not null,
@@ -287,4 +238,3 @@ alter table Tag_related
    add constraint FK_TAG_RELA_TAG_RELAT_MOVIE foreign key (ID_movie)
       references Movie (ID_movie)
       on delete restrict on update restrict;
-
