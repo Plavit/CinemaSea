@@ -3,106 +3,11 @@
 /* Created on:     29.03.2016 14:15:24                          */
 /*==============================================================*/
 
-
-drop index "Also_S/A_FK";
-
-drop index "Also_D/A2_FK";
-
-drop index Actor_PK;
-
-drop table Actor;
-
-drop index "Also_D/S_FK";
-
-drop index "Also_D/A_FK";
-
-drop index Director_PK;
-
-drop table Director;
-
-drop index Genre_related_FK;
-
-drop index Genre_related2_FK;
-
-drop index Genre_related_PK;
-
-drop table Genre_related;
-
-drop index Genres_PK;
-
-drop table Genres;
-
-drop index Movie_PK;
-
-drop table Movie;
-
-drop index Plays_FK;
-
-drop index Plays2_FK;
-
-drop index Plays_PK;
-
-drop table Plays;
-
-drop index User_Rated_FK;
-
-drop index Rating_PK;
-
-drop table Rating;
-
-drop index Rating_related2_FK;
-
-drop index Rating_related_FK;
-
-drop index Rating_related_PK;
-
-drop table Rating_related;
-
-drop index "Also_D/S2_FK";
-
-drop index "Also_S/A2_FK";
-
-drop index Scenarist_PK;
-
-drop table Scenarist;
-
-drop index Screenplay_FK;
-
-drop index Screenplay2_FK;
-
-drop index Screenplay_PK;
-
-drop table Screenplay;
-
-drop index Shoots_FK;
-
-drop index Shoots2_FK;
-
-drop index Shoots_PK;
-
-drop table Shoots;
-
-drop index Tag_related_FK;
-
-drop index Tag_related2_FK;
-
-drop index Tag_related_PK;
-
-drop table Tag_related;
-
-drop index Tags_PK;
-
-drop table Tags;
-
-drop index User_PK;
-
-drop table "User";
-
 /*==============================================================*/
 /* Table: Actor                                                 */
 /*==============================================================*/
 create table Actor (
-   ID_Actor             INT4                 not null,
+   ID_Actor             INT4,
    ID_Director          INT4                 null,
    ID_Scenarist         INT4                 null,
    Name                 TEXT                 not null,
@@ -111,33 +16,11 @@ create table Actor (
    Description          TEXT                 null,
    constraint PK_ACTOR primary key (ID_Actor)
 );
-
-/*==============================================================*/
-/* Index: Actor_PK                                              */
-/*==============================================================*/
-create unique index Actor_PK on Actor (
-ID_Actor
-);
-
-/*==============================================================*/
-/* Index: "Also_D/A2_FK"                                        */
-/*==============================================================*/
-create  index "Also_D/A2_FK" on Actor (
-ID_Director
-);
-
-/*==============================================================*/
-/* Index: "Also_S/A_FK"                                         */
-/*==============================================================*/
-create  index "Also_S/A_FK" on Actor (
-ID_Scenarist
-);
-
 /*==============================================================*/
 /* Table: Director                                              */
 /*==============================================================*/
 create table Director (
-   ID_Director          INT4                 not null,
+   ID_Director          INT4,
    ID_Actor             INT4                 null,
    ID_Scenarist         INT4                 null,
    Name                 TEXT                 not null,
@@ -146,28 +29,6 @@ create table Director (
    Description          TEXT                 null,
    constraint PK_DIRECTOR primary key (ID_Director)
 );
-
-/*==============================================================*/
-/* Index: Director_PK                                           */
-/*==============================================================*/
-create unique index Director_PK on Director (
-ID_Director
-);
-
-/*==============================================================*/
-/* Index: "Also_D/A_FK"                                         */
-/*==============================================================*/
-create  index "Also_D/A_FK" on Director (
-ID_Actor
-);
-
-/*==============================================================*/
-/* Index: "Also_D/S_FK"                                         */
-/*==============================================================*/
-create  index "Also_D/S_FK" on Director (
-ID_Scenarist
-);
-
 /*==============================================================*/
 /* Table: Genre_related                                         */
 /*==============================================================*/
@@ -184,21 +45,6 @@ create unique index Genre_related_PK on Genre_related (
 ID_Genre,
 ID_movie
 );
-
-/*==============================================================*/
-/* Index: Genre_related2_FK                                     */
-/*==============================================================*/
-create  index Genre_related2_FK on Genre_related (
-ID_movie
-);
-
-/*==============================================================*/
-/* Index: Genre_related_FK                                      */
-/*==============================================================*/
-create  index Genre_related_FK on Genre_related (
-ID_Genre
-);
-
 /*==============================================================*/
 /* Table: Genres                                                */
 /*==============================================================*/
@@ -207,14 +53,6 @@ create table Genres (
    Type                 TEXT                 not null,
    constraint PK_GENRES primary key (ID_Genre)
 );
-
-/*==============================================================*/
-/* Index: Genres_PK                                             */
-/*==============================================================*/
-create unique index Genres_PK on Genres (
-ID_Genre
-);
-
 /*==============================================================*/
 /* Table: Movie                                                 */
 /*==============================================================*/
@@ -227,14 +65,6 @@ create table Movie (
    Description          TEXT                 null,
    constraint PK_MOVIE primary key (ID_movie)
 );
-
-/*==============================================================*/
-/* Index: Movie_PK                                              */
-/*==============================================================*/
-create unique index Movie_PK on Movie (
-ID_movie
-);
-
 /*==============================================================*/
 /* Table: Plays                                                 */
 /*==============================================================*/
@@ -253,20 +83,6 @@ ID_movie
 );
 
 /*==============================================================*/
-/* Index: Plays2_FK                                             */
-/*==============================================================*/
-create  index Plays2_FK on Plays (
-ID_movie
-);
-
-/*==============================================================*/
-/* Index: Plays_FK                                              */
-/*==============================================================*/
-create  index Plays_FK on Plays (
-ID_Actor
-);
-
-/*==============================================================*/
 /* Table: Rating                                                */
 /*==============================================================*/
 create table Rating (
@@ -274,20 +90,6 @@ create table Rating (
    ID_User              INT4                 not null,
    Stars                INT2                 not null,
    constraint PK_RATING primary key (ID_Rate)
-);
-
-/*==============================================================*/
-/* Index: Rating_PK                                             */
-/*==============================================================*/
-create unique index Rating_PK on Rating (
-ID_Rate
-);
-
-/*==============================================================*/
-/* Index: User_Rated_FK                                         */
-/*==============================================================*/
-create  index User_Rated_FK on Rating (
-ID_User
 );
 
 /*==============================================================*/
@@ -308,20 +110,6 @@ ID_movie
 );
 
 /*==============================================================*/
-/* Index: Rating_related_FK                                     */
-/*==============================================================*/
-create  index Rating_related_FK on Rating_related (
-ID_Rate
-);
-
-/*==============================================================*/
-/* Index: Rating_related2_FK                                    */
-/*==============================================================*/
-create  index Rating_related2_FK on Rating_related (
-ID_movie
-);
-
-/*==============================================================*/
 /* Table: Scenarist                                             */
 /*==============================================================*/
 create table Scenarist (
@@ -333,27 +121,6 @@ create table Scenarist (
    Year                 INT2                 null,
    Description          TEXT                 null,
    constraint PK_SCENARIST primary key (ID_Scenarist)
-);
-
-/*==============================================================*/
-/* Index: Scenarist_PK                                          */
-/*==============================================================*/
-create unique index Scenarist_PK on Scenarist (
-ID_Scenarist
-);
-
-/*==============================================================*/
-/* Index: "Also_S/A2_FK"                                        */
-/*==============================================================*/
-create  index "Also_S/A2_FK" on Scenarist (
-ID_Actor
-);
-
-/*==============================================================*/
-/* Index: "Also_D/S2_FK"                                        */
-/*==============================================================*/
-create  index "Also_D/S2_FK" on Scenarist (
-ID_Director
 );
 
 /*==============================================================*/
@@ -374,20 +141,6 @@ ID_movie
 );
 
 /*==============================================================*/
-/* Index: Screenplay2_FK                                        */
-/*==============================================================*/
-create  index Screenplay2_FK on Screenplay (
-ID_movie
-);
-
-/*==============================================================*/
-/* Index: Screenplay_FK                                         */
-/*==============================================================*/
-create  index Screenplay_FK on Screenplay (
-ID_Scenarist
-);
-
-/*==============================================================*/
 /* Table: Shoots                                                */
 /*==============================================================*/
 create table Shoots (
@@ -402,20 +155,6 @@ create table Shoots (
 create unique index Shoots_PK on Shoots (
 ID_Director,
 ID_movie
-);
-
-/*==============================================================*/
-/* Index: Shoots2_FK                                            */
-/*==============================================================*/
-create  index Shoots2_FK on Shoots (
-ID_movie
-);
-
-/*==============================================================*/
-/* Index: Shoots_FK                                             */
-/*==============================================================*/
-create  index Shoots_FK on Shoots (
-ID_Director
 );
 
 /*==============================================================*/
@@ -436,20 +175,6 @@ ID_movie
 );
 
 /*==============================================================*/
-/* Index: Tag_related2_FK                                       */
-/*==============================================================*/
-create  index Tag_related2_FK on Tag_related (
-ID_movie
-);
-
-/*==============================================================*/
-/* Index: Tag_related_FK                                        */
-/*==============================================================*/
-create  index Tag_related_FK on Tag_related (
-ID_Tag
-);
-
-/*==============================================================*/
 /* Table: Tags                                                  */
 /*==============================================================*/
 create table Tags (
@@ -457,14 +182,6 @@ create table Tags (
    Type                 TEXT                 not null,
    constraint PK_TAGS primary key (ID_Tag)
 );
-
-/*==============================================================*/
-/* Index: Tags_PK                                               */
-/*==============================================================*/
-create unique index Tags_PK on Tags (
-ID_Tag
-);
-
 /*==============================================================*/
 /* Table: "User"                                                */
 /*==============================================================*/
@@ -474,13 +191,6 @@ create table "User" (
    Password             TEXT                 not null,
    isAdmin              BOOL                 not null,
    constraint PK_USER primary key (ID_User)
-);
-
-/*==============================================================*/
-/* Index: User_PK                                               */
-/*==============================================================*/
-create unique index User_PK on "User" (
-ID_User
 );
 
 alter table Actor
