@@ -11,13 +11,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.lang.Math.random;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.*;
 import java.util.Base64;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
@@ -72,14 +70,14 @@ public class LoginPane extends JPanel implements ActionListener{
         String psw = String.valueOf(pswC);
         
         try {
-            HashPSW(psw);
+            psw = HashPSW(psw);
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LoginPane.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidKeySpecException ex) {
             Logger.getLogger(LoginPane.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Database db = new Database();        
+        Database db = new Database();
         Connection conn = db.getConnection();
         
         
@@ -95,7 +93,7 @@ public class LoginPane extends JPanel implements ActionListener{
         System.out.printf("salt: %s%n", enc.encodeToString(salt));
         System.out.printf("hash: %s%n", enc.encodeToString(hash));
         
-        return enc.encodeToString(hash);        
+        return enc.encodeToString(hash);
     }
 
 }

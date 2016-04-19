@@ -47,5 +47,59 @@ public class Database {
    public Connection getConnection(){
        return this.conn;
    }
+   
+   public ResultSet execStatement(Statement stmt){
+       ResultSet rs = null;
+       try {
+           stmt = conn.createStatement();
+           String sql;
+           sql = "SELECT id, first, last, age FROM Employees";
+           rs = stmt.executeQuery(sql);
+
+           //STEP 5: Extract data from result set
+           /*
+      while(rs.next()){
+         //Retrieve by column name
+         int id  = rs.getInt("id");
+         int age = rs.getInt("age");
+         String first = rs.getString("first");
+         String last = rs.getString("last");
+
+         //Display values
+         System.out.print("ID: " + id);
+         System.out.print(", Age: " + age);
+         System.out.print(", First: " + first);
+         System.out.println(", Last: " + last);
+      }
+            */
+           //STEP 6: Clean-up environment
+           stmt.close();
+           conn.close();
+           return rs;
+       } catch (SQLException se) {
+           //Handle errors for JDBC
+           se.printStackTrace();
+       } catch (Exception e) {
+           //Handle errors for Class.forName
+           e.printStackTrace();
+       } finally {
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try
+       return rs;
+   }
+   
     
 }
