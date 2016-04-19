@@ -13,6 +13,22 @@ import javax.swing.JFrame;
  */
 public class mainframe extends JFrame{
     
+    private User user;
+    private Movie[] allMovies;
+    private Database db;
+    
+    public mainframe(){
+        
+    }
+    
+    public void initComponents(){
+        
+    }
+    
+    public void setUser(User user){
+        this.user = user;
+    }
+    
     
     
 }

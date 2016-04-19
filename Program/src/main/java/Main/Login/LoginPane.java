@@ -7,6 +7,7 @@ package Main.Login;
 
 import Main.Database;
 import Main.User;
+import Main.mainframe;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -83,6 +84,9 @@ public class LoginPane extends JPanel implements ActionListener{
         
         if(user != null){
             System.out.println("SUCCESFULY LOGGED");
+           
+            mainframe mf = new mainframe();
+            mf.setUser(user);
             
            // TODO
            // OTEVRIT MAINFRAME A SPUSTIT VLAKNA NA NATAHANI DAT Z DATABAZE
