@@ -12,6 +12,7 @@ Whereas user has some overview of his movies he has on HDD or just seen, admin i
 * **pgAdmin III**
 * **Balsamiq 3**
 * **Sybyse PowerDesigner 15**
+* **Enterprise Architect**
 
 #### Team:
 |Name| Nickname |
