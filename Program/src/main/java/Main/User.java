@@ -49,6 +49,18 @@ public class User {
     public void setMoviePaths(LinkedList moviePaths) {
         this.moviePaths = moviePaths;
     }
+
+    public int getId() {
+        return Id;
+    }
+
+    public String getNickname() {
+        return Nickname;
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
     
     
     

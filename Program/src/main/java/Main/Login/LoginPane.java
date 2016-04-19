@@ -6,6 +6,7 @@
 package Main.Login;
 
 import Main.Database;
+import Main.User;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -65,6 +66,7 @@ public class LoginPane extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        User user = null;
         String nick = nickField.getText();
         char[] pswC = passField.getPassword();
         String psw = String.valueOf(pswC);
@@ -78,9 +80,11 @@ public class LoginPane extends JPanel implements ActionListener{
         }
         
         Database db = new Database();
-        Connection conn = db.getConnection();
+        user = db.login(psw);
+    
         
-        
+
+
     }
     
     private String HashPSW(String init) throws InvalidKeySpecException, NoSuchAlgorithmException{
@@ -89,10 +93,10 @@ public class LoginPane extends JPanel implements ActionListener{
         SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] hash = f.generateSecret(spec).getEncoded();
         Base64.Encoder enc = Base64.getEncoder();
-        
+        /*
         System.out.printf("salt: %s%n", enc.encodeToString(salt));
         System.out.printf("hash: %s%n", enc.encodeToString(hash));
-        
+        */
         return enc.encodeToString(hash);
     }
 

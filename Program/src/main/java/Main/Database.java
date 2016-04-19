@@ -48,41 +48,42 @@ public class Database {
        return this.conn;
    }
    
-   public ResultSet execStatement(Statement stmt){
-       ResultSet rs = null;
+   public User login(String psw){
+       User user = null;
+       Statement stmt = null;
        try {
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
            stmt = conn.createStatement();
-           String sql;
-           sql = "SELECT id, first, last, age FROM Employees";
-           rs = stmt.executeQuery(sql);
-
-           //STEP 5: Extract data from result set
-           /*
-      while(rs.next()){
-         //Retrieve by column name
-         int id  = rs.getInt("id");
-         int age = rs.getInt("age");
-         String first = rs.getString("first");
-         String last = rs.getString("last");
-
-         //Display values
-         System.out.print("ID: " + id);
-         System.out.print(", Age: " + age);
-         System.out.print(", First: " + first);
-         System.out.println(", Last: " + last);
-      }
-            */
-           //STEP 6: Clean-up environment
+           String sql = "SELECT 'id_user','nickname','isadmin'"
+                   + " FROM User"
+                   + " WHERE 'nickname' LIKE '" + "admin" + "'";
+           
+           ResultSet rs = stmt.executeQuery(sql);
+           
+           System.out.println(psw);
+           if(rs.next()){
+               user = new User(rs.getInt("id_user"), rs.getString("nickname"), rs.getBoolean("isadmin"));
+               System.out.println("ID: " + Integer.toString(user.getId()) + 
+                "\nNick: " + user.getNickname() + "\nisAdmin: " + 
+                Boolean.toString(user.isIsAdmin()));
+           }   
+           
+           
+           
            stmt.close();
            conn.close();
-           return rs;
+           rs.close();
+
        } catch (SQLException se) {
-           //Handle errors for JDBC
+           System.out.println("FAIL #1");
            se.printStackTrace();
        } catch (Exception e) {
-           //Handle errors for Class.forName
+           System.out.println("FAIL #2");
            e.printStackTrace();
        } finally {
+           //finally block used to close resources
            //finally block used to close resources
            try {
                if (stmt != null) {
@@ -98,7 +99,7 @@ public class Database {
                se.printStackTrace();
            }//end finally try
        }//end try
-       return rs;
+       return user;
    }
    
     
