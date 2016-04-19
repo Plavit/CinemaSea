@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
+package Main.Login;
 
-import Main.Login.LoginFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
  * @author leffl_000
  */
-public class test {
-    
-    public static void main(String[] args){
-        new LoginFrame();
+public class registerAction implements ActionListener{
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
     }
     
 }

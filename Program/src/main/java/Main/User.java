@@ -13,13 +13,15 @@ import java.util.LinkedList;
  */
 public class User {
     
+    final private int Id;
     final private String Nickname;
     final private boolean isAdmin;
     private Movie[] Favorites;
     private Movie[] Rated;
     private LinkedList moviePaths;
 
-    public User(String Nickname, boolean isAdmin) {
+    public User(int id, String Nickname, boolean isAdmin) {
+        this.Id = id;
         this.Nickname = Nickname;
         this.isAdmin = isAdmin;
     }

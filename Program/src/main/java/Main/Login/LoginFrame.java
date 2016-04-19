@@ -21,8 +21,8 @@ public class LoginFrame extends javax.swing.JFrame{
         frame.setLayout(new BorderLayout());
         frame.add(new LoginPane());
         frame.pack();
-        frame.setLocationRelativeTo(null);
         frame.setBounds(0,0,350,200);
+        frame.setLocationRelativeTo(null);        
         frame.setResizable(false);
         frame.setVisible(true);      
         
