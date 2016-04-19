@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project.cinemasea.Enter;
+package Main;
+
+import Main.Login.LoginFrame;
 
 /**
  *
  * @author leffl_000
  */
-public class LoginButt extends javax.swing.JButton{
-
-    public LoginButt() {
+public class test {
+    
+    public static void main(String[] args){
+        new LoginFrame();
     }
-    
-    
     
 }

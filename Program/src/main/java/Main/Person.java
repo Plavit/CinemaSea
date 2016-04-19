@@ -1,5 +1,5 @@
 
-package project.cinemasea;
+package Main;
 
 /**
  *
