@@ -1,13 +1,12 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     29.03.2016 14:15:24                          */
+/* Created on:     19.04.2016 22:10:11                          */
 /*==============================================================*/
-
 /*==============================================================*/
 /* Table: Actor                                                 */
 /*==============================================================*/
 create table Actor (
-   ID_Actor             INT4,
+   ID_Actor             INT4                 not null,
    ID_Director          INT4                 null,
    ID_Scenarist         INT4                 null,
    Name                 TEXT                 not null,
@@ -16,11 +15,12 @@ create table Actor (
    Description          TEXT                 null,
    constraint PK_ACTOR primary key (ID_Actor)
 );
+
 /*==============================================================*/
 /* Table: Director                                              */
 /*==============================================================*/
 create table Director (
-   ID_Director          INT4,
+   ID_Director          INT4                 not null,
    ID_Actor             INT4                 null,
    ID_Scenarist         INT4                 null,
    Name                 TEXT                 not null,
@@ -29,6 +29,7 @@ create table Director (
    Description          TEXT                 null,
    constraint PK_DIRECTOR primary key (ID_Director)
 );
+
 /*==============================================================*/
 /* Table: Genre_related                                         */
 /*==============================================================*/
@@ -37,19 +38,21 @@ create table Genre_related (
    ID_movie             INT4                 not null,
    constraint PK_GENRE_RELATED primary key (ID_Genre, ID_movie)
 );
+
 /*==============================================================*/
 /* Table: Genres                                                */
 /*==============================================================*/
 create table Genres (
-   ID_Genre             INT4,
+   ID_Genre             INT4                 not null,
    Type                 TEXT                 not null,
    constraint PK_GENRES primary key (ID_Genre)
 );
+
 /*==============================================================*/
 /* Table: Movie                                                 */
 /*==============================================================*/
 create table Movie (
-   ID_movie             INT4,
+   ID_movie             INT4                 not null,
    "Cover image"        TEXT                 not null,
    NameCZ               TEXT                 not null,
    NameEN               TEXT                 not null,
@@ -57,6 +60,7 @@ create table Movie (
    Description          TEXT                 null,
    constraint PK_MOVIE primary key (ID_movie)
 );
+
 /*==============================================================*/
 /* Table: Plays                                                 */
 /*==============================================================*/
@@ -70,7 +74,7 @@ create table Plays (
 /* Table: Rating                                                */
 /*==============================================================*/
 create table Rating (
-   ID_Rate              INT4,
+   ID_Rate              INT4                 not null,
    ID_User              INT4                 not null,
    Stars                INT2                 not null,
    constraint PK_RATING primary key (ID_Rate)
@@ -89,7 +93,7 @@ create table Rating_related (
 /* Table: Scenarist                                             */
 /*==============================================================*/
 create table Scenarist (
-   ID_Scenarist         INT4,
+   ID_Scenarist         INT4                 not null,
    ID_Actor             INT4                 null,
    ID_Director          INT4                 null,
    Name                 TEXT                 not null,
@@ -116,6 +120,7 @@ create table Shoots (
    ID_movie             INT4                 not null,
    constraint PK_SHOOTS primary key (ID_Director, ID_movie)
 );
+
 /*==============================================================*/
 /* Table: Tag_related                                           */
 /*==============================================================*/
@@ -129,19 +134,20 @@ create table Tag_related (
 /* Table: Tags                                                  */
 /*==============================================================*/
 create table Tags (
-   ID_Tag               INT4,
+   ID_Tag               INT4                 not null,
    Type                 TEXT                 not null,
    constraint PK_TAGS primary key (ID_Tag)
 );
+
 /*==============================================================*/
-/* Table: "User"                                                */
+/* Table: Users                                                 */
 /*==============================================================*/
-create table "User" (
-   ID_User              INT4,
+create table Users (
+   ID_User              INT4                 not null,
    Nickname             TEXT                 not null,
    Password             TEXT                 not null,
    isAdmin              BOOL                 not null,
-   constraint PK_USER primary key (ID_User)
+   constraint PK_USERS primary key (ID_User)
 );
 
 alter table Actor
@@ -185,8 +191,8 @@ alter table Plays
       on delete restrict on update restrict;
 
 alter table Rating
-   add constraint FK_RATING_USER_RATE_USER foreign key (ID_User)
-      references "User" (ID_User)
+   add constraint FK_RATING_USER_RATE_USERS foreign key (ID_User)
+      references Users (ID_User)
       on delete restrict on update restrict;
 
 alter table Rating_related
@@ -238,3 +244,4 @@ alter table Tag_related
    add constraint FK_TAG_RELA_TAG_RELAT_MOVIE foreign key (ID_movie)
       references Movie (ID_movie)
       on delete restrict on update restrict;
+

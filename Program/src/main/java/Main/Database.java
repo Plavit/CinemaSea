@@ -6,6 +6,8 @@
 package Main;
 
 import java.sql.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -30,7 +32,10 @@ public class Database {
            System.out.println("CONNECTION SUCCESFUL");           
        }
        catch(Exception e){
-           System.out.println("CONNECTION FAILED");
+           JOptionPane.showMessageDialog(new JFrame(),
+                    "Couldn't connect to server! Please try it later.",
+                    "SERVER ERROR",
+                    JOptionPane.ERROR_MESSAGE);
            System.out.println(e.toString());
        }finally {           
            try {

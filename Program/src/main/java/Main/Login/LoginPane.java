@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.sql.*;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
