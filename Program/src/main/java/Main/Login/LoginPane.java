@@ -80,8 +80,22 @@ public class LoginPane extends JPanel implements ActionListener{
         }
         
         Database db = new Database();
-        user = db.login(psw);
-    
+        user = db.login(psw,nick);
+        
+        if(user != null){
+            System.out.println("SUCCESFULY LOGGED");
+            
+           // TODO
+           // OTEVRIT MAINFRAME A SPUSTIT VLAKNA NA NATAHANI DAT Z DATABAZE
+           
+           
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Nickname or password is not valid!",
+                    "Login error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
         
 
 

@@ -48,30 +48,26 @@ public class Database {
        return this.conn;
    }
    
-   public User login(String psw){
+   public User login(String psw, String nick){
        User user = null;
        Statement stmt = null;
        try {
+           // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-           stmt = conn.createStatement();
-           String sql = "SELECT 'id_user','nickname','isadmin'"
-                   + " FROM User"
-                   + " WHERE 'nickname' LIKE '" + "admin" + "'";
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+           String sql = "SELECT * FROM users WHERE password LIKE '" + psw +"' AND nickname LIKE '" + nick + "'";
            
+           // COLLECTING OF DATA
            ResultSet rs = stmt.executeQuery(sql);
-           
-           System.out.println(psw);
+
            if(rs.next()){
                user = new User(rs.getInt("id_user"), rs.getString("nickname"), rs.getBoolean("isadmin"));
-               System.out.println("ID: " + Integer.toString(user.getId()) + 
-                "\nNick: " + user.getNickname() + "\nisAdmin: " + 
-                Boolean.toString(user.isIsAdmin()));
-           }   
-           
-           
-           
+           }
+
+           // CLOSING THE CONNECTION
            stmt.close();
            conn.close();
            rs.close();
