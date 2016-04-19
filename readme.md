@@ -8,7 +8,7 @@ This tool will provide comfort for managing your movies and serials. The user ca
 Whereas user has some overview of his movies he has on HDD or just seen, admin is able to manage whole database. That includes adding, deleting and updating data in database.
 
 ### **Used technologies:**
-* **IntelliJ IDEA**
+* **Netbeans**
 * **pgAdmin III**
 * **Balsamiq 3**
 * **Sybyse PowerDesigner 15**
@@ -17,4 +17,4 @@ Whereas user has some overview of his movies he has on HDD or just seen, admin i
 |Name| Nickname |
 | -------- | -------- |
 |Marek Szeles| @szelemar |
-|David Löffler| @loffldav |
+|David LÃ¶ffler| @loffldav |
