@@ -25,7 +25,8 @@ import javax.swing.*;
 
 /**
  *
- * @author leffl_000
+ * @author Löffler David, Szeles Marek
+ * 
  */
 public class LoginPane extends JPanel implements ActionListener{
     

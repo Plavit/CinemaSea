@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author leffl_000
+ * @author Löffler David, Szeles Marek
  */
 public class User {
     

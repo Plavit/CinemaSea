@@ -10,7 +10,7 @@ import Main.Login.LoginFrame;
 
 /**
  *
- * @author leffl_000
+ * @author Löffler David, Szeles Marek
  */
 public class Start {
     

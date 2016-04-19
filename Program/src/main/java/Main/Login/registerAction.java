@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author leffl_000
+ * @author Löffler David, Szeles Marek
  */
 public class registerAction implements ActionListener{
 

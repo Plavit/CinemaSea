@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author leffl_000
+ * @author Löffler David, Szeles Marek
  */
 public class Database {
     
