@@ -5,6 +5,8 @@
  */
 package Main;
 
+import Main.Login.LoginFrame;
+
 
 /**
  *
@@ -13,7 +15,8 @@ package Main;
 public class Start {
     
     public static void main(String[] args){
-
+        Database db = new Database();
+        db.ConnectToServer();
     }
     
 }
