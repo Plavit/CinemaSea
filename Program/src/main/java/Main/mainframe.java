@@ -5,17 +5,14 @@
  */
 package Main;
 
-import Main.Login.LoginFrame;
-
+import javax.swing.JFrame;
 
 /**
  *
  * @author leffl_000
  */
-public class Start {
+public class mainframe extends JFrame{
     
-    public static void main(String[] args){
-        new LoginFrame();
-    }
+    
     
 }

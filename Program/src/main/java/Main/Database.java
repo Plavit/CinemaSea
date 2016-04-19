@@ -15,32 +15,19 @@ import java.sql.*;
 public class Database {
     
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-   static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz";
+   static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
    
    static final String USER = "db16_loffldav";
    static final String PASS = "db16_loffldav";
    
-   private User user;
-
-    public Database() {
-    }
-    
-    public Database(User user){
-        this.user = user;
-    }
+   private Connection conn = null;
    
-   
-   
-   public void ConnectToServer(){
-       Connection conn = null;
-       
+   public void Database(){
        try{
-           
+           Class.forName("org.postgresql.Driver");
            System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("CONNECTION SUCCESFUL");
-           
-           conn.close();
+           System.out.println("CONNECTION SUCCESFUL");           
        }
        catch(Exception e){
            System.out.println("CONNECTION FAILED");
@@ -55,6 +42,10 @@ public class Database {
            }//end finally try
        }
        
+   }
+   
+   public Connection getConnection(){
+       return this.conn;
    }
     
 }

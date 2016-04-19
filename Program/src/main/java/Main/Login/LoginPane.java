@@ -5,11 +5,23 @@
  */
 package Main.Login;
 
+import Main.Database;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.Math.random;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.sql.*;
+import java.util.Base64;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.swing.*;
 
 /**
@@ -59,8 +71,31 @@ public class LoginPane extends JPanel implements ActionListener{
         char[] pswC = passField.getPassword();
         String psw = String.valueOf(pswC);
         
+        try {
+            HashPSW(psw);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginPane.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(LoginPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Database db = new Database();        
+        Connection conn = db.getConnection();
         
         
+    }
+    
+    private String HashPSW(String init) throws InvalidKeySpecException, NoSuchAlgorithmException{
+        byte[] salt = {15,32,54,3,45,2,5,3,1,4,87,9,6,89,99,17};
+        KeySpec spec = new PBEKeySpec(init.toCharArray(), salt, 98434, 256);
+        SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = f.generateSecret(spec).getEncoded();
+        Base64.Encoder enc = Base64.getEncoder();
+        
+        System.out.printf("salt: %s%n", enc.encodeToString(salt));
+        System.out.printf("hash: %s%n", enc.encodeToString(hash));
+        
+        return enc.encodeToString(hash);        
     }
 
 }
