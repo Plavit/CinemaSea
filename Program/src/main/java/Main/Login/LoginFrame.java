@@ -10,7 +10,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Löffler David
+ * @author Löffler David, Szeles Marek
  */
 public class LoginFrame extends javax.swing.JFrame{
 

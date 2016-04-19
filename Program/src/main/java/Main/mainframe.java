@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author leffl_000
+ * @author Löffler David, Szeles Marek
  */
 public class mainframe extends JFrame{
     
