@@ -42,13 +42,19 @@ public class mainframe extends JFrame{
     
     public void setUser(User user){
         this.user = user;
-        // SPUSTIT VLAKNA NA NATAHANI DAT
+        try {
+            gatherAllData();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void gatherAllData() throws InterruptedException{
         
         Callable<Movie[]> allFilms = new selectAllMovies();
         
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<Movie[]> films = executor.submit(allFilms);
-        
+        Future<Movie[]> films = executor.submit(allFilms);        
         
         try {
             allMovies = films.get();            
@@ -61,8 +67,27 @@ public class mainframe extends JFrame{
         /*
         for(Movie mv : allMovies){
             System.out.println(mv.getNameCZ() + "   " + String.valueOf(mv.getYear()));            
-        }
+        }        
         */
+        for(Movie mv : allMovies){
+            selectPersons threadA = new selectPersons(mv.getId(),'A');
+            selectPersons threadS = new selectPersons(mv.getId(),'S');
+            selectPersons threadD = new selectPersons(mv.getId(),'D');
+            
+            threadA.start();
+            threadS.start();
+            threadD.start();
+            
+            threadA.join();
+            threadS.join();
+            threadD.join();            
+            
+            mv.setActors(threadA.returnPersonArray());
+            mv.setScenarists(threadS.returnPersonArray());
+            mv.setDirectors(threadD.returnPersonArray());
+        }
+        
+        
     }
     
     
