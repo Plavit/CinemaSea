@@ -12,9 +12,9 @@ import javax.swing.*;
  *
  * @author Löffler David, Szeles Marek
  */
-public class LoginFrame extends javax.swing.JFrame
+public class RegisterFrame extends javax.swing.JFrame
 {
-    public LoginFrame() 
+    public RegisterFrame() 
     {        
         
         JFrame frame = new JFrame("CINSEA - Register");

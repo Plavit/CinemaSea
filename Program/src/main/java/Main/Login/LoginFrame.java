@@ -28,6 +28,10 @@ public class LoginFrame extends javax.swing.JFrame{
         
     }
     
+    public void exitFrame(boolean exit){
+        if(exit) dispose();
+    }
+    
     
     
 }

@@ -28,7 +28,7 @@ import javax.swing.*;
  * @author Löffler David, Szeles Marek
  * 
  */
-public class LoginPane extends JPanel implements ActionListener{
+public class RegisterPane extends JPanel implements ActionListener{
     
     JPanel btnPane = new JPanel();
     JButton btnLogin = new JButton("SIGN IN");
@@ -75,9 +75,9 @@ public class LoginPane extends JPanel implements ActionListener{
         try {
             psw = HashPSW(psw);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(LoginPane.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterPane.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(LoginPane.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterPane.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         Database db = new Database();

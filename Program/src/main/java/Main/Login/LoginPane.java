@@ -8,11 +8,16 @@ package Main.Login;
 import Main.Database;
 import Main.User;
 import Main.mainframe;
+import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -21,7 +26,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte0.runnable;
 
 /**
  *
@@ -37,13 +44,15 @@ public class LoginPane extends JPanel implements ActionListener{
     JPasswordField passField = new JPasswordField(20);
     JLabel nickLabel = new JLabel("Nickname:");
     JLabel passLabel = new JLabel("Password:");
+    GridBagConstraints gbc = new GridBagConstraints();
+    JLabel label;
 
     public LoginPane() {
+        
         setLayout(new GridBagLayout());
         btnLogin.addActionListener(this);
         btnRegister.addActionListener(new registerAction());
-
-        GridBagConstraints gbc = new GridBagConstraints();
+        
         gbc.insets = new Insets(5, 5, 5, 5);
 
         add(nickLabel, gbc);
@@ -63,6 +72,13 @@ public class LoginPane extends JPanel implements ActionListener{
 
         gbc.gridy = 2;
         add(btnPane, gbc);
+        
+        ImageIcon imageIcon = new ImageIcon("D:\\wheel.gif");
+        label = new JLabel(imageIcon);        
+        gbc.gridx = 0;        
+        add(label,gbc);
+        label.setVisible(false);
+        
     }
 
     @Override
@@ -71,6 +87,10 @@ public class LoginPane extends JPanel implements ActionListener{
         String nick = nickField.getText();
         char[] pswC = passField.getPassword();
         String psw = String.valueOf(pswC);
+        
+        
+        
+        label.setVisible(true);
         
         try {
             psw = HashPSW(psw);
@@ -92,7 +112,6 @@ public class LoginPane extends JPanel implements ActionListener{
            // TODO
            // OTEVRIT MAINFRAME A SPUSTIT VLAKNA NA NATAHANI DAT Z DATABAZE
            
-           
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(),
@@ -101,7 +120,8 @@ public class LoginPane extends JPanel implements ActionListener{
                     JOptionPane.ERROR_MESSAGE);
         }
         
-
+        label.setVisible(false);
+        
 
     }
     
