@@ -6,6 +6,8 @@
 package Main;
 
 import Main.Threads.*;
+import Main.panels.*;
+import java.awt.BorderLayout;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -26,22 +28,46 @@ public class mainframe extends JFrame{
     private Database db;
     
     JProgressBar bar = new JProgressBar();
-    JPanel mainPanel = new JPanel();
+    JTabbedPane mainPanel = new JTabbedPane();
+    homePanel homePane = new homePanel();
+    allMoviesPanel moviesPane = new allMoviesPanel();
+    databasePanel dataPane = new databasePanel();
+    localPanel localPane = new localPanel();
+    ratedPanel ratePane = new ratedPanel();
+    searchPanel srchPane = new searchPanel();
+    settingsPanel settPane = new settingsPanel();
     
     public mainframe(){
         setTitle("Cinsea - Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        pack();
         setBounds(0,0,800,600);
         setLocationRelativeTo(null);
         setVisible(true);
+       
     }
     
-    public void initComponents(){
+    // ADDING COMPONENTS
+    public void initComponents(){        
+        mainPanel.addTab("Home", homePane);
+        mainPanel.addTab("Settings", settPane);
+        mainPanel.addTab("Local", localPane);
+        mainPanel.addTab("Rated", ratePane);
+        mainPanel.addTab("All movies", moviesPane);
+        mainPanel.addTab("Search", srchPane);
+        if(user.isIsAdmin()){
+            mainPanel.addTab("Database", dataPane);
+        }   
+
+        // DOPORUCUJU DOPLNIT KOMPONENTY DO DANYCH CLASS PANELU KVULI PREHLEDNOSTI
         
+        add(mainPanel);         
     }
     
-    public void setUser(User user){
+    public void setMainFrame(User user){
         this.user = user;
+        initComponents();
         try {
             gatherAllData();
         } catch (InterruptedException ex) {
@@ -68,7 +94,7 @@ public class mainframe extends JFrame{
         for(Movie mv : allMovies){
             System.out.println(mv.getNameCZ() + "   " + String.valueOf(mv.getYear()));            
         }        
-        */
+        *//*
         for(Movie mv : allMovies){
             selectPersons threadA = new selectPersons(mv.getId(),'A');
             selectPersons threadS = new selectPersons(mv.getId(),'S');
@@ -86,9 +112,10 @@ public class mainframe extends JFrame{
             mv.setScenarists(threadS.returnPersonArray());
             mv.setDirectors(threadD.returnPersonArray());
         }
-        
+        */
         
     }
+
     
     
     

@@ -52,8 +52,7 @@ public class LoginFrame implements ActionListener{
         
     }
     
-    private void initComponents(){
-        
+    private void initComponents(){        
         
         LoginPane.setLayout(new GridBagLayout());
         btnLogin.addActionListener(this);
@@ -106,7 +105,7 @@ public class LoginFrame implements ActionListener{
             db.updateViews();
             mainframe mf = new mainframe();            
             frame.dispose();
-            mf.setUser(user);
+            mf.setMainFrame(user);
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(),
