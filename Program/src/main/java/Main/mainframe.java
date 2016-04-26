@@ -5,7 +5,7 @@
  */
 package Main;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  *
@@ -17,8 +17,15 @@ public class mainframe extends JFrame{
     private Movie[] allMovies;
     private Database db;
     
+    JProgressBar bar = new JProgressBar();
+    JPanel mainPanel = new JPanel();
+    
     public mainframe(){
-        
+        setTitle("Cinsea - Home");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(0,0,800,600);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
     
     public void initComponents(){
