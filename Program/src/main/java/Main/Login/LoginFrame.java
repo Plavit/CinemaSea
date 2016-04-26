@@ -37,6 +37,7 @@ public class LoginFrame implements ActionListener{
     JLabel passLabel = new JLabel("Password:");
     GridBagConstraints gbc = new GridBagConstraints();
     JPanel LoginPane = new JPanel();
+    Database db = new Database();
     
     public LoginFrame() {        
         
@@ -89,7 +90,6 @@ public class LoginFrame implements ActionListener{
         String nick = nickField.getText();
         char[] pswC = passField.getPassword();
         String psw = String.valueOf(pswC);
-        Database db = new Database();
         
         try {
             psw = db.HashPSW(psw);
@@ -103,7 +103,7 @@ public class LoginFrame implements ActionListener{
         
         if(user != null){
             System.out.println("SUCCESFULY LOGGED");
-           
+            db.clearViews();
             mainframe mf = new mainframe();
             mf.setUser(user);
             frame.dispose();           
@@ -119,8 +119,8 @@ public class LoginFrame implements ActionListener{
     
     ActionListener signupListener = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-
+        public void actionPerformed(ActionEvent actionEvent) {            
+            
             RegisterFrame rf = new RegisterFrame();
             frame.dispose();
 

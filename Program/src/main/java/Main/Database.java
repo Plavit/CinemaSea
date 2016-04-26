@@ -109,6 +109,52 @@ public class Database {
        return user;
    }
    
+   public void clearViews(){
+       Statement stmt = null;
+       try {
+           // PREPARING THE SQL REQUEST
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+           String[] sqls = {"DROP VIEW IF EXISTS movieactors;", 
+                            "DROP VIEW IF EXISTS moviedirectors;",
+                            "DROP VIEW IF EXISTS moviescenarist;",
+                            "DROP VIEW IF EXISTS movierating;",
+                            "DROP VIEW IF EXISTS usermovies;"};
+           for(String sql : sqls){
+               stmt.executeUpdate(sql);               
+           }
+           // CLOSING THE CONNECTION
+           stmt.close();
+           conn.close();           
+
+       } catch (SQLException se) {
+           System.out.println("FAIL #1");
+           se.printStackTrace();
+       } catch (Exception e) {
+           System.out.println("FAIL #2");
+           e.printStackTrace();
+       } finally {
+           //finally block used to close resources
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try       
+   }
+   
    public String HashPSW(String init) throws InvalidKeySpecException, NoSuchAlgorithmException{
         byte[] salt = {15,32,54,3,45,2,5,3,1,4,87,9,6,89,99,17};
         KeySpec spec = new PBEKeySpec(init.toCharArray(), salt, 98434, 256);
