@@ -56,7 +56,8 @@ public class mainframe extends JFrame{
             Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ExecutionException ex) {
             Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }        
+        executor.shutdown();
         /*
         for(Movie mv : allMovies){
             System.out.println(mv.getNameCZ() + "   " + String.valueOf(mv.getYear()));            
