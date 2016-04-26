@@ -116,6 +116,9 @@ public class Movie {
         this.Year = Year;
     }
     
+    public int getId(){
+        return Id;
+    }    
     
     
 }
