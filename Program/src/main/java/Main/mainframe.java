@@ -5,6 +5,7 @@
  */
 package Main;
 
+import Main.Threads.*;
 import javax.swing.*;
 
 /**
@@ -35,6 +36,7 @@ public class mainframe extends JFrame{
     public void setUser(User user){
         this.user = user;
         // SPUSTIT VLAKNA NA NATAHANI DAT
+        
     }
     
     

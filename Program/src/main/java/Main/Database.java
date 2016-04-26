@@ -5,6 +5,7 @@
  */
 package Main;
 
+import Main.Threads.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -153,6 +154,18 @@ public class Database {
                se.printStackTrace();
            }//end finally try
        }//end try       
+   }
+   
+   public void updateViews(){
+       clearViews();       
+       Thread[] threads = {new viewMovieActors(), new viewMovieDirectors(),
+                           new viewMovieScenarists(), new viewMovieRating(),
+                           new viewUserMovies()};
+       
+      for(Thread th : threads){
+          th.start();
+      }
+       
    }
    
    public String HashPSW(String init) throws InvalidKeySpecException, NoSuchAlgorithmException{

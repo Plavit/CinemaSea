@@ -103,10 +103,10 @@ public class LoginFrame implements ActionListener{
         
         if(user != null){
             System.out.println("SUCCESFULY LOGGED");
-            db.clearViews();
+            db.updateViews();
             mainframe mf = new mainframe();
             mf.setUser(user);
-            frame.dispose();           
+            frame.dispose();
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(),
