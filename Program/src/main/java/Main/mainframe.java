@@ -94,7 +94,7 @@ public class mainframe extends JFrame{
         for(Movie mv : allMovies){
             System.out.println(mv.getNameCZ() + "   " + String.valueOf(mv.getYear()));            
         }        
-        *//*
+        */
         for(Movie mv : allMovies){
             selectPersons threadA = new selectPersons(mv.getId(),'A');
             selectPersons threadS = new selectPersons(mv.getId(),'S');
@@ -112,7 +112,7 @@ public class mainframe extends JFrame{
             mv.setScenarists(threadS.returnPersonArray());
             mv.setDirectors(threadD.returnPersonArray());
         }
-        */
+        
         
     }
 

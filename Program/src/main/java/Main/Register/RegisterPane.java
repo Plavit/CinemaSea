@@ -85,9 +85,6 @@ public class RegisterPane extends JPanel implements ActionListener{
         
         if(user != null){
             System.out.println("SUCCESFULY LOGGED");
-           
-            mainframe mf = new mainframe();
-            mf.setUser(user);
             
            // TODO
            // OTEVRIT MAINFRAME A SPUSTIT VLAKNA NA NATAHANI DAT Z DATABAZE
