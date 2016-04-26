@@ -16,47 +16,62 @@
  */
 package Main.Threads;
 
+import Main.Movie;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 /**
  *
  * @author David Löffler
  */
-public class viewMovieActors extends Thread{
+public class selectAllMovies implements Callable<Movie[]>{
     
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
     static final String USER = "db16_loffldav";
     static final String PASS = "db16_loffldav";
-    
+
     @Override
-    public void run(){
-        
+    public Movie[] call() throws Exception {
+        ArrayList<Movie> list = new ArrayList<>();
+        Movie result;        
         Connection conn = null;
         Statement stmt = null;
+        
         try {
             // PREPARING THE SQL REQUEST
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
             stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
                     ResultSet.CONCUR_READ_ONLY);
-            String sql = "CREATE VIEW movieactors AS "
-                    + "SELECT movie.id_movie, actor.name, actor.surname, actor.year, actor.description \n"
-                    + "FROM movie, actor, plays \n"
-                    + "WHERE movie.id_movie = plays.id_movie AND plays.id_actor = actor.id_actor;";
-            stmt.executeUpdate(sql);
             
-            System.out.println("VIEW(actors) CREATED");
+            String sql = "SELECT * FROM movie;";
+            
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            while(rs.next()){
+                result = new Movie(rs.getInt("id_movie"));
+                result.setCoverImage(rs.getString("Cover image"));
+                result.setNameCZ(rs.getString("namecz"));
+                result.setNameEN(rs.getString("nameen"));
+                result.setYear(rs.getInt("year"));
+                result.setDescription(rs.getString("description"));
+                list.add(result);
+            }
+            
+            System.out.println("ALL MOVIES SELECTED & ADDED");
             
             // CLOSING THE CONNECTION
             stmt.close();
-            conn.close();
-
+            conn.close();           
+            rs.close();
+            Movie[] movies = new Movie[list.size()];            
+            return list.toArray(movies);
         } catch (SQLException se) {
             System.out.println("FAIL #1");
             se.printStackTrace();
@@ -79,8 +94,10 @@ public class viewMovieActors extends Thread{
             } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
-        }//end try
+        }//end try     
         
+    
+        return null;
     }
     
 }

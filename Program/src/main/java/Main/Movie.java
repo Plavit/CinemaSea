@@ -21,6 +21,8 @@ public class Movie {
     private int Rating;
     private String[] Genres;
     private String[] Tags;
+    private String Description;
+    private int Year;
 
     public Movie(int id) {
         this.Id = id;
@@ -97,9 +99,22 @@ public class Movie {
     public void setTags(String[] Tags) {
         this.Tags = Tags;
     }
-    
-    
 
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+
+    public int getYear() {
+        return Year;
+    }
+
+    public void setYear(int Year) {
+        this.Year = Year;
+    }
     
     
     
