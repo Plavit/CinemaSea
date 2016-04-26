@@ -11,6 +11,7 @@ package Main;
  */
 public class Movie {
     
+    private final int Id;
     private String NameCZ;
     private String NameEN;
     private String CoverImage;
@@ -21,7 +22,8 @@ public class Movie {
     private String[] Genres;
     private String[] Tags;
 
-    public Movie() {
+    public Movie(int id) {
+        this.Id = id;
     }
 
     public String getNameCZ() {
