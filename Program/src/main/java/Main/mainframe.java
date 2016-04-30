@@ -157,9 +157,13 @@ public class mainframe extends JFrame{
                 Movie[] userMovieTMP = new Movie[tmpId.length]; 
                 for(int i = 0; i < tmpId.length; i++){
                     userMovieTMP[i] = allMovies[tmpId[i]-1];                    
-                }                
-                
+                }
                 user.setRated(userMovieTMP);
+                
+                // SET ALL PANELS - PASS DATA
+                
+                ratePane.passData(user.getRated());
+                
                 System.out.println("ALL DATA SET");
                 bar.setVisible(false);
             }

@@ -16,7 +16,21 @@
  */
 package Main.panels;
 
+import Main.Movie;
+import Main.User;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Label;
+import static java.awt.font.TextAttribute.FONT;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -24,12 +38,61 @@ import javax.swing.JPanel;
  */
 public class ratedPanel extends JPanel{
     
+    private User user;
+    private Object[][] data;    
+    private JTable dataTable;
+    private String[] columnNames = {"Name CZ",
+                        "Name EN",
+                        "Genres",
+                        "Release date"};
+    GridBagConstraints gbc = new GridBagConstraints();
+    
     public ratedPanel(){
+        setLayout(new BorderLayout());
+    }    
+    
+    private void initComponents(){
+        dataTable = new JTable(data,columnNames);        
+        JScrollPane scrollPane = new JScrollPane(dataTable);
+        JPanel toolPane = new JPanel();
+        toolPane.setLayout(new BorderLayout());
+        Label headline = new Label("Rated movies");
+        headline.setFont(new Font("Arial",Font.PLAIN,18));
+        JButton btn = new JButton("Show");
+        toolPane.add(headline, BorderLayout.WEST);
+        toolPane.add(btn, BorderLayout.EAST);
+        
+        add(toolPane,BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+        
+    }
+    
+    public void passData(Movie[] rated){
+        
+        data = new Object[rated.length][4];
+        
+        for(int i = 0; i < rated.length; i++){
+            data[i][0] = rated[i].getNameCZ();
+            data[i][1] = rated[i].getNameEN();
+            
+            String genres = "";
+            
+            for(int k = 0; k < rated[i].getGenres().length; k++){
+                if(rated[i].getGenres().length > 1 && rated[i].getGenres().length != k+1){
+                    genres += rated[i].getGenres()[k] + " / ";
+                }
+                else{
+                    genres += rated[i].getGenres()[k];
+                }
+            }
+            
+            data[i][2] = genres;
+            data[i][3] = rated[i].getYear();
+        }      
         initComponents();
     }
     
-    private void initComponents(){
-        
-    }
+    
+    
     
 }
