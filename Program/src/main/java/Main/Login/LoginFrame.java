@@ -102,10 +102,17 @@ public class LoginFrame implements ActionListener{
         
         if(user != null){
             System.out.println("SUCCESFULY LOGGED");
-            db.updateViews();
-            mainframe mf = new mainframe();            
-            frame.dispose();
-            mf.setMainFrame(user);
+            
+            try {
+                if(db.updateViews()){                
+                    mainframe mf = new mainframe();
+                    frame.dispose();
+                    mf.setMainFrame(user);            
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }           
+            
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(),

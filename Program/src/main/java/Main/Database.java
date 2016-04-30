@@ -123,7 +123,9 @@ public class Database {
                             "DROP VIEW IF EXISTS moviedirectors;",
                             "DROP VIEW IF EXISTS moviescenarist;",
                             "DROP VIEW IF EXISTS movierating;",
-                            "DROP VIEW IF EXISTS usermovies;"};
+                            "DROP VIEW IF EXISTS usermovies;",
+                            "DROP VIEW IF EXISTS moviegenres;",
+                            "DROP VIEW IF EXISTS movietags;"};
            for(String sql : sqls){
                stmt.executeUpdate(sql);               
            }
@@ -156,16 +158,26 @@ public class Database {
        }//end try       
    }
    
-   public void updateViews(){
+   public boolean updateViews() throws InterruptedException{
        clearViews();       
        Thread[] threads = {new viewMovieActors(), new viewMovieDirectors(),
                            new viewMovieScenarists(), new viewMovieRating(),
-                           new viewUserMovies()};
+                           new viewUserMovies(), new viewMovieTags(),
+                           new viewMovieGenres()};
        
       for(Thread th : threads){
           th.start();
       }
+      
+      threads[0].join();
+      threads[1].join();
+      threads[2].join();
+      threads[3].join();
+      threads[4].join();
+      threads[5].join();
+      threads[6].join();
        
+      return true;
    }
    
    public String HashPSW(String init) throws InvalidKeySpecException, NoSuchAlgorithmException{
