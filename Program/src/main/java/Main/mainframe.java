@@ -160,9 +160,7 @@ public class mainframe extends JFrame{
                 }
                 user.setRated(userMovieTMP);
                 
-                // SET ALL PANELS - PASS DATA
-                
-                ratePane.passData(user.getRated());
+                updateMainFrame();
                 
                 System.out.println("ALL DATA SET");
                 bar.setVisible(false);
@@ -170,6 +168,13 @@ public class mainframe extends JFrame{
         };
         
         gatherPersons.start();
+        
+    }
+    
+    public void updateMainFrame(){
+        
+        ratePane.passData(user.getRated());
+        moviesPane.passData(allMovies);
         
     }
 

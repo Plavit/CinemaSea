@@ -17,20 +17,13 @@
 package Main.panels;
 
 import Main.Movie;
-import Main.User;
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.Label;
-import static java.awt.font.TextAttribute.FONT;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -38,14 +31,12 @@ import javax.swing.table.TableModel;
  */
 public class ratedPanel extends JPanel{
     
-    private User user;
     private Object[][] data;    
     private JTable dataTable;
     private String[] columnNames = {"Name CZ",
                         "Name EN",
                         "Genres",
-                        "Release date"};
-    GridBagConstraints gbc = new GridBagConstraints();
+                        "Release date", "Rating"};
     
     public ratedPanel(){
         setLayout(new BorderLayout());
@@ -69,7 +60,7 @@ public class ratedPanel extends JPanel{
     
     public void passData(Movie[] rated){
         
-        data = new Object[rated.length][4];
+        data = new Object[rated.length][5];
         
         for(int i = 0; i < rated.length; i++){
             data[i][0] = rated[i].getNameCZ();
@@ -88,6 +79,7 @@ public class ratedPanel extends JPanel{
             
             data[i][2] = genres;
             data[i][3] = rated[i].getYear();
+            data[i][4] = rated[i].getRating();
         }      
         initComponents();
     }

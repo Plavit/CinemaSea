@@ -16,7 +16,11 @@
  */
 package Main.panels;
 
-import javax.swing.JPanel;
+import Main.Movie;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Label;
+import javax.swing.*;
 
 /**
  *
@@ -24,12 +28,56 @@ import javax.swing.JPanel;
  */
 public class allMoviesPanel extends JPanel{
     
+    private Object[][] data;    
+    private JTable dataTable;
+    private String[] columnNames = {"Name CZ",
+                        "Name EN",
+                        "Genres",
+                        "Release date", "Rating"};
+    
     public allMoviesPanel(){
-        initComponents();
+        setLayout(new BorderLayout());
     }
     
     private void initComponents(){
+        dataTable = new JTable(data,columnNames);        
+        JScrollPane scrollPane = new JScrollPane(dataTable);
+        JPanel toolPane = new JPanel();
+        toolPane.setLayout(new BorderLayout());
+        Label headline = new Label("All movies - NO.: " + dataTable.getRowCount());
+        headline.setFont(new Font("Arial",Font.PLAIN,18));
+        JButton btn = new JButton("Show");
+        toolPane.add(headline, BorderLayout.WEST);
+        toolPane.add(btn, BorderLayout.EAST);
         
+        add(toolPane,BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+    
+    public void passData(Movie[] rated){
+        
+        data = new Object[rated.length][5];
+        
+        for(int i = 0; i < rated.length; i++){
+            data[i][0] = rated[i].getNameCZ();
+            data[i][1] = rated[i].getNameEN();
+            
+            String genres = "";
+            
+            for(int k = 0; k < rated[i].getGenres().length; k++){
+                if(rated[i].getGenres().length > 1 && rated[i].getGenres().length != k+1){
+                    genres += rated[i].getGenres()[k] + " / ";
+                }
+                else{
+                    genres += rated[i].getGenres()[k];
+                }
+            }
+            
+            data[i][2] = genres;
+            data[i][3] = rated[i].getYear();
+            data[i][4] = rated[i].getRating();
+        }      
+        initComponents();
     }
     
 }
