@@ -8,6 +8,7 @@ package Main;
 import Main.Threads.*;
 import Main.panels.*;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -42,7 +43,8 @@ public class mainframe extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         pack();
-        setBounds(0,0,800,600);
+        setBounds(0,0,950,600);
+        setMinimumSize(new Dimension(950,600));
         setLocationRelativeTo(null);
         setVisible(true);
        
