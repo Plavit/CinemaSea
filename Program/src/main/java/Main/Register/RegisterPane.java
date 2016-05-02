@@ -35,8 +35,10 @@ public class RegisterPane extends JPanel implements ActionListener{
     JButton btnRegister = new JButton("SIGN UP");
     JTextField nickField = new JTextField(20);
     JPasswordField passField = new JPasswordField(20);
+    JPasswordField conPassField = new JPasswordField(20);
     JLabel nickLabel = new JLabel("Nickname:");
     JLabel passLabel = new JLabel("Password:");
+    JLabel conPassLabel = new JLabel("Confirm pass:");
 
     public RegisterPane() {
         setLayout(new GridBagLayout());
@@ -50,6 +52,10 @@ public class RegisterPane extends JPanel implements ActionListener{
 
         gbc.gridy = 1;
         add(passLabel, gbc);
+       
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(conPassLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -57,11 +63,15 @@ public class RegisterPane extends JPanel implements ActionListener{
 
         gbc.gridy = 1;
         add(passField, gbc);
+        
 
+        gbc.gridy = 2;
+        add(conPassField, gbc);
+        
         btnPane.add(btnLogin);
         btnPane.add(btnRegister);
 
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         add(btnPane, gbc);
     }
 
@@ -85,6 +95,9 @@ public class RegisterPane extends JPanel implements ActionListener{
         
         if(user != null){
             System.out.println("SUCCESFULY LOGGED");
+           
+            mainframe mf = new mainframe();
+            mf.setUser(user);
             
            // TODO
            // OTEVRIT MAINFRAME A SPUSTIT VLAKNA NA NATAHANI DAT Z DATABAZE

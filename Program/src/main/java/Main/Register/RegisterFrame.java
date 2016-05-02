@@ -17,12 +17,12 @@ public class RegisterFrame extends javax.swing.JFrame
     public RegisterFrame() 
     {        
         
-        JFrame frame = new JFrame("CINSEA - Register");
+        JFrame frame = new JFrame("CINSEA - Registration");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.add(new RegisterPane());
         frame.pack();
-        frame.setBounds(0,0,350,200);
+        frame.setBounds(0,0,350,300);
         frame.setLocationRelativeTo(null);        
         frame.setResizable(false);
         frame.setVisible(true);      
