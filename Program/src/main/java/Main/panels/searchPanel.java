@@ -23,6 +23,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Label;
+import java.util.Calendar;
 import javax.swing.*;
 
 /**
@@ -48,6 +49,7 @@ public class searchPanel extends JPanel{
         // initializing components
         JPanel upperTools = new JPanel();
         JTable tableMovie = new JTable();
+        JTextField nameTxtField = new JTextField(10);
         GridBagConstraints gbc = new GridBagConstraints();
         JComboBox sinceYear = new JComboBox();
         JComboBox tillYear = new JComboBox();
@@ -91,13 +93,35 @@ public class searchPanel extends JPanel{
         Label scenaristsLabel = new Label("Scenarists:");
         Label genresLabel = new Label("Genres:");
         Label tagsLabel = new Label("Tags:");
-        Label yearLabel = new Label("Year:");
-        Label ratingLabel = new Label("Rating:");
+        Label yearLabel = new Label("Year(since):");
+        Label ratingLabel = new Label("Rating(from):");
+        Label nameLabel = new Label("Name:");
         
         // setting of components
         upperTools.setLayout(new GridBagLayout());        
         gbc.insets = new Insets(2,2,2,2);        
         headline.setFont(new Font("Arial",Font.PLAIN,18));
+        fromRating.addItem("-");
+        fromRating.addItem("1");
+        fromRating.addItem("2");
+        fromRating.addItem("3");
+        fromRating.addItem("4");
+        fromRating.addItem("5");
+        toRating.addItem("-");
+        toRating.addItem("1");
+        toRating.addItem("2");
+        toRating.addItem("3");
+        toRating.addItem("4");
+        toRating.addItem("5");
+        sinceYear.addItem("----");
+        tillYear.addItem("----");
+        Calendar now = Calendar.getInstance();   // Gets the current date and time
+        int year = now.get(Calendar.YEAR);
+        for(int i = year; i >= 1930; i--){
+            sinceYear.addItem(String.valueOf(i));
+            tillYear.addItem(String.valueOf(i));
+        }
+        
         
         // Adding and positioning components
         upperTools.add(headline,gbc);
@@ -112,6 +136,11 @@ public class searchPanel extends JPanel{
         tagTools.add(addTag,BorderLayout.NORTH);
         tagTools.add(rmTag,BorderLayout.SOUTH);
         
+        gbc.gridy = 4;
+        gbc.gridx = 6;
+        upperTools.add(nameLabel,gbc);
+        
+        gbc.gridx = 0;
         gbc.gridy = 1;
         upperTools.add(directorsLabel, gbc);
         gbc.gridy = 2;
@@ -174,6 +203,8 @@ public class searchPanel extends JPanel{
         upperTools.add(checkLocal, gbc);
         
         gbc.gridy = 4;
+        gbc.gridx = 7;
+        upperTools.add(nameTxtField,gbc);
         gbc.gridx = 8;
         upperTools.add(findButt, gbc);
         gbc.gridx = 9;

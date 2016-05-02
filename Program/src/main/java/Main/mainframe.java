@@ -43,8 +43,8 @@ public class mainframe extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         pack();
-        setBounds(0,0,950,600);
-        setMinimumSize(new Dimension(950,600));
+        setBounds(0,0,1000,600);
+        setMinimumSize(new Dimension(1000,600));
         setLocationRelativeTo(null);
         setVisible(true);
        
