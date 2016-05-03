@@ -50,6 +50,15 @@ public class allMoviesPanel extends JPanel{
         toolPane.add(headline, BorderLayout.WEST);
         toolPane.add(btn, BorderLayout.EAST);
         
+        // Setting of table
+        for (int c = 0; c < dataTable.getColumnCount(); c++) {
+            Class<?> col_class = dataTable.getColumnClass(c);
+            dataTable.setDefaultEditor(col_class, null);        // remove editor
+        }
+        
+        dataTable.setRowSelectionAllowed(true);
+        dataTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                
         add(toolPane,BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
     }
