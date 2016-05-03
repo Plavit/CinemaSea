@@ -58,6 +58,7 @@ public class mainframe extends JFrame{
         mainPanel.addTab("Home", homePane);
         mainPanel.addTab("Settings", settPane);
         mainPanel.addTab("Local", localPane);
+        mainPanel.addTab("Actors", localPane);
         mainPanel.addTab("Rated", ratePane);
         mainPanel.addTab("All movies", moviesPane);
         mainPanel.addTab("Search", srchPane);
