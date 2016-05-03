@@ -179,8 +179,5 @@ public class mainframe extends JFrame{
         moviesPane.passData(allMovies);
         
     }
-
-    
-    
     
 }

@@ -193,4 +193,38 @@ public class Movie {
         
         return show;
     }
+    
+    public String personsToString(char Who){
+        String str = "";
+        switch (Who) {
+            case 'A':
+                for(int i = 0; i < Actors.length; i++){
+                    if(Actors.length > 1 && Actors.length != i+1){
+                        str += Actors[i].getFullName() + ", ";
+                    }else{
+                        str += Actors[i].getFullName();
+                    }
+                }
+                break;
+            case 'D':
+                for(int i = 0; i < Directors.length; i++){
+                    if(Directors.length > 1 && Directors.length != i+1){
+                        str += Directors[i].getFullName() + ", ";
+                    }else{
+                        str += Directors[i].getFullName();
+                    }
+                }
+                break;
+            case 'S':
+                for(int i = 0; i < Scenarists.length; i++){
+                    if(Scenarists.length > 1 && Scenarists.length != i+1){
+                        str += Scenarists[i].getFullName() + ", ";
+                    }else{
+                        str += Scenarists[i].getFullName();
+                    }
+                }
+                break;
+        }
+        return str;
+    }
 }
