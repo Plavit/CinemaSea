@@ -38,6 +38,8 @@ public class mainframe extends JFrame{
     searchPanel srchPane = new searchPanel();
     settingsPanel settPane = new settingsPanel();
     actorsPanel actPane = new actorsPanel();
+    directorsPanel dirPane = new directorsPanel();
+    scenaristsPanel scePane = new scenaristsPanel();
     
     public mainframe(){
         setTitle("Cinsea - Home");
@@ -59,6 +61,8 @@ public class mainframe extends JFrame{
         mainPanel.addTab("Home", homePane);
         mainPanel.addTab("Settings", settPane);
         mainPanel.addTab("Local", localPane);
+        mainPanel.addTab("Directors", dirPane);
+        mainPanel.addTab("Scenarists", scePane);
         mainPanel.addTab("Actors", actPane);
         mainPanel.addTab("Rated", ratePane);
         mainPanel.addTab("All movies", moviesPane);
@@ -181,6 +185,8 @@ public class mainframe extends JFrame{
         ratePane.passData(user.getRated());
         moviesPane.passData(allMovies);
         actPane.passData(allMovies);
+        scePane.passData(allMovies);
+        dirPane.passData(allMovies);
     }
     
 }
