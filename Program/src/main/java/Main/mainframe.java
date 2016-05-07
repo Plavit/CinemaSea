@@ -9,6 +9,10 @@ import Main.Threads.*;
 import Main.panels.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -16,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -41,8 +46,9 @@ public class mainframe extends JFrame{
     directorsPanel dirPane = new directorsPanel();
     scenaristsPanel scePane = new scenaristsPanel();
     
-    public mainframe(){
+    public mainframe() throws MalformedURLException, IOException{
         setTitle("Cinsea - Home");
+        setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         pack();
@@ -50,7 +56,6 @@ public class mainframe extends JFrame{
         setMinimumSize(new Dimension(1000,600));
         setLocationRelativeTo(null);
         setVisible(true);
-       
     }
     
     // ADDING COMPONENTS

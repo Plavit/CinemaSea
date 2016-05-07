@@ -9,16 +9,25 @@ import Main.Database;
 import Main.Register.RegisterFrame;
 import Main.User;
 import Main.mainframe;
+import static com.sun.webkit.graphics.WCImage.getImage;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -39,7 +48,7 @@ public class LoginFrame implements ActionListener{
     JPanel LoginPane = new JPanel();
     Database db = new Database();
     
-    public LoginFrame() {        
+    public LoginFrame() throws IOException {        
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -48,8 +57,8 @@ public class LoginFrame implements ActionListener{
         frame.setBounds(0,0,350,200);
         frame.setLocationRelativeTo(null);        
         frame.setResizable(false);
-        frame.setVisible(true);      
-        
+        frame.setVisible(true);
+        frame.setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo.png")));
     }
     
     private void initComponents(){        
@@ -110,6 +119,10 @@ public class LoginFrame implements ActionListener{
                     mf.setMainFrame(user);            
                 }
             } catch (InterruptedException ex) {
+                Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
             }           
             
