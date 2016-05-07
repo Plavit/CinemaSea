@@ -60,6 +60,53 @@ public class Database {
        return this.conn;
    }
    
+   public User register(String psw, String nick){
+       User user = null;
+       Statement stmt = null;
+        try {
+           // PREPARING THE SQL REQUEST
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+           String sql = "INSERT INTO users (password, nickname) VALUES ('" + psw +"', '" + nick + "');";
+           
+           // COLLECTING OF DATA
+           ResultSet rs = stmt.executeQuery(sql);
+
+           // CLOSING THE CONNECTION
+           stmt.close();
+           conn.close();
+           rs.close();
+
+       } catch (SQLException se) {
+           System.out.println("FAIL #1 (SQL)");
+           se.printStackTrace();
+       } catch (Exception e) {
+           System.out.println("FAIL #2");
+           e.printStackTrace();
+       } finally {
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try      
+       //TBD
+       
+       return user;
+   }
+   
    public User login(String psw, String nick){
        User user = null;
        Statement stmt = null;
@@ -91,7 +138,6 @@ public class Database {
            System.out.println("FAIL #2");
            e.printStackTrace();
        } finally {
-           //finally block used to close resources
            //finally block used to close resources
            try {
                if (stmt != null) {
