@@ -58,7 +58,7 @@ public class LoginFrame implements ActionListener{
         frame.setLocationRelativeTo(null);        
         frame.setResizable(false);
         frame.setVisible(true);
-        frame.setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo.png")));
+        frame.setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo_icon.png")));
     }
     
     private void initComponents(){        

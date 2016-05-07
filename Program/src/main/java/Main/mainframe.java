@@ -48,7 +48,7 @@ public class mainframe extends JFrame{
     
     public mainframe() throws MalformedURLException, IOException{
         setTitle("Cinsea - Home");
-        setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo.png")));
+        setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo_icon.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         pack();
