@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Handlers;
+package Main.Handlers;
 
 /**
  *
- * @authors Marek Szeles, David Loffler
+ * @author Marek
  */
-public class CheckPassEqual {
+public class CheckPass {
     
 }
