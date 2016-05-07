@@ -14,10 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class CheckPass {
 
-    public static void checkPasswords(String pass, String checkPass) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    public boolean CheckPasswords(String pass,String checkPass){
+    public static boolean checkPasswords(String pass, String checkPass) {
         boolean isok = false;
                     JOptionPane.showMessageDialog(new JFrame(),
                     "Nickname or password is not valid!",
