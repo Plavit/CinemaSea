@@ -42,8 +42,10 @@ public class RegisterFrame implements ActionListener{
     JButton btnRegister = new JButton("SIGN UP");
     JTextField nickField = new JTextField(20);
     JPasswordField passField = new JPasswordField(20);
+    JPasswordField checkPassField = new JPasswordField(20);
     JLabel nickLabel = new JLabel("Nickname:");
     JLabel passLabel = new JLabel("Password:");
+    JLabel checkPassLabel = new JLabel("Retype pass:");
     GridBagConstraints gbc = new GridBagConstraints();
     JPanel RegPane = new JPanel();
     Database db = new Database();
@@ -74,6 +76,10 @@ public class RegisterFrame implements ActionListener{
 
         gbc.gridy = 1;
         RegPane.add(passLabel, gbc);
+        
+        gbc.gridy = 2;
+        RegPane.add(checkPassLabel, gbc);
+
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -81,11 +87,14 @@ public class RegisterFrame implements ActionListener{
 
         gbc.gridy = 1;
         RegPane.add(passField, gbc);
+        
+        gbc.gridy = 2;
+        RegPane.add(checkPassField, gbc);
 
         btnPane.add(btnLogin);
         btnPane.add(btnRegister);
 
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         RegPane.add(btnPane, gbc);
         
         frame.add(RegPane);
@@ -98,17 +107,19 @@ public class RegisterFrame implements ActionListener{
         User user = null;
         String nick = nickField.getText();
         char[] pswC = passField.getPassword();
-        String psw = String.valueOf(pswC);
+        char[] checkPswC = passField.getPassword();
+        String pass = String.valueOf(pswC);
+        String checkPass = String.valueOf(checkPswC);
         
         try {
-            psw = db.HashPSW(psw);
+            pass = db.HashPSW(pass);
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidKeySpecException ex) {
             Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
         }        
         
-        user = db.login(psw,nick);
+        user = db.login(pass,nick);
         
         if(user != null){
             System.out.println("SUCCESFULY LOGGED");
