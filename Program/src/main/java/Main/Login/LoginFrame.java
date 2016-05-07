@@ -141,7 +141,11 @@ public class LoginFrame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
             
-            RegisterFrame rf = new RegisterFrame();
+            try {
+                RegisterFrame rf = new RegisterFrame();
+            } catch (IOException ex) {
+                Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
             frame.dispose();
 
         }
