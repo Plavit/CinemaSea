@@ -50,7 +50,6 @@ public class Database {
                    conn.close();
                }
            } catch (SQLException se) {
-               se.printStackTrace();
            }//end finally try
        }
        
@@ -63,6 +62,11 @@ public class Database {
    public User register(String psw, String nick){
        User user = null;
        Statement stmt = null;
+       //TODO: change to MAX id found + 1
+       java.util.Date date= new java.util.Date();
+       String idHash="4"+date.getTime();
+       idHash=idHash.substring(5, 12);
+       //System.out.println("TIME: "+date.getTime());
         try {
            // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
@@ -70,7 +74,7 @@ public class Database {
 
            stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
                            ResultSet.CONCUR_READ_ONLY);
-           String sql = "INSERT INTO users (password, nickname, isadmin) VALUES ('" + psw +"', '" + nick+"', '" + false + "');";
+           String sql = "INSERT INTO users (id_user, password, nickname, isadmin) VALUES ('" + idHash +"', '"+ psw +"', '" + nick+"', '" + false + "');";
            
            // COLLECTING OF DATA
            ResultSet rs = stmt.executeQuery(sql);
