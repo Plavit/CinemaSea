@@ -62,6 +62,7 @@ public class LoginFrame implements ActionListener{
     }
     
     private void initComponents(){        
+       
         
         LoginPane.setLayout(new GridBagLayout());
         btnLogin.addActionListener(this);
