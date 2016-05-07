@@ -9,6 +9,7 @@ import Main.Database;
 import Main.Login.LoginFrame;
 import Main.User;
 import Main.mainframe;
+import Main.Handlers.CheckPass;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -107,40 +108,42 @@ public class RegisterFrame implements ActionListener{
         String checkPass = String.valueOf(checkPswC);
         
         //check if passwords are valid
-        
-        
-        try {
-            pass = db.HashPSW(pass);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-        
-        user = db.login(pass,nick);
-        
-        if(user != null){
-            System.out.println("SUCCESFULY LOGGED");
-            
+        String checkPassVerdict=CheckPass.checkPasswords(pass,checkPass);
+        if("OK".equals(checkPassVerdict)){
             try {
-                if(db.updateViews()){                
-                    mainframe mf = new mainframe();
-                    frame.dispose();
-                    mf.setMainFrame(user);            
-                }
-            } catch (InterruptedException ex) {
+                pass = db.HashPSW(pass);
+            } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (MalformedURLException ex) {
+            } catch (InvalidKeySpecException ex) {
                 Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }           
-            
+            }        
+
+            user = db.register(pass,nick);
+            user = db.login(pass,nick);
+
+            if(user != null){
+                System.out.println("SUCCESFULY REGISTERED AND LOGGED");
+
+                try {
+                    if(db.updateViews()){                
+                        mainframe mf = new mainframe();
+                        frame.dispose();
+                        mf.setMainFrame(user);            
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }           
+
+            }
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(),
-                    "Nickname or password is not valid!",
-                    "Login error",
+                    checkPassVerdict,
+                    "Signup error",
                     JOptionPane.ERROR_MESSAGE);
         }
     

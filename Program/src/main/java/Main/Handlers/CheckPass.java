@@ -14,12 +14,23 @@ import javax.swing.JOptionPane;
  */
 public class CheckPass {
 
-    public static boolean checkPasswords(String pass, String checkPass) {
-        boolean isok = false;
-                    JOptionPane.showMessageDialog(new JFrame(),
-                    "Nickname or password is not valid!",
-                    "Login error",
-                    JOptionPane.ERROR_MESSAGE);
-        return isok;
+    public static String checkPasswords(String pass, String checkPass) {
+        String msg = new String("");
+        if(pass.isEmpty()){
+            msg="You need to choose your password!";
+            return msg;
+        }else if(checkPass.isEmpty()){
+            msg="You need to re-enter your password to proceed.";
+            return msg;
+        }else if(pass.length()<8){
+            msg="Password too short! Minimum: 8, Given: " + pass.length();
+            return msg;
+        }else if(pass == null ? checkPass != null : !pass.equals(checkPass)){
+            msg="You need to re-enter your password to proceed.";
+            return msg;
+        }else{
+            msg="OK";
+            return msg;
+        }
     }
 }
