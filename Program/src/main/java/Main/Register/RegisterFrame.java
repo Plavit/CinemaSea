@@ -9,19 +9,14 @@ import Main.Database;
 import Main.Login.LoginFrame;
 import Main.User;
 import Main.mainframe;
-import static com.sun.webkit.graphics.WCImage.getImage;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -110,6 +105,9 @@ public class RegisterFrame implements ActionListener{
         char[] checkPswC = passField.getPassword();
         String pass = String.valueOf(pswC);
         String checkPass = String.valueOf(checkPswC);
+        
+        //check if passwords are valid
+        
         
         try {
             pass = db.HashPSW(pass);
