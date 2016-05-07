@@ -70,7 +70,7 @@ public class Database {
 
            stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
                            ResultSet.CONCUR_READ_ONLY);
-           String sql = "INSERT INTO users (password, nickname) VALUES ('" + psw +"', '" + nick + "');";
+           String sql = "INSERT INTO users (password, nickname, isadmin) VALUES ('" + psw +"', '" + nick+"', '" + false + "');";
            
            // COLLECTING OF DATA
            ResultSet rs = stmt.executeQuery(sql);
