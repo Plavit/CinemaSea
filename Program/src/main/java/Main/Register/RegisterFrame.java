@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Main.Register;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
 
 /**
- *
+ * Implements a registration form that lets a user create a new profile in the program, using a login name and password
  * @author Löffler David, Szeles Marek
  */
 public class RegisterFrame extends javax.swing.JFrame
@@ -25,6 +20,6 @@ public class RegisterFrame extends javax.swing.JFrame
         frame.setBounds(0,0,350,300);
         frame.setLocationRelativeTo(null);        
         frame.setResizable(false);
-        frame.setVisible(true);      
+        frame.setVisible(true);
     }
 }

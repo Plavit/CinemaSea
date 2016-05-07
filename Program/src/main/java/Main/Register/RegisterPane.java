@@ -80,6 +80,7 @@ public class RegisterPane extends JPanel implements ActionListener{
         User user = null;
         String nick = nickField.getText();
         char[] pswC = passField.getPassword();
+        char[] cpswC = conPassField.getPassword();
         String psw = String.valueOf(pswC);
         
         try {
@@ -98,8 +99,6 @@ public class RegisterPane extends JPanel implements ActionListener{
            
             mainframe mf = new mainframe();
             
-           // TODO
-           // OTEVRIT MAINFRAME A SPUSTIT VLAKNA NA NATAHANI DAT Z DATABAZE
            
            
         }
@@ -113,7 +112,7 @@ public class RegisterPane extends JPanel implements ActionListener{
 
 
     }
-    
+    //hashing function
     private String HashPSW(String init) throws InvalidKeySpecException, NoSuchAlgorithmException{
         byte[] salt = {15,32,54,3,45,2,5,3,1,4,87,9,6,89,99,17};
         KeySpec spec = new PBEKeySpec(init.toCharArray(), salt, 98434, 256);
