@@ -6,6 +6,7 @@
 package Main.panels;
 
 import Main.Movie;
+import Main.Person;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Label;
@@ -22,7 +23,7 @@ import javax.swing.ListSelectionModel;
  */
 public class actorsPanel extends JPanel{
     
-    private ArrayList rawPeople = new ArrayList(0);
+    private ArrayList<Person> rawPeople = new ArrayList<Person>(0);
     private Object[][] data;    
     private JTable dataTable;
     private String[] columnNames = {"Name",
@@ -39,7 +40,7 @@ public class actorsPanel extends JPanel{
         JScrollPane scrollPane = new JScrollPane(dataTable);
         JPanel toolPane = new JPanel();
         toolPane.setLayout(new BorderLayout());
-        Label headline = new Label("Actors in movies");
+        Label headline = new Label("Actors in movies - total:" + dataTable.getRowCount());
         headline.setFont(new Font("Arial",Font.PLAIN,18));
         JButton btn = new JButton("Show");
         toolPane.add(headline, BorderLayout.WEST);
@@ -61,45 +62,46 @@ public class actorsPanel extends JPanel{
     
     public void passData(Movie[] movies){
         
-        data = new Object[movies.length][4];
+
         boolean isThere = false;
+        Person curPerson;
         
         //get out all the actors
-        System.out.println("getting actors");
+        //System.out.println("getting actors");
         for(int i = 0; i < movies.length; i++){
-            System.out.println("movie nr" + i);
+            //System.out.println("movie nr" + i);
             for(int j = 0; j < movies[i].getActors().length; j++){
-                System.out.println("actor nr" + j);
-                //if set of actors is empty, just add actor
-                if(rawPeople.isEmpty()){
+                //System.out.println("actor nr" + j);
                     rawPeople.add(movies[i].getActors()[j]);
                 }
-                //if not, first check whether he is already there - if not, add him
-                else{
-                    for(int k = 0; k < rawPeople.size(); k++){
-                        System.out.println("rawP progress" + k + "out of" + rawPeople.size());
-                        if(movies[i].getActors()==rawPeople.get(k)){
-                            isThere=true;
-                        }
-                        else{
-                            
-                        }
-                    }
-                    if(isThere==false){
-                        rawPeople.add(movies[i].getActors()[j]);
-                    }
+        }
+        
+        //delete duplicate persons
+        //System.out.println("removing process commenced");
+        for(int i = 0; i < rawPeople.size(); i++){
+            for(int j = 1+i; j < rawPeople.size(); j++){
+                //System.out.println("index: [" + i + "," + j + "]");
+                if(rawPeople.get(i)==rawPeople.get(j)){
+                    rawPeople.remove(j);
+                    //System.out.println("removed:" + j);
+                    j--;
                 }
             }
         }
+        //System.out.println("removing finished");
+        
+        
+        
+        
+        data = new Object[rawPeople.size()][4];
         
         //assign relevant people values to table
         
         for(int i = 0; i < rawPeople.size(); i++){
-            
-            data[i][0] = rawPeople.get(i);//getName();//name
-            data[i][1] = rawPeople.get(i);//surname
-            data[i][2] = rawPeople.get(i);//desc
-            data[i][3] = rawPeople.get(i);//year
+            data[i][0] = rawPeople.get(i).getName();//name
+            data[i][1] = rawPeople.get(i).getLastName();//surname
+            data[i][2] = rawPeople.get(i).getDescription();//desc
+            data[i][3] = rawPeople.get(i).getYear();//year
             
         }
         

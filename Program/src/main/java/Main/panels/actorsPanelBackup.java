@@ -19,7 +19,7 @@ import javax.swing.ListSelectionModel;
  *
  * @author Marek
  */
-public class actorsPanel extends JPanel{
+public class actorsPanelBackup extends JPanel{
     
     private Object[][] data;    
     private JTable dataTable;
