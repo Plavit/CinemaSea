@@ -1,6 +1,8 @@
 
 package Main;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Löffler David, Szeles Marek
@@ -12,7 +14,10 @@ public class Person {
     private String FullName;
     private String Description;
     private int Year;
-
+    private ArrayList<Movie> moviesActed = new ArrayList<Movie>(0);
+    private ArrayList<Movie> moviesDirected = new ArrayList<Movie>(0);
+    private ArrayList<Movie> moviesScreenwritten = new ArrayList<Movie>(0);
+    
     public Person() {
     }
 
@@ -55,7 +60,21 @@ public class Person {
     public void setYear(int Year) {
         this.Year = Year;
     }
+
+    public Movie[] getMoviesActed() {
+        Movie[] movie = new Movie[moviesActed.size()];
+        for(int i=0;i<moviesActed.size();i++){
+            movie[i]=moviesActed.get(i);
+        }
+        return movie;
+    }
     
+    public void addMovieActed(Movie movie) {
+        this.moviesActed.add(movie);
+    }
     
+    public void removeMovieActed(Movie movie){
+        this.moviesActed.remove(movie);
+    }
     
 }
