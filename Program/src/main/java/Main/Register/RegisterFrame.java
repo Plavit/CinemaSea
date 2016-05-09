@@ -11,7 +11,6 @@ import Main.User;
 import Main.mainframe;
 import Main.Handlers.CheckPassword;
 import Main.Handlers.CheckUsername;
-import Main.Text.*;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

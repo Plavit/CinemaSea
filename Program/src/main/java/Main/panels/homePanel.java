@@ -18,16 +18,16 @@ package Main.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.font.LineBreakMeasurer;
-import java.awt.font.TextLayout;
-import java.text.AttributedString;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -39,8 +39,25 @@ public class homePanel extends JPanel{
     
     JPanel welcomePage = new JPanel();
     GridBagConstraints gbc = new GridBagConstraints();
+    Font h1;
+    Font subheading;
+    Font plaintext;
     
     public homePanel(){
+        
+        //TODO: Move to separate package
+        try {
+            h1 = Font.createFont(Font.TRUETYPE_FONT, new File(".\\src\\main\\java\\Main\\Resources\\Fonts\\BCGHENSANSBOLD.TTF"));
+            h1 = h1.deriveFont(36F);
+            
+            subheading = Font.createFont(Font.TRUETYPE_FONT, new File(".\\src\\main\\java\\Main\\Resources\\Fonts\\BCGHENSANSITALIC.TTF"));
+            subheading = subheading.deriveFont(28F);
+            
+            plaintext = Font.createFont(Font.TRUETYPE_FONT, new File(".\\src\\main\\java\\Main\\Resources\\Fonts\\BCGHENSANSLIGHT.TTF"));
+            plaintext = plaintext.deriveFont(20F);
+        } catch (FontFormatException | IOException ex) {
+            Logger.getLogger(homePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setLayout(new BorderLayout());
         initComponents();
     }
@@ -52,13 +69,12 @@ public class homePanel extends JPanel{
         
         //setting text fields
         JLabel heading = new JLabel("Welcome to CinemaSea!");
-        heading.setFont(new Font("Arial",Font.BOLD,36));
+        heading.setFont(h1);
         
         JLabel intro = new JLabel("<html><body style='width: 350px; text-align:left'>CinemaSea is a simple tool to keep track of the movies you watch, and rate them! <br><br> In the tabs above, you can choose to view the full database of movies, movies rated by you, actors, and other people from the Movie world! Each person has their own profile you can view by clicking them. <br><br> Let's get started! <br><br> <br><br> Remember - CinemaSea is still Work in progress!</body></html>");
-        intro.setFont(new Font("Arial",Font.PLAIN,18));
+        intro.setFont(plaintext);
         
         welcomePage.setLayout(new GridBagLayout());
-        
         //set gridbag alignment
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.anchor = GridBagConstraints.WEST;
