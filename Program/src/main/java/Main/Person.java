@@ -70,7 +70,11 @@ public class Person {
     }
     
     public void addMovieActed(Movie movie) {
-        this.moviesActed.add(movie);
+        //check if Movie to be added isn't included yet
+        if(!this.moviesActed.contains(movie)){
+            //if not, add movie
+            this.moviesActed.add(movie);
+        }
     }
     
     public void removeMovieActed(Movie movie){
