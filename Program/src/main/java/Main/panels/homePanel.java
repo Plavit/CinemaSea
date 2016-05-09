@@ -16,20 +16,30 @@
  */
 package Main.panels;
 
+import java.awt.BorderLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
  *
- * @author David Löffler
+ * @author David Löffler, Marek Szeles
  */
 public class homePanel extends JPanel{
     
     public homePanel(){
+        setLayout(new BorderLayout());
         initComponents();
     }
     
     private void initComponents(){
+        JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label_small.png"));
+        JPanel welcomePage = new JPanel();
+        welcomePage.add(logoLabel);
         
+        add(welcomePage,BorderLayout.NORTH);
+        add(welcomePage,BorderLayout.WEST);
     }
     
 }
