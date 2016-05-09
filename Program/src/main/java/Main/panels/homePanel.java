@@ -59,6 +59,8 @@ public class homePanel extends JPanel{
         
         welcomePage.setLayout(new GridBagLayout());
         
+        //set gridbag alignment
+        gbc.anchor = GridBagConstraints.NORTH;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(20, 20, 20, 20);
         //adding the logo and text to the layout
@@ -69,6 +71,8 @@ public class homePanel extends JPanel{
         
         gbc.gridy = 2;
         welcomePage.add(intro,gbc);
+        
+        add(welcomePage,BorderLayout.WEST);
     }
     
 }
