@@ -79,27 +79,27 @@ public class RegisterFrame implements ActionListener{
         gbc.gridy = 1;
         RegPane.add(nickLabel, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         RegPane.add(passLabel, gbc);
         
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         RegPane.add(checkPassLabel, gbc);
 
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         RegPane.add(nickField, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         RegPane.add(passField, gbc);
         
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         RegPane.add(checkPassField, gbc);
 
         btnPane.add(btnLogin);
         btnPane.add(btnRegister);
 
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         RegPane.add(btnPane, gbc);
         
         frame.add(RegPane);
