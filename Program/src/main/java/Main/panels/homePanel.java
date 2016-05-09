@@ -18,6 +18,14 @@ package Main.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextLayout;
+import java.text.AttributedString;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,14 +37,16 @@ import javax.swing.JPanel;
  */
 public class homePanel extends JPanel{
     
+    JPanel welcomePage = new JPanel();
+    GridBagConstraints gbc = new GridBagConstraints();
+    
     public homePanel(){
         setLayout(new BorderLayout());
         initComponents();
     }
     
     private void initComponents(){
-        JPanel welcomePage = new JPanel();
-        
+     
         //setting the logo
         JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label.png"));
         
@@ -45,12 +55,20 @@ public class homePanel extends JPanel{
         heading.setFont(new Font("Arial",Font.BOLD,42));
         
         JLabel intro = new JLabel("CinemaSea is a simple tool to keep track of the movies you watch, and rate them! \n \n In the tabs above, you can pick xyz \n \nLet's get started!");
-        heading.setFont(new Font("Arial",Font.PLAIN,18));
+        intro.setFont(new Font("Arial",Font.PLAIN,18));
         
+        welcomePage.setLayout(new GridBagLayout());
+        
+        gbc.insets = new Insets(5, 5, 5, 5);
         //adding the logo and text to the layout
-        welcomePage.add(logoLabel);
-        welcomePage.add(heading);
-        welcomePage.add(intro);
+        welcomePage.add(logoLabel,gbc);
+        
+        gbc.gridy = 1;
+        welcomePage.add(heading,gbc);
+        
+        gbc.gridy = 2;
+        welcomePage.add(intro,gbc);
+       
         
         add(welcomePage,BorderLayout.NORTH);
         add(welcomePage,BorderLayout.WEST);
