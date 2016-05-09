@@ -106,8 +106,6 @@ public class RegisterFrame implements ActionListener{
         
         frame.add(RegPane);
         
-        FixedWidthLabel xz = new FixedWidthLabel();
-        
     }
 
     @Override
