@@ -9,7 +9,8 @@ import Main.Database;
 import Main.Login.LoginFrame;
 import Main.User;
 import Main.mainframe;
-import Main.Handlers.CheckPass;
+import Main.Handlers.CheckPassword;
+import Main.Handlers.CheckUsername;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -32,7 +33,9 @@ import javax.swing.*;
  */
 public class RegisterFrame implements ActionListener{
     
+    JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label_small.png"));
     JFrame frame = new JFrame("CINSEA - Register");
+    JPanel logoPane = new JPanel();
     JPanel btnPane = new JPanel();
     JButton btnLogin = new JButton("SIGN IN");
     JButton btnRegister = new JButton("SIGN UP");
@@ -52,7 +55,7 @@ public class RegisterFrame implements ActionListener{
         frame.setLayout(new BorderLayout());
         initComponents();
         frame.pack();
-        frame.setBounds(0,0,350,200);
+        frame.setBounds(0,0,350,220);
         frame.setLocationRelativeTo(null);        
         frame.setResizable(false);
         frame.setVisible(true);
@@ -67,30 +70,37 @@ public class RegisterFrame implements ActionListener{
         btnRegister.addActionListener(this);
         
         gbc.insets = new Insets(5, 5, 5, 5);
+        
+        gbc.gridwidth=2;
+        logoPane.add(logoLabel);
 
+        RegPane.add(logoPane, gbc);
+        
+        gbc.gridwidth=1;
+        gbc.gridy = 1;
         RegPane.add(nickLabel, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         RegPane.add(passLabel, gbc);
         
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         RegPane.add(checkPassLabel, gbc);
 
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         RegPane.add(nickField, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         RegPane.add(passField, gbc);
         
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         RegPane.add(checkPassField, gbc);
 
         btnPane.add(btnLogin);
         btnPane.add(btnRegister);
 
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         RegPane.add(btnPane, gbc);
         
         frame.add(RegPane);
@@ -107,42 +117,44 @@ public class RegisterFrame implements ActionListener{
         String pass = String.valueOf(pswC);
         String checkPass = String.valueOf(checkPswC);
         
-        //check if passwords are valid
-        String checkPassVerdict=CheckPass.checkPasswords(pass,checkPass);
-        if("OK".equals(checkPassVerdict)){
-            try {
-                pass = db.HashPSW(pass);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvalidKeySpecException ex) {
-                Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }        
-
-            user = db.register(pass,nick);
-            user = db.login(pass,nick);
-
-            if(user != null){
-                System.out.println("SUCCESFULY REGISTERED AND LOGGED");
-
+        //TODO: check if username valid and not taken
+        String valCheckOutcome=CheckUsername.checkUsername(nick);
+        if("OK".equals(valCheckOutcome)){
+            //check if passwords are valid
+            valCheckOutcome=CheckPassword.checkPasswords(pass,checkPass);
+            if("OK".equals(valCheckOutcome)){
                 try {
-                    if(db.updateViews()){                
-                        mainframe mf = new mainframe();
-                        frame.dispose();
-                        mf.setMainFrame(user);            
-                    }
-                } catch (InterruptedException ex) {
+                    pass = db.HashPSW(pass);
+                } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
                     Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }           
+                }        
 
+                db.register(pass,nick);
+                user = db.login(pass,nick);
+
+                if(user != null){
+                    System.out.println("SUCCESFULY REGISTERED AND LOGGED");
+
+                    try {
+                        if(db.updateViews()){                
+                            mainframe mf = new mainframe();
+                            frame.dispose();
+                            mf.setMainFrame(user);            
+                        }
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }           
+
+                }
             }
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(),
-                    checkPassVerdict,
+                    valCheckOutcome,
                     "Signup error",
                     JOptionPane.ERROR_MESSAGE);
         }

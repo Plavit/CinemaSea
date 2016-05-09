@@ -110,8 +110,6 @@ public class allMoviesPanel extends JPanel{
                 Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
                 showMovie dialog = new showMovie(passMovie);
                 dialog.setVisible(true);
-                
-                
             }
 
         }

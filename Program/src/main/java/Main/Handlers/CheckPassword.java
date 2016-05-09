@@ -5,17 +5,14 @@
  */
 package Main.Handlers;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author Marek
  */
-public class CheckPass {
+public class CheckPassword {
 
     public static String checkPasswords(String pass, String checkPass) {
-        String msg = new String("");
+        String msg = "";
         if(pass.isEmpty()){
             msg="You need to choose your password!";
             return msg;
