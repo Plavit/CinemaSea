@@ -26,7 +26,7 @@ public class actorsPanel extends JPanel{
     private ArrayList<Person> rawPeople = new ArrayList<Person>(0);
     private Object[][] data;    
     private JTable dataTable;
-    private String[] columnNames = {"Name",
+    private final String[] columnNames = {"Name",
                         "Surname",
                         "Description",
                         "Year"};
@@ -101,8 +101,7 @@ public class actorsPanel extends JPanel{
             data[i][0] = rawPeople.get(i).getName();//name
             data[i][1] = rawPeople.get(i).getLastName();//surname
             data[i][2] = rawPeople.get(i).getDescription();//desc
-            data[i][3] = rawPeople.get(i).getYear();//year
-            
+            data[i][3] = rawPeople.get(i).getYear();//year            
         }
         
         initComponents();

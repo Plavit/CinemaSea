@@ -15,6 +15,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,7 @@ import javax.swing.*;
 public class LoginFrame implements ActionListener{
     
     JFrame frame = new JFrame("CINSEA - Login");
+    JPanel logoPane = new JPanel();
     JPanel btnPane = new JPanel();
     JButton btnLogin = new JButton("SIGN IN");
     JButton btnRegister = new JButton("SIGN UP");
@@ -62,30 +64,37 @@ public class LoginFrame implements ActionListener{
     }
     
     private void initComponents(){        
-       
-        
+ 
+        JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label_small.png"));
         LoginPane.setLayout(new GridBagLayout());
         btnLogin.addActionListener(this);
         btnRegister.addActionListener(signupListener);
         
         gbc.insets = new Insets(5, 5, 5, 5);
+        
+        gbc.gridwidth=2;
+        logoPane.add(logoLabel);
 
+        LoginPane.add(logoPane, gbc);
+        
+        gbc.gridwidth=1;
+        gbc.gridy = 1;
         LoginPane.add(nickLabel, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         LoginPane.add(passLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         LoginPane.add(nickField, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         LoginPane.add(passField, gbc);
 
         btnPane.add(btnLogin);
         btnPane.add(btnRegister);
 
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         LoginPane.add(btnPane, gbc);
         
         frame.add(LoginPane);
