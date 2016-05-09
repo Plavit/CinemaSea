@@ -116,18 +116,18 @@ public class RegisterFrame implements ActionListener{
         String pass = String.valueOf(pswC);
         String checkPass = String.valueOf(checkPswC);
         
+        //TODO: check if username taken
+        
         //check if passwords are valid
         String checkPassVerdict=CheckPass.checkPasswords(pass,checkPass);
         if("OK".equals(checkPassVerdict)){
             try {
                 pass = db.HashPSW(pass);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvalidKeySpecException ex) {
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
                 Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
             }        
 
-            user = db.register(pass,nick);
+            db.register(pass,nick);
             user = db.login(pass,nick);
 
             if(user != null){
