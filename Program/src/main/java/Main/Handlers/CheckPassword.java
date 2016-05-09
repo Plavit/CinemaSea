@@ -9,8 +9,8 @@ package Main.Handlers;
  *
  * @author Marek
  */
-public class CheckUserTaken {
-    //TODO: Check username taken
+public class CheckPassword {
+
     public static String checkPasswords(String pass, String checkPass) {
         String msg = "";
         if(pass.isEmpty()){

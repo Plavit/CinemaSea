@@ -9,7 +9,8 @@ import Main.Database;
 import Main.Login.LoginFrame;
 import Main.User;
 import Main.mainframe;
-import Main.Handlers.CheckPass;
+import Main.Handlers.CheckPassword;
+import Main.Handlers.CheckUsername;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -117,36 +118,38 @@ public class RegisterFrame implements ActionListener{
         String checkPass = String.valueOf(checkPswC);
         
         //TODO: check if username taken
-        
-        //check if passwords are valid
-        String valCheckOutcome=CheckPass.checkPasswords(pass,checkPass);
+        String valCheckOutcome=CheckUsername.checkUsername(nick);
         if("OK".equals(valCheckOutcome)){
-            try {
-                pass = db.HashPSW(pass);
-            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-                Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }        
-
-            db.register(pass,nick);
-            user = db.login(pass,nick);
-
-            if(user != null){
-                System.out.println("SUCCESFULY REGISTERED AND LOGGED");
-
+            //check if passwords are valid
+            valCheckOutcome=CheckPassword.checkPasswords(pass,checkPass);
+            if("OK".equals(valCheckOutcome)){
                 try {
-                    if(db.updateViews()){                
-                        mainframe mf = new mainframe();
-                        frame.dispose();
-                        mf.setMainFrame(user);            
-                    }
-                } catch (InterruptedException ex) {
+                    pass = db.HashPSW(pass);
+                } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
                     Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }           
+                }        
 
+                db.register(pass,nick);
+                user = db.login(pass,nick);
+
+                if(user != null){
+                    System.out.println("SUCCESFULY REGISTERED AND LOGGED");
+
+                    try {
+                        if(db.updateViews()){                
+                            mainframe mf = new mainframe();
+                            frame.dispose();
+                            mf.setMainFrame(user);            
+                        }
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(RegisterFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }           
+
+                }
             }
         }
         else {
