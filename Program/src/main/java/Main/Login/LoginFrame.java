@@ -56,7 +56,7 @@ public class LoginFrame implements ActionListener{
         frame.setLayout(new BorderLayout());
         initComponents();
         frame.pack();
-        frame.setBounds(0,0,350,200);
+        frame.setBounds(0,0,350,220);
         frame.setLocationRelativeTo(null);        
         frame.setResizable(false);
         frame.setVisible(true);
