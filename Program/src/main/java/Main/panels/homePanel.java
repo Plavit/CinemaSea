@@ -34,7 +34,7 @@ public class homePanel extends JPanel{
     }
     
     private void initComponents(){
-        JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label_small.png"));
+        JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label.png"));
         JPanel welcomePage = new JPanel();
         welcomePage.add(logoLabel);
         
