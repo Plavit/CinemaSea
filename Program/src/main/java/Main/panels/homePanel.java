@@ -17,6 +17,7 @@
 package Main.panels;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,9 +35,18 @@ public class homePanel extends JPanel{
     }
     
     private void initComponents(){
-        JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label.png"));
         JPanel welcomePage = new JPanel();
+        
+        //setting the logo
+        JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label.png"));
+        
+        //setting text fields
+        JLabel heading = new JLabel("Welcome to CinemaSea!");
+        heading.setFont(new Font("Arial",Font.PLAIN,18));
+        
+        //adding the logo and text to the layout
         welcomePage.add(logoLabel);
+        welcomePage.add(heading);
         
         add(welcomePage,BorderLayout.NORTH);
         add(welcomePage,BorderLayout.WEST);
