@@ -69,10 +69,6 @@ public class homePanel extends JPanel{
         
         gbc.gridy = 2;
         welcomePage.add(intro,gbc);
-       
-        
-        add(welcomePage,BorderLayout.NORTH);
-        add(welcomePage,BorderLayout.WEST);
     }
     
 }
