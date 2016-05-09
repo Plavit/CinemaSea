@@ -32,7 +32,9 @@ import javax.swing.*;
  */
 public class RegisterFrame implements ActionListener{
     
+    JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label_small.png"));
     JFrame frame = new JFrame("CINSEA - Register");
+    JPanel logoPane = new JPanel();
     JPanel btnPane = new JPanel();
     JButton btnLogin = new JButton("SIGN IN");
     JButton btnRegister = new JButton("SIGN UP");
@@ -67,7 +69,14 @@ public class RegisterFrame implements ActionListener{
         btnRegister.addActionListener(this);
         
         gbc.insets = new Insets(5, 5, 5, 5);
+        
+        gbc.gridwidth=2;
+        logoPane.add(logoLabel);
 
+        RegPane.add(logoPane, gbc);
+        
+        gbc.gridwidth=1;
+        gbc.gridy = 1;
         RegPane.add(nickLabel, gbc);
 
         gbc.gridy = 1;
