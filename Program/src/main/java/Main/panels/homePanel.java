@@ -52,14 +52,15 @@ public class homePanel extends JPanel{
         
         //setting text fields
         JLabel heading = new JLabel("Welcome to CinemaSea!");
-        heading.setFont(new Font("Arial",Font.BOLD,42));
+        heading.setFont(new Font("Arial",Font.BOLD,36));
         
-        JLabel intro = new JLabel("CinemaSea is a simple tool to keep track of the movies you watch, and rate them! \n \n In the tabs above, you can pick xyz \n \nLet's get started!");
+        JLabel intro = new JLabel("<html><body style='width: 350px; text-align:left'>CinemaSea is a simple tool to keep track of the movies you watch, and rate them! <br><br> In the tabs above, you can choose to view the full database of movies, movies rated by you, actors, and other people from the Movie world! Each person has their own profile you can view by clicking them. <br><br> Let's get started! <br><br> <br><br> Remember - CinemaSea is still Work in progress!</body></html>");
         intro.setFont(new Font("Arial",Font.PLAIN,18));
         
         welcomePage.setLayout(new GridBagLayout());
         
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(20, 20, 20, 20);
         //adding the logo and text to the layout
         welcomePage.add(logoLabel,gbc);
         

@@ -11,6 +11,7 @@ import Main.User;
 import Main.mainframe;
 import Main.Handlers.CheckPassword;
 import Main.Handlers.CheckUsername;
+import Main.Text.*;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -104,6 +105,8 @@ public class RegisterFrame implements ActionListener{
         RegPane.add(btnPane, gbc);
         
         frame.add(RegPane);
+        
+        FixedWidthLabel xz = new FixedWidthLabel();
         
     }
 
