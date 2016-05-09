@@ -17,9 +17,7 @@
 package Main.panels;
 
 import Main.Dialogs.showMovie;
-import Main.Login.LoginFrame;
 import Main.Movie;
-import Main.Register.RegisterFrame;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Label;
@@ -81,20 +79,8 @@ public class allMoviesPanel extends JPanel{
         for(int i = 0; i < rated.length; i++){
             data[i][0] = rated[i].getId();
             data[i][1] = rated[i].getNameCZ();
-            data[i][2] = rated[i].getNameEN();
-            
-            String genres = "";
-            
-            for(int k = 0; k < rated[i].getGenres().length; k++){
-                if(rated[i].getGenres().length > 1 && rated[i].getGenres().length != k+1){
-                    genres += rated[i].getGenres()[k] + " / ";
-                }
-                else{
-                    genres += rated[i].getGenres()[k];
-                }
-            }
-            
-            data[i][3] = genres;
+            data[i][2] = rated[i].getNameEN();           
+            data[i][3] = rated[i].genresToString();
             data[i][4] = rated[i].getYear();
             data[i][5] = rated[i].getRating();
         }      
@@ -108,7 +94,12 @@ public class allMoviesPanel extends JPanel{
             if(dataTable.getSelectedRow() != -1){
                 Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
                 Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
-                showMovie dialog = new showMovie(passMovie);
+                showMovie dialog = null;
+                try {
+                    dialog = new showMovie(passMovie);
+                } catch (IOException ex) {
+                    Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.setVisible(true);
             }
 

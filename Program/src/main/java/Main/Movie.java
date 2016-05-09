@@ -227,4 +227,17 @@ public class Movie {
         }
         return str;
     }
+
+    public String genresToString() {
+        String genres = "";
+
+        for (int k = 0; k < Genres.length; k++) {
+            if (Genres.length > 1 && Genres.length != k + 1) {
+                genres += Genres[k] + " / ";
+            } else {
+                genres += Genres[k];
+            }
+        }
+        return genres;
+    }
 }

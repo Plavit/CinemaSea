@@ -234,5 +234,10 @@ public class Database {
         return enc.encodeToString(hash);
     }
    
+   public void rateMovie(double rate, int id_movie){
+       
+       System.out.println("rate: " + String.valueOf(rate));
+       
+   }   
     
 }
