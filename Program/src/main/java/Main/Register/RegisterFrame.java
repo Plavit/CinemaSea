@@ -117,7 +117,7 @@ public class RegisterFrame implements ActionListener{
         String pass = String.valueOf(pswC);
         String checkPass = String.valueOf(checkPswC);
         
-        //TODO: check if username taken
+        //TODO: check if username valid and not taken
         String valCheckOutcome=CheckUsername.checkUsername(nick);
         if("OK".equals(valCheckOutcome)){
             //check if passwords are valid

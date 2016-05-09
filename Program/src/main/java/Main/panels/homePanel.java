@@ -42,11 +42,15 @@ public class homePanel extends JPanel{
         
         //setting text fields
         JLabel heading = new JLabel("Welcome to CinemaSea!");
+        heading.setFont(new Font("Arial",Font.BOLD,42));
+        
+        JLabel intro = new JLabel("CinemaSea is a simple tool to keep track of the movies you watch, and rate them! \n \n In the tabs above, you can pick xyz \n \nLet's get started!");
         heading.setFont(new Font("Arial",Font.PLAIN,18));
         
         //adding the logo and text to the layout
         welcomePage.add(logoLabel);
         welcomePage.add(heading);
+        welcomePage.add(intro);
         
         add(welcomePage,BorderLayout.NORTH);
         add(welcomePage,BorderLayout.WEST);
