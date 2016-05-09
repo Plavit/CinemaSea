@@ -119,8 +119,8 @@ public class RegisterFrame implements ActionListener{
         //TODO: check if username taken
         
         //check if passwords are valid
-        String checkPassVerdict=CheckPass.checkPasswords(pass,checkPass);
-        if("OK".equals(checkPassVerdict)){
+        String valCheckOutcome=CheckPass.checkPasswords(pass,checkPass);
+        if("OK".equals(valCheckOutcome)){
             try {
                 pass = db.HashPSW(pass);
             } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
@@ -151,7 +151,7 @@ public class RegisterFrame implements ActionListener{
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(),
-                    checkPassVerdict,
+                    valCheckOutcome,
                     "Signup error",
                     JOptionPane.ERROR_MESSAGE);
         }
