@@ -16,10 +16,18 @@
  */
 package Main.panels;
 
+import Main.Dialogs.showMovie;
+import Main.Login.LoginFrame;
 import Main.Movie;
+import Main.Register.RegisterFrame;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -30,10 +38,11 @@ public class allMoviesPanel extends JPanel{
     
     private Object[][] data;    
     private JTable dataTable;
-    private String[] columnNames = {"Name CZ",
+    private String[] columnNames = {"ID","Name CZ",
                         "Name EN",
                         "Genres",
                         "Release date", "Rating"};
+    private Movie[] movies;
     
     public allMoviesPanel(){
         setLayout(new BorderLayout());
@@ -41,12 +50,14 @@ public class allMoviesPanel extends JPanel{
     
     private void initComponents(){
         dataTable = new JTable(data,columnNames);        
+        dataTable.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollPane = new JScrollPane(dataTable);
         JPanel toolPane = new JPanel();
         toolPane.setLayout(new BorderLayout());
         Label headline = new Label("All movies - NO.: " + dataTable.getRowCount());
         headline.setFont(new Font("Arial",Font.PLAIN,18));
         JButton btn = new JButton("Show");
+        btn.addActionListener(showListener);
         toolPane.add(headline, BorderLayout.WEST);
         toolPane.add(btn, BorderLayout.EAST);
         
@@ -64,12 +75,13 @@ public class allMoviesPanel extends JPanel{
     }
     
     public void passData(Movie[] rated){
-        
-        data = new Object[rated.length][5];
+        this.movies = rated;        
+        data = new Object[rated.length][6];
         
         for(int i = 0; i < rated.length; i++){
-            data[i][0] = rated[i].getNameCZ();
-            data[i][1] = rated[i].getNameEN();
+            data[i][0] = rated[i].getId();
+            data[i][1] = rated[i].getNameCZ();
+            data[i][2] = rated[i].getNameEN();
             
             String genres = "";
             
@@ -82,11 +94,28 @@ public class allMoviesPanel extends JPanel{
                 }
             }
             
-            data[i][2] = genres;
-            data[i][3] = rated[i].getYear();
-            data[i][4] = rated[i].getRating();
+            data[i][3] = genres;
+            data[i][4] = rated[i].getYear();
+            data[i][5] = rated[i].getRating();
         }      
         initComponents();
     }
+    
+    ActionListener showListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {            
+            
+            if(dataTable.getSelectedRow() != -1){
+                Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
+                showMovie dialog = new showMovie(passMovie);
+                dialog.setVisible(true);
+                
+                
+            }
+
+        }
+    }; 
+    
     
 }

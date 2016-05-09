@@ -23,17 +23,16 @@ import javax.swing.JPanel;
  */
 public class showMovie extends JDialog{
         
-    private final int id;
-    private final Movie[] movies;
-    private Movie current;
+    private final Movie movie;
     
-    public showMovie(int ID, Movie[] all) {
-        this.id = ID;
-        this.movies = all;
-        findMovie();
+    public showMovie(Movie mv) {        
+        this.movie = mv;
+        initComponents();
+        setModalityType(ModalityType.APPLICATION_MODAL);
     }
     
-    private void initComponents(){
+    private void initComponents(){        
+        
         JPanel mainPanel = new JPanel();
         JPanel upperPanel = new JPanel();
         JPanel ratePanel = new JPanel();
@@ -54,13 +53,13 @@ public class showMovie extends JDialog{
         rateBox.addItem("4");
         rateBox.addItem("5");
         JButton rateButt = new JButton("RATE IT");
-        Label rating = new Label("Rating: " + String.valueOf(current.getRating()));
-        Label description = new Label("Description: " + current.getDescription());
-        Label actors = new Label("Actors: " + current.personsToString('A'));
-        Label scenrists = new Label("Scenarists: " + current.personsToString('S'));
-        Label directors = new Label("Directors: " + current.personsToString('D'));
+        Label rating = new Label("Rating: " + String.valueOf(movie.getRating()));
+        Label description = new Label("Description: " + movie.getDescription());
+        Label actors = new Label("Actors: " + movie.personsToString('A'));
+        Label scenrists = new Label("Scenarists: " + movie.personsToString('S'));
+        Label directors = new Label("Directors: " + movie.personsToString('D'));
         
-        Label headline = new Label(current.getNameCZ());
+        Label headline = new Label(movie.getNameCZ());
         headline.setFont(new Font("Arial",Font.BOLD,18));
         gbc.insets = new Insets(5, 5, 5, 5);
         
@@ -72,13 +71,5 @@ public class showMovie extends JDialog{
         upperPanel.add(ratePanel,BorderLayout.EAST);
         upperPanel.add(headline,BorderLayout.WEST);
     }
-    
-    private void findMovie(){
-        
-        for(int i = 0; i < movies.length; i++){        
-            if(i == id-1){
-                current = movies[i];
-            }        
-        }        
-    }
+   
 }

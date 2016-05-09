@@ -63,7 +63,8 @@ public class LoginFrame implements ActionListener{
     
     private void initComponents(){        
        
-        
+        frame.getRootPane().setDefaultButton(btnLogin);
+        //LoginFrame.setDefaultButton(btnLogin);
         LoginPane.setLayout(new GridBagLayout());
         btnLogin.addActionListener(this);
         btnRegister.addActionListener(signupListener);
