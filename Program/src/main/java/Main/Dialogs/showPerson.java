@@ -81,6 +81,7 @@ private String screenwriting;
         coverPanel.setLayout(new BorderLayout());     
         
         GridBagConstraints gbc = new GridBagConstraints();
+        //TODO formatting
         Label actedIn = new Label("Starring in movies: " + acting + "Directing in movies: " + directing);
         JTextArea descriptArea = new JTextArea("Description: " + prepareDescription(person.getDescription()));
         descriptArea.setEditable(false);
