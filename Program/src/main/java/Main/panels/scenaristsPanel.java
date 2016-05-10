@@ -28,7 +28,7 @@ import javax.swing.ListSelectionModel;
 
 /**
  *
- * @author David Loffler, Marek Szeles
+ * @author David Löffler, Marek Szeles
  */
 public class scenaristsPanel extends JPanel{
     

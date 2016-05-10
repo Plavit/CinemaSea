@@ -32,7 +32,7 @@ import javax.swing.*;
 
 /**
  *
- * @author David Löffler
+ * @author David Löffler, Marek Szeles
  */
 public class allMoviesPanel extends JPanel{
     

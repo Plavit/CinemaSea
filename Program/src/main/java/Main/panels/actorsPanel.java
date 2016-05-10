@@ -6,6 +6,7 @@
 package Main.panels;
 
 import Main.Dialogs.personDialog;
+import Main.Dialogs.showPerson;
 import Main.Movie;
 import Main.Person;
 import java.awt.BorderLayout;
@@ -26,7 +27,7 @@ import javax.swing.ListSelectionModel;
 
 /**
  *
- * @author David Loffler, Marek Szeles
+ * @author David Löffler, Marek Szeles
  */
 public class actorsPanel extends JPanel{
     
@@ -39,6 +40,7 @@ public class actorsPanel extends JPanel{
                         "Surname",
                         "Description",
                         "Year"};
+    private Person[] people;
     
     public actorsPanel(int idUser){
         this.idUser = idUser;
@@ -54,10 +56,10 @@ public class actorsPanel extends JPanel{
         Label headline = new Label("Actors in movies - total:" + dataTable.getRowCount());
         headline.setFont(new Font("Arial",Font.PLAIN,18));
         JButton btn = new JButton("Show");
-        toolPane.add(headline, BorderLayout.WEST);
         JButton btnAdd = new JButton("Add");
         JButton btnEdit = new JButton("Edit");
-        //btn.addActionListener(showListener);
+        toolPane.add(headline, BorderLayout.WEST);
+        btn.addActionListener(showListener);
         btnAdd.addActionListener(addListener);
         btnEdit.addActionListener(editListener);        
         
@@ -114,8 +116,7 @@ public class actorsPanel extends JPanel{
         }
         //System.out.println("removing finished");
         
-        
-        
+
         
         data = new Object[rawPeople.size()][5];
         
@@ -160,6 +161,28 @@ public class actorsPanel extends JPanel{
                     dialog = new personDialog(idUser,human,'U','A');
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.setVisible(true);
+            }
+
+        }
+    };
+        ActionListener showListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {            
+                    //fill up people array from rawPeople arraylist
+            people = new Person[rawPeople.size()];
+            for(int i=0;i<people.length;i++){
+                people[i]=rawPeople.get(i);
+            }
+            if(dataTable.getSelectedRow() != -1){
+                Object idPerson = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Person passPerson = people[Integer.parseInt(idPerson.toString()) - 1];
+                showPerson dialog = null;
+                try {
+                    dialog = new showPerson(passPerson);
+                } catch (IOException ex) {
+                    Logger.getLogger(actorsPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.setVisible(true);
             }
