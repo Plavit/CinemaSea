@@ -127,7 +127,7 @@ public class allMoviesPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
             
-           
+           System.out.println("none");
 
         }
     };
@@ -136,7 +136,7 @@ public class allMoviesPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
             
-           
+           System.out.println("EDIT");
 
         }
     };
