@@ -57,12 +57,19 @@ private String screenwriting;
     private void initComponents() throws IOException{        
         
         String subHeadingText="";
-        
-        //TODO proper description
         acting="";
-        for (int i = 0; i < person.getMoviesActed().length; i++){
-            acting+=person.getMoviesActed()[i].getNameCZ()+"[EN: "+person.getMoviesActed()[i].getNameEN()+"]";
+        //TODO proper description
+        if(person.getMoviesActed().length!=0){
+
+            for (int i = 0; i < person.getMoviesActed().length; i++){
+                acting+=person.getMoviesActed()[i].getNameCZ()+"[EN: "+person.getMoviesActed()[i].getNameEN()+"]";
+                subHeadingText+="Actor";
+                if(person.getMoviesDirected().length!=0||person.getMoviesScreenwritten().length!=0){
+                    subHeadingText+=", ";
+                }
+            }
         }
+
         
         directing="";
         for (int i = 0; i < person.getMoviesDirected().length; i++){
