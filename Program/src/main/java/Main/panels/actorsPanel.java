@@ -135,9 +135,18 @@ public class actorsPanel extends JPanel{
     
     ActionListener addListener = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {            
-            
-           System.out.println("none");
+        public void actionPerformed(ActionEvent actionEvent) {
+            int lastID = 0;
+            for(Person pr : rawPeople){
+                if(pr.getId() > lastID) lastID = pr.getId();
+            }
+
+            try {
+                personDialog dialog = new personDialog(lastID, null, 'I', 'A');
+                dialog.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
     };

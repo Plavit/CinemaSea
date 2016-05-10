@@ -20,7 +20,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -32,7 +34,7 @@ import javax.swing.JTextField;
  */
 public class personDialog extends JDialog{
     
-    private int idUser;
+    private int lastID;
     private Person person;
     private char typeOfDialog;
     private char Who;
@@ -41,8 +43,8 @@ public class personDialog extends JDialog{
     private JTextField yearField = new JTextField(30);
     private JTextArea descArea = new JTextArea(10, 30);
 
-    public personDialog(int idUser, Person person, char typeOfDialog, char Who) throws IOException {
-        this.idUser = idUser;
+    public personDialog(int id, Person person, char typeOfDialog, char Who) throws IOException {
+        this.lastID = id;
         this.person = person;
         this.typeOfDialog = typeOfDialog;
         this.Who = Who;
@@ -80,6 +82,8 @@ public class personDialog extends JDialog{
         }
         buttonPane.add(close);
         close.addActionListener(closeAction);
+        update.addActionListener(updateAction);
+        insert.addActionListener(insertAction);
         
         switch (Who) {
             case 'A':
@@ -122,12 +126,14 @@ public class personDialog extends JDialog{
         fieldsPane.add(scroll,gbc);
         add(fieldsPane,BorderLayout.WEST);
         
-        nameField.setText(person.getName());
-        surnameField.setText(person.getLastName());
-        yearField.setText(String.valueOf(person.getYear()));
+        if (person != null) {
+            nameField.setText(person.getName());
+            surnameField.setText(person.getLastName());
+            yearField.setText(String.valueOf(person.getYear()));
+            descArea.setText(person.getDescription());
+        }
         
         descArea.setLineWrap(true);
-        descArea.setText(person.getDescription());
         
     }
     
@@ -136,11 +142,86 @@ public class personDialog extends JDialog{
     };
     
     ActionListener updateAction = (ActionEvent actionEvent) -> {
-        this.dispose();
+        String name = nameField.getText();
+        String surname = surnameField.getText();
+        String year = yearField.getText();
+        String desc = descArea.getText();
+        
+        if(!"".equals(name) && !"".equals(surname)){
+            Database db = new Database();
+            if(!"".equals(year) && checkYear(year)){                
+                db.updatePerson(name, surname, year, desc, person.getId(), Who);
+                JOptionPane.showMessageDialog(new JFrame(),
+                    "Person was updated!",
+                    "Data accepted",
+                    JOptionPane.PLAIN_MESSAGE);
+            }
+            else if(!checkYear(year) && !"".equals(year)){
+                JOptionPane.showMessageDialog(new JFrame(),
+                    "Year is not in valid format!",
+                    "Data error",
+                    JOptionPane.ERROR_MESSAGE);
+            }else{
+                db.updatePerson(name, surname, null, desc, person.getId(), Who);
+                JOptionPane.showMessageDialog(new JFrame(),
+                    "Person was updated!",
+                    "Data accepted",
+                    JOptionPane.PLAIN_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Name and surname have to be filled in!",
+                    "Data error",
+                    JOptionPane.ERROR_MESSAGE);
+        }        
+        
     };
     
     ActionListener insertAction = (ActionEvent actionEvent) -> {
-        this.dispose();
+        String name = nameField.getText();
+        String surname = surnameField.getText();
+        String year = yearField.getText();
+        String desc = descArea.getText();
+        
+        if(!"".equals(name) && !"".equals(surname)){
+            Database db = new Database();
+            if(!"".equals(year) && checkYear(year)){                
+                db.insertPerson(name, surname, year, desc, lastID+1, Who);
+                JOptionPane.showMessageDialog(new JFrame(),
+                    "Person was inserted!",
+                    "Data accepted",
+                    JOptionPane.PLAIN_MESSAGE);
+            }
+            else if(!checkYear(year) && !"".equals(year)){
+                JOptionPane.showMessageDialog(new JFrame(),
+                    "Year is not in valid format!",
+                    "Data error",
+                    JOptionPane.ERROR_MESSAGE);
+            }else{
+                db.insertPerson(name, surname, null, desc, lastID+1, Who);
+                JOptionPane.showMessageDialog(new JFrame(),
+                    "Person was inserted!",
+                    "Data accepted",
+                    JOptionPane.PLAIN_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Name and surname have to be filled in!",
+                    "Data error",
+                    JOptionPane.ERROR_MESSAGE);
+        } 
+        
     };
+    
+    private boolean checkYear(String year){
+        boolean valid = false;        
+        try{
+            int convert = Integer.parseInt(year);
+            valid = true;
+        }catch(Exception ex){
+            valid = false;
+        }
+        return valid;
+    }
     
 }

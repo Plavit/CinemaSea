@@ -138,8 +138,17 @@ public class scenaristsPanel extends JPanel{
     ActionListener addListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
+            int lastID = 0;
+            for(Person pr : rawPeople){
+                if(pr.getId() > lastID) lastID = pr.getId();
+            }
             
-           System.out.println("none");
+           try {
+                personDialog dialog = new personDialog(lastID, null, 'I', 'S');
+                dialog.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
     };
@@ -170,12 +179,7 @@ public class scenaristsPanel extends JPanel{
         }
     };
     
-    ActionListener showListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {            
-         
-            System.out.println("EDIT");
-
-        }
+    ActionListener showListener = (ActionEvent actionEvent) -> {
+        System.out.println("EDIT");
     };
 }

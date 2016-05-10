@@ -285,6 +285,170 @@ public class Database {
        
        System.out.println("rate: " + String.valueOf(rate));
        
-   }   
+   }
+
+    public void updatePerson(String name, String surname, String year, String desc, int id, char Who){
+       Statement stmt = null;
+       try {
+           // PREPARING THE SQL REQUEST
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+           
+           String sql = "";
+           
+           switch (Who) {
+               case 'A':
+                   if (year != null) {
+                       sql = "UPDATE actor SET name = '" + name
+                               + "', surname = '" + surname
+                               + "', year = " + year + ", description = '" + desc
+                               + "'\nWHERE id_actor = " + id;
+                   } else {
+                       sql = "UPDATE actor SET name = '" + name
+                               + "', surname = '" + surname
+                               + "', description = '" + desc
+                               + "'\nWHERE id_actor = " + id;
+                   }
+                   break;
+               case 'D':
+                   if (year != null) {
+                       sql = "UPDATE director SET name = '" + name
+                               + "', surname = '" + surname
+                               + "', year = " + year + ", description = '" + desc
+                               + "'\nWHERE id_director = " + id;
+                   } else {
+                       sql = "UPDATE director SET name = '" + name
+                               + "', surname = '" + surname
+                               + "', description = '" + desc
+                               + "'\nWHERE id_director = " + id;
+                   }
+                   break;
+               case 'S':
+                   if (year != null) {
+                       sql = "UPDATE scenarist SET name = '" + name
+                               + "', surname = '" + surname
+                               + "', year = " + year + ", description = '" + desc
+                               + "'\nWHERE id_scenarist = " + id;
+                   } else {
+                       sql = "UPDATE scenarist SET name = '" + name
+                               + "', surname = '" + surname
+                               + "', description = '" + desc
+                               + "'\nWHERE id_scenarist = " + id;
+                   }
+                   break;
+           }
+           
+           stmt.executeUpdate(sql);
+           
+           // CLOSING THE CONNECTION
+           stmt.close();
+           conn.close();           
+
+       } catch (SQLException se) {
+           System.out.println("FAIL #1");
+           se.printStackTrace();
+       } catch (Exception e) {
+           System.out.println("FAIL #2");
+           e.printStackTrace();
+       } finally {
+           //finally block used to close resources
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try
+    }
+    
+    public void insertPerson(String name, String surname, String year, String desc, int id, char Who){
+        Statement stmt = null;
+       try {
+           // PREPARING THE SQL REQUEST
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+           
+           String sql = "";
+           
+           switch (Who) {
+               case 'A':
+                   if(year != null){
+                   sql = "INSERT INTO actor (id_actor, name, surname, year, description)" 
+                           +"VALUES(" + id + ", '" + name
+                           + "', '" + surname + "', " + year + ",'" + desc + "');";
+                   }else{
+                       sql = "INSERT INTO actor (id_actor, name, surname, description)" 
+                           +"VALUES(" + id + ", '" + name
+                           + "', '" + surname + "', '" + desc + "');";
+                   }                    
+                   break;
+               case 'D':
+                   if(year != null){
+                   sql = "INSERT INTO director (id_director, name, surname, year, description)" 
+                           +"VALUES(" + id + ", '" + name
+                           + "', '" + surname + "', " + year + ",'" + desc + "');";
+                   }else{
+                       sql = "INSERT INTO director (id_director, name, surname, description)" 
+                           +"VALUES(" + id + ", '" + name
+                           + "', '" + surname + "', '" + desc + "');";
+                   }                   
+                   break;
+               case 'S':
+                   if(year != null){
+                   sql = "INSERT INTO scenarist (id_scenarist, name, surname, year, description)" 
+                           +"VALUES(" + id + ", '" + name
+                           + "', '" + surname + "', " + year + ",'" + desc + "');";
+                   }else{
+                       sql = "INSERT INTO scenarist (id_scenarist, name, surname, description)" 
+                           +"VALUES(" + id + ", '" + name
+                           + "', '" + surname + "', '" + desc + "');";
+                   }
+                   break;
+           }
+           
+           stmt.executeUpdate(sql);
+           
+           // CLOSING THE CONNECTION
+           stmt.close();
+           conn.close();           
+
+       } catch (SQLException se) {
+           System.out.println("FAIL #1");
+           se.printStackTrace();
+       } catch (Exception e) {
+           System.out.println("FAIL #2");
+           e.printStackTrace();
+       } finally {
+           //finally block used to close resources
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try
+    }
     
 }
