@@ -35,6 +35,7 @@ import javax.swing.*;
  */
 public class allMoviesPanel extends JPanel{
     
+    private int idUser;
     private boolean isAdmin = false;
     private Object[][] data;    
     private JTable dataTable;
@@ -44,7 +45,8 @@ public class allMoviesPanel extends JPanel{
                         "Release date", "Rating"};
     private Movie[] movies;
     
-    public allMoviesPanel(){
+    public allMoviesPanel(int idUser){
+        this.idUser = idUser;
         setLayout(new BorderLayout());
     }
     

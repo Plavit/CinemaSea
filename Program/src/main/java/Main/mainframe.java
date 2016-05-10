@@ -35,13 +35,14 @@ public class mainframe extends JFrame{
     JProgressBar bar = new JProgressBar();
     JTabbedPane mainPanel = new JTabbedPane();
     homePanel homePane = new homePanel();
-    allMoviesPanel moviesPane = new allMoviesPanel();
+    allMoviesPanel moviesPane;
     databasePanel dataPane = new databasePanel();
     ratedPanel ratePane = new ratedPanel();
     searchPanel srchPane = new searchPanel();
-    actorsPanel actPane = new actorsPanel();
-    directorsPanel dirPane = new directorsPanel();
-    scenaristsPanel scePane = new scenaristsPanel();
+    actorsPanel actPane;
+    directorsPanel dirPane;
+    scenaristsPanel scePane;
+    
     
     public mainframe() throws MalformedURLException, IOException{
         setTitle("Cinsea - Home");
@@ -57,6 +58,11 @@ public class mainframe extends JFrame{
     
     // ADDING COMPONENTS
     public void initComponents(){
+        moviesPane = new allMoviesPanel(user.getId());
+        actPane = new actorsPanel(user.getId());
+        dirPane = new directorsPanel(user.getId());
+        scePane = new scenaristsPanel(user.getId());
+        
         bar.setStringPainted(true);
         bar.setString("Gathering data from database 0%");
         bar.setVisible(false);

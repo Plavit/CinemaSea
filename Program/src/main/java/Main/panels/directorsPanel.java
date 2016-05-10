@@ -26,6 +26,7 @@ import javax.swing.ListSelectionModel;
  */
 public class directorsPanel extends JPanel{
     
+    private int idUser;
     private boolean isAdmin = false;
     private ArrayList<Person> rawPeople = new ArrayList<Person>(0);
     private Object[][] data;    
@@ -35,7 +36,8 @@ public class directorsPanel extends JPanel{
                         "Description",
                         "Year"};
     
-    public directorsPanel(){
+    public directorsPanel(int idUser){
+        this.idUser = idUser;
         setLayout(new BorderLayout());
     }    
     

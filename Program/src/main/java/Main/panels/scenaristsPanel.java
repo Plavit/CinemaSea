@@ -26,16 +26,18 @@ import javax.swing.ListSelectionModel;
  */
 public class scenaristsPanel extends JPanel{
     
+    private int id_user;
     private boolean isAdmin = false;
     private ArrayList<Person> rawPeople = new ArrayList<Person>(0);
     private Object[][] data;    
     private JTable dataTable;
-    private String[] columnNames = {"Name",
+    private String[] columnNames = {"ID","Name",
                         "Surname",
                         "Description",
                         "Year"};
     
-    public scenaristsPanel(){
+    public scenaristsPanel(int idUser){
+        this.id_user = idUser;
         setLayout(new BorderLayout());
     }    
     
@@ -51,7 +53,7 @@ public class scenaristsPanel extends JPanel{
         toolPane.add(headline, BorderLayout.WEST);
         JButton btnAdd = new JButton("Add");
         JButton btnEdit = new JButton("Edit");
-        //btn.addActionListener(showListener);
+        btn.addActionListener(showListener);
         btnAdd.addActionListener(addListener);
         btnEdit.addActionListener(editListener);        
         
@@ -111,15 +113,16 @@ public class scenaristsPanel extends JPanel{
         
         
         
-        data = new Object[rawPeople.size()][4];
+        data = new Object[rawPeople.size()][5];
         
         //assign relevant people values to table
         
         for(int i = 0; i < rawPeople.size(); i++){
-            data[i][0] = rawPeople.get(i).getName();//name
-            data[i][1] = rawPeople.get(i).getLastName();//surname
-            data[i][2] = rawPeople.get(i).getDescription();//desc
-            data[i][3] = rawPeople.get(i).getYear();//year
+            data[i][0] = rawPeople.get(i).getId(); // id
+            data[i][1] = rawPeople.get(i).getName();//name
+            data[i][2] = rawPeople.get(i).getLastName();//surname
+            data[i][3] = rawPeople.get(i).getDescription();//desc
+            data[i][4] = rawPeople.get(i).getYear();//year
             
         }
         
@@ -140,6 +143,15 @@ public class scenaristsPanel extends JPanel{
         public void actionPerformed(ActionEvent actionEvent) {            
             
            System.out.println("EDIT");
+
+        }
+    };
+    
+    ActionListener showListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {            
+         
+            System.out.println("EDIT");
 
         }
     };
