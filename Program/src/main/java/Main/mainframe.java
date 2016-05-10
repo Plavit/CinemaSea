@@ -37,10 +37,8 @@ public class mainframe extends JFrame{
     homePanel homePane = new homePanel();
     allMoviesPanel moviesPane = new allMoviesPanel();
     databasePanel dataPane = new databasePanel();
-    localPanel localPane = new localPanel();
     ratedPanel ratePane = new ratedPanel();
     searchPanel srchPane = new searchPanel();
-    settingsPanel settPane = new settingsPanel();
     actorsPanel actPane = new actorsPanel();
     directorsPanel dirPane = new directorsPanel();
     scenaristsPanel scePane = new scenaristsPanel();
@@ -63,8 +61,6 @@ public class mainframe extends JFrame{
         bar.setString("Gathering data from database 0%");
         bar.setVisible(false);
         mainPanel.addTab("Home", homePane);
-        mainPanel.addTab("Settings", settPane);
-        mainPanel.addTab("Local", localPane);
         mainPanel.addTab("Directors", dirPane);
         mainPanel.addTab("Scenarists", scePane);
         mainPanel.addTab("Actors", actPane);
@@ -188,9 +184,9 @@ public class mainframe extends JFrame{
         
         ratePane.passData(user.getRated());
         moviesPane.passData(allMovies,user.isIsAdmin());
-        actPane.passData(allMovies);
-        scePane.passData(allMovies);
-        dirPane.passData(allMovies);
+        actPane.passData(allMovies, user.isIsAdmin());
+        scePane.passData(allMovies, user.isIsAdmin());
+        dirPane.passData(allMovies, user.isIsAdmin());
     }
     
 }

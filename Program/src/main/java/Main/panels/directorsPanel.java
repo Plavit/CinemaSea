@@ -8,8 +8,11 @@ package Main.panels;
 import Main.Movie;
 import Main.Person;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -23,6 +26,7 @@ import javax.swing.ListSelectionModel;
  */
 public class directorsPanel extends JPanel{
     
+    private boolean isAdmin = false;
     private ArrayList<Person> rawPeople = new ArrayList<Person>(0);
     private Object[][] data;    
     private JTable dataTable;
@@ -36,6 +40,7 @@ public class directorsPanel extends JPanel{
     }    
     
     private void initComponents(){
+        JPanel buttPane = new JPanel(new FlowLayout());
         dataTable = new JTable(data,columnNames);        
         JScrollPane scrollPane = new JScrollPane(dataTable);
         JPanel toolPane = new JPanel();
@@ -44,7 +49,20 @@ public class directorsPanel extends JPanel{
         headline.setFont(new Font("Arial",Font.PLAIN,18));
         JButton btn = new JButton("Show");
         toolPane.add(headline, BorderLayout.WEST);
-        toolPane.add(btn, BorderLayout.EAST);
+        JButton btnAdd = new JButton("Add");
+        JButton btnEdit = new JButton("Edit");
+        //btn.addActionListener(showListener);
+        btnAdd.addActionListener(addListener);
+        btnEdit.addActionListener(editListener);        
+        
+        // ADD CONTROL BUTTONS
+        if(isAdmin){
+            buttPane.add(btnAdd);
+            buttPane.add(btnEdit);
+        }
+        buttPane.add(btn);
+        
+        toolPane.add(buttPane, BorderLayout.EAST);
         
         // Setting of table
         for (int c = 0; c < dataTable.getColumnCount(); c++) {
@@ -60,9 +78,9 @@ public class directorsPanel extends JPanel{
         
     }
     
-    public void passData(Movie[] movies){
+    public void passData(Movie[] movies, boolean isAdmin){
         
-
+        this.isAdmin = isAdmin;
         boolean isThere = false;
         Person curPerson;
         
@@ -107,4 +125,22 @@ public class directorsPanel extends JPanel{
         
         initComponents();
     }
+    
+    ActionListener addListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {            
+            
+           System.out.println("none");
+
+        }
+    };
+    
+    ActionListener editListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {            
+            
+           System.out.println("EDIT");
+
+        }
+    };
 }

@@ -19,8 +19,6 @@ public class Person {
     private ArrayList<Movie> moviesDirected = new ArrayList<Movie>(0);
     private ArrayList<Movie> moviesScreenwritten = new ArrayList<Movie>(0);
     
-    public Person() {
-    }
 
     public Person(int Id) {
         this.Id = Id;
