@@ -113,7 +113,7 @@ public class RegisterFrame implements ActionListener{
         User user = null;
         String nick = nickField.getText();
         char[] pswC = passField.getPassword();
-        char[] checkPswC = passField.getPassword();
+        char[] checkPswC = checkPassField.getPassword();
         String pass = String.valueOf(pswC);
         String checkPass = String.valueOf(checkPswC);
         
@@ -152,7 +152,10 @@ public class RegisterFrame implements ActionListener{
                 }
             }
         }
-        else {
+        if(valCheckOutcome=="OK"){
+            
+        } else {
+            System.out.println("error signup");
             JOptionPane.showMessageDialog(new JFrame(),
                     valCheckOutcome,
                     "Signup error",
