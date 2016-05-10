@@ -98,8 +98,8 @@ public class actorsPanel extends JPanel{
             //System.out.println("movie nr" + i);
             for(int j = 0; j < movies[i].getActors().length; j++){
                 //System.out.println("actor nr" + j);
-                    rawPeople.add(movies[i].getActors()[j]);
-                }
+                rawPeople.add(movies[i].getActors()[j]);
+            }
         }
         
         //delete duplicate persons
@@ -170,14 +170,14 @@ public class actorsPanel extends JPanel{
         ActionListener showListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
-                    //fill up people array from rawPeople arraylist
+            //fill up people array from rawPeople arraylist
             people = new Person[rawPeople.size()];
             for(int i=0;i<people.length;i++){
                 people[i]=rawPeople.get(i);
             }
             if(dataTable.getSelectedRow() != -1){
                 Object idPerson = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Person passPerson = people[Integer.parseInt(idPerson.toString()) - 1];
+                Person passPerson = people[dataTable.getSelectedRow()];
                 showPerson dialog = null;
                 try {
                     dialog = new showPerson(passPerson);
