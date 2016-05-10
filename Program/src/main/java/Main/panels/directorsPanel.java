@@ -150,6 +150,13 @@ public class directorsPanel extends JPanel{
                 Object idDirector = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
                 Person human = rawPeople.get(Integer.parseInt(idDirector.toString())-1);
                 personDialog dialog = null;
+                
+                for(Person pr : rawPeople){
+                    if(pr.getId() == Integer.parseInt(idDirector.toString())){
+                        human = pr;
+                    }                        
+                }
+                
                 try {
                     dialog = new personDialog(idUser,human,'U','D');
                 } catch (IOException ex) {

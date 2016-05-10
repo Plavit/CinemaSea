@@ -152,6 +152,13 @@ public class scenaristsPanel extends JPanel{
                 Object idScenarists = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
                 Person human = rawPeople.get(Integer.parseInt(idScenarists.toString())-1);
                 personDialog dialog = null;
+                
+                for(Person pr : rawPeople){
+                    if(pr.getId() == Integer.parseInt(idScenarists.toString())){
+                        human = pr;
+                    }                        
+                }
+                
                 try {
                     dialog = new personDialog(id_user,human,'U','S');
                 } catch (IOException ex) {

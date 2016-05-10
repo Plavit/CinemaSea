@@ -152,8 +152,7 @@ public class actorsPanel extends JPanel{
                 for(Person pr : rawPeople){
                     if(pr.getId() == Integer.parseInt(idActor.toString())){
                         human = pr;
-                    }
-                        
+                    }                        
                 }
                 
                 personDialog dialog = null;
