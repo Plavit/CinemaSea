@@ -94,7 +94,8 @@ private String screenwriting;
         Label headline = new Label(person.getFullName());
         headline.setFont(new Font("Arial",Font.BOLD,18));
         
-        Label subHeading = new Label(person.getFullName());
+        Label subHeading = new Label(subHeadingText);
+        headline.setFont(new Font("Arial",Font.ITALIC,14));
         
         gbc.insets = new Insets(5, 5, 5, 5);      
         
