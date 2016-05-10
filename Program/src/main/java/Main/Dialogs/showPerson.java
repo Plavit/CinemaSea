@@ -87,11 +87,6 @@ private Person person;
         infoPanel.add(descriptArea,gbc);
         
         
-        // SETTING OF COVER IMAGE
-        Image image = null;
-        JLabel cvImage = null;
-        cvImage = new JLabel(new ImageIcon(image));
-        coverPanel.add(cvImage,BorderLayout.CENTER);
         
         // ADDING THE PANELS        
         add(upperPanel,BorderLayout.NORTH);
