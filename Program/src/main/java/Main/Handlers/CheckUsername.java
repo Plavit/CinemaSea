@@ -5,19 +5,24 @@
  */
 package Main.Handlers;
 
+import Main.Database;
+
 /**
  *
- * @author Marek
+ * @author Szeles Marek, Loffler David
  */
 public class CheckUsername {
+    static Database db = new Database();
     
     public static String checkUsername(String username) {
         String msg = "";
         if(username.isEmpty()){
             msg="You need to choose your username!";
             return msg;
-            //TODO: Check username taken
-        }else{
+        } else if(db.isUserRegistered(username)) {
+            msg="Username already taken!";
+            return msg;
+        } else {
             msg="OK";
             return msg;
         }
