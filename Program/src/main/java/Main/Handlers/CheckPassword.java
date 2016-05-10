@@ -22,7 +22,7 @@ public class CheckPassword {
         }else if(pass.length()<8){
             msg="Password too short! Minimum: 8, Given: " + pass.length();
             return msg;
-        }else if(pass == null ? checkPass != null : !pass.equals(checkPass)){
+        }else if(checkPass.isEmpty() || !pass.equals(checkPass)){
             msg="You need to re-enter your password to proceed.";
             return msg;
         }else{

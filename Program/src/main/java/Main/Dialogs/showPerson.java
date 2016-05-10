@@ -102,7 +102,7 @@ private String screenwriting;
         headline.setFont(new Font("Arial",Font.BOLD,18));
         
         Label subHeading = new Label(subHeadingText);
-        headline.setFont(new Font("Arial",Font.ITALIC,14));
+        subHeading.setFont(new Font("Arial",Font.ITALIC,14));
         
         gbc.insets = new Insets(5, 5, 5, 5);      
         
