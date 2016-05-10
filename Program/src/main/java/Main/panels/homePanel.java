@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -71,7 +72,7 @@ public class homePanel extends JPanel{
         JLabel heading = new JLabel("Welcome to CinemaSea!");
         heading.setFont(h1);
         
-        JLabel intro = new JLabel("<html><body style='width: 350px; text-align:left'>CinemaSea is a simple tool to keep track of the movies you watch, and rate them! <br><br> In the tabs above, you can choose to view the full database of movies, movies rated by you, actors, and other people from the Movie world! Each person has their own profile you can view by clicking them. <br><br> Let's get started! <br><br> <br><br> Remember - CinemaSea is still Work in progress!</body></html>");
+        JLabel intro = new JLabel("<html><body style='width: 350px; text-align:left'>CinemaSea is a simple tool to keep track of the movies you watch, and rate them! <br><br> In the tabs above, you can choose to view the full database of movies, movies rated by you, actors, and other people from the Movie world! Each person has their own profile you can view by clicking them. <br><br> Let's get started! <br><br> Remember - CinemaSea is still Work in progress!</body></html>");
         intro.setFont(plaintext);
         
         welcomePage.setLayout(new GridBagLayout());
@@ -88,7 +89,7 @@ public class homePanel extends JPanel{
         gbc.gridy = 2;
         welcomePage.add(intro,gbc);
         
-        add(welcomePage,BorderLayout.WEST);
+        add(welcomePage, BorderLayout.NORTH);
     }
     
 }

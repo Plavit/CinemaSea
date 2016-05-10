@@ -9,7 +9,6 @@ import Main.Threads.*;
 import Main.panels.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -188,7 +187,7 @@ public class mainframe extends JFrame{
         
         
         ratePane.passData(user.getRated());
-        moviesPane.passData(allMovies);
+        moviesPane.passData(allMovies,user.isIsAdmin());
         actPane.passData(allMovies);
         scePane.passData(allMovies);
         dirPane.passData(allMovies);

@@ -19,6 +19,7 @@ package Main.panels;
 import Main.Dialogs.showMovie;
 import Main.Movie;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -34,6 +35,7 @@ import javax.swing.*;
  */
 public class allMoviesPanel extends JPanel{
     
+    private boolean isAdmin = false;
     private Object[][] data;    
     private JTable dataTable;
     private String[] columnNames = {"ID","Name CZ",
@@ -47,6 +49,7 @@ public class allMoviesPanel extends JPanel{
     }
     
     private void initComponents(){
+        JPanel buttPane = new JPanel(new FlowLayout());
         dataTable = new JTable(data,columnNames);        
         dataTable.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollPane = new JScrollPane(dataTable);
@@ -55,9 +58,22 @@ public class allMoviesPanel extends JPanel{
         Label headline = new Label("All movies - NO.: " + dataTable.getRowCount());
         headline.setFont(new Font("Arial",Font.PLAIN,18));
         JButton btn = new JButton("Show");
+        JButton btnAdd = new JButton("Add");
+        JButton btnEdit = new JButton("Edit");
         btn.addActionListener(showListener);
+        btnAdd.addActionListener(addListener);
+        btnEdit.addActionListener(editListener);
         toolPane.add(headline, BorderLayout.WEST);
-        toolPane.add(btn, BorderLayout.EAST);
+        
+        // ADD CONTROL BUTTONS
+        if(isAdmin){
+            buttPane.add(btnAdd);
+            buttPane.add(btnEdit);
+        }
+        buttPane.add(btn);
+        
+        toolPane.add(buttPane, BorderLayout.EAST);
+        
         
         // Setting of table
         for (int c = 0; c < dataTable.getColumnCount(); c++) {
@@ -72,7 +88,8 @@ public class allMoviesPanel extends JPanel{
         add(scrollPane, BorderLayout.CENTER);
     }
     
-    public void passData(Movie[] rated){
+    public void passData(Movie[] rated, boolean isAdmin){
+        this.isAdmin = isAdmin;
         this.movies = rated;        
         data = new Object[rated.length][6];
         
@@ -104,7 +121,23 @@ public class allMoviesPanel extends JPanel{
             }
 
         }
-    }; 
+    };
     
+    ActionListener addListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {            
+            
+           
+
+        }
+    };
     
+    ActionListener editListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {            
+            
+           
+
+        }
+    };
 }
