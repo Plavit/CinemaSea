@@ -8,6 +8,7 @@ package Main.Dialogs;
 import Main.Database;
 import Main.Login.LoginFrame;
 import Main.Movie;
+import Main.User;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -37,13 +38,13 @@ import javax.swing.JTextArea;
  */
 public class showMovie extends JDialog{
         
-    private int idUser;
+    private User user;
     private Movie movie;    
     JComboBox rateBox = new JComboBox();
         
-    public showMovie(Movie mv, int idUser) throws IOException {        
+    public showMovie(Movie mv, User user) throws IOException {        
         this.movie = mv;
-        this.idUser = idUser;
+        this.user = user;
         initComponents();
         setModalityType(ModalityType.APPLICATION_MODAL);
         setBounds(0,0,900,620);
@@ -152,7 +153,7 @@ public class showMovie extends JDialog{
         Database db = new Database();
         Object obj = rateBox.getSelectedItem();
         double rate = Double.valueOf(obj.toString());
-        db.rateMovie(rate, movie.getId(),idUser);
+        db.rateMovie(rate, movie.getId(),user);
     }; 
    
 }

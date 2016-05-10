@@ -281,7 +281,7 @@ public class Database {
         return enc.encodeToString(hash);
     }
    
-   public void rateMovie(double rate, int id_movie, int id_user){
+   public void rateMovie(double rate, int id_movie, User user){
        
        System.out.println("rate: " + String.valueOf(rate));
        

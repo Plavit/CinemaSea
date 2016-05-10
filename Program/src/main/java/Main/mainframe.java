@@ -58,7 +58,7 @@ public class mainframe extends JFrame{
     
     // ADDING COMPONENTS
     public void initComponents(){
-        moviesPane = new allMoviesPanel(user.getId());
+        moviesPane = new allMoviesPanel(user);
         actPane = new actorsPanel(user.getId());
         dirPane = new directorsPanel(user.getId());
         scePane = new scenaristsPanel(user.getId());

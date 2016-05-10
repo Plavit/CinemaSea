@@ -18,6 +18,7 @@ package Main.panels;
 
 import Main.Dialogs.showMovie;
 import Main.Movie;
+import Main.User;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -35,7 +36,7 @@ import javax.swing.*;
  */
 public class allMoviesPanel extends JPanel{
     
-    private int idUser;
+    private User user;
     private boolean isAdmin = false;
     private Object[][] data;    
     private JTable dataTable;
@@ -45,8 +46,8 @@ public class allMoviesPanel extends JPanel{
                         "Release date", "Rating"};
     private Movie[] movies;
     
-    public allMoviesPanel(int idUser){
-        this.idUser = idUser;
+    public allMoviesPanel(User user){
+        this.user = user;
         setLayout(new BorderLayout());
     }
     
@@ -115,7 +116,7 @@ public class allMoviesPanel extends JPanel{
                 Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
                 showMovie dialog = null;
                 try {
-                    dialog = new showMovie(passMovie,idUser);
+                    dialog = new showMovie(passMovie,user);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
