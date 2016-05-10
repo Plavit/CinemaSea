@@ -112,7 +112,7 @@ private String screenwriting;
         gbc.gridx = 1;
         gbc.gridy = 0;        
         
-        upperPanel.add(subHeading,BorderLayout.WEST);   
+        infoPanel.add(subHeading,gbc);   
         
         gbc.gridy = 4;
         infoPanel.add(actedIn,gbc);
