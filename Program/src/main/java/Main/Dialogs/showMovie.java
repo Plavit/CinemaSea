@@ -37,11 +37,13 @@ import javax.swing.JTextArea;
  */
 public class showMovie extends JDialog{
         
+    private int idUser;
     private Movie movie;    
     JComboBox rateBox = new JComboBox();
         
-    public showMovie(Movie mv) throws IOException {        
+    public showMovie(Movie mv, int idUser) throws IOException {        
         this.movie = mv;
+        this.idUser = idUser;
         initComponents();
         setModalityType(ModalityType.APPLICATION_MODAL);
         setBounds(0,0,900,620);
@@ -150,7 +152,7 @@ public class showMovie extends JDialog{
         Database db = new Database();
         Object obj = rateBox.getSelectedItem();
         double rate = Double.valueOf(obj.toString());
-        db.rateMovie(rate, movie.getId());
+        db.rateMovie(rate, movie.getId(),idUser);
     }; 
    
 }

@@ -115,7 +115,7 @@ public class allMoviesPanel extends JPanel{
                 Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
                 showMovie dialog = null;
                 try {
-                    dialog = new showMovie(passMovie);
+                    dialog = new showMovie(passMovie,idUser);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
