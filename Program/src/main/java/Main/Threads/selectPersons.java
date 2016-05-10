@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author David Löffler
+ * @author David Löffler, Marek Szeles
  */
 public class selectPersons extends Thread{
     

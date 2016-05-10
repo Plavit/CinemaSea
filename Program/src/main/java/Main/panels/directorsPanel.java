@@ -105,7 +105,7 @@ public class directorsPanel extends JPanel{
         for(int i = 0; i < rawPeople.size(); i++){
             for(int j = 1+i; j < rawPeople.size(); j++){
                 //System.out.println("index: [" + i + "," + j + "]");
-                if(rawPeople.get(i)==rawPeople.get(j)){
+                if(rawPeople.get(i).getId()==(rawPeople.get(j).getId())){
                     rawPeople.remove(j);
                     //System.out.println("removed:" + j);
                     j--;
