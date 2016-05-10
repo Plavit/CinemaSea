@@ -9,7 +9,7 @@ import Main.Database;
 
 /**
  *
- * @author Szeles Marek, Loffler David
+ * @author Szeles Marek, Löffler David
  */
 public class CheckUsername {
     static Database db = new Database();

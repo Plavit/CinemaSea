@@ -73,7 +73,7 @@ public class showMovie extends JDialog{
         Label rating = new Label("Rating: " + String.valueOf(movie.getRating()));
         Label genres = new Label("Genres: " + movie.genresToString());
         Label actors = new Label("Actors: " + movie.personsToString('A'));
-        Label scenrists = new Label("Scenarists: " + movie.personsToString('S'));
+        Label scenarists = new Label("Scenarists: " + movie.personsToString('S'));
         Label directors = new Label("Directors: " + movie.personsToString('D'));
         JTextArea descriptArea = new JTextArea("Description: " + prepareDescription(movie.getDescription()));
         descriptArea.setEditable(false);
@@ -101,7 +101,7 @@ public class showMovie extends JDialog{
         gbc.gridy = 2;
         infoPanel.add(directors,gbc);
         gbc.gridy = 3;
-        infoPanel.add(scenrists,gbc);
+        infoPanel.add(scenarists,gbc);
         gbc.gridy = 4;
         infoPanel.add(actors,gbc);
         gbc.gridy = 5;
