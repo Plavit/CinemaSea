@@ -45,7 +45,7 @@ public class viewMovieDirectors extends Thread{
 
             stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
                     ResultSet.CONCUR_READ_ONLY);
-            String sql = "CREATE VIEW moviedirectors AS SELECT movie.id_movie,"
+            String sql = "CREATE VIEW moviedirectors AS SELECT movie.id_movie, director.id_director,"
                     + " director.name, director.surname, director.year,"
                     + " director.description\n FROM movie, director, shoots\n"
                     + "WHERE movie.id_movie = shoots.id_movie AND " 

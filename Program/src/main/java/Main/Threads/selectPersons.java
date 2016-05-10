@@ -78,8 +78,8 @@ public class selectPersons extends Thread{
             
             ResultSet rs = stmt.executeQuery(sql);
             
-            while(rs.next() && isRunning){
-                result = new Person(rs.getInt(1));
+            while(rs.next() && isRunning){                
+                result = new Person(rs.getInt(2));                
                 result.setName(rs.getString("name"));
                 result.setLastName(rs.getString("surname"));
                 result.setFullName(result.getName() + " " + result.getLastName());
@@ -94,7 +94,7 @@ public class selectPersons extends Thread{
             conn.close();           
             rs.close();
             people = new Person[list.size()];            
-            people = list.toArray(people);
+            people = list.toArray(people);            
             isRunning = false;
         } catch (SQLException se) {
             System.out.println("FAIL #1");

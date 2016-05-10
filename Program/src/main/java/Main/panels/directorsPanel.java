@@ -5,6 +5,7 @@
  */
 package Main.panels;
 
+import Main.Dialogs.personDialog;
 import Main.Movie;
 import Main.Person;
 import java.awt.BorderLayout;
@@ -13,7 +14,10 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,7 +35,7 @@ public class directorsPanel extends JPanel{
     private ArrayList<Person> rawPeople = new ArrayList<Person>(0);
     private Object[][] data;    
     private JTable dataTable;
-    private String[] columnNames = {"Name",
+    private String[] columnNames = {"ID","Name",
                         "Surname",
                         "Description",
                         "Year"};
@@ -113,15 +117,16 @@ public class directorsPanel extends JPanel{
         
         
         
-        data = new Object[rawPeople.size()][4];
+        data = new Object[rawPeople.size()][5];
         
         //assign relevant people values to table
         
         for(int i = 0; i < rawPeople.size(); i++){
-            data[i][0] = rawPeople.get(i).getName();//name
-            data[i][1] = rawPeople.get(i).getLastName();//surname
-            data[i][2] = rawPeople.get(i).getDescription();//desc
-            data[i][3] = rawPeople.get(i).getYear();//year
+            data[i][0] = rawPeople.get(i).getId();//ID
+            data[i][1] = rawPeople.get(i).getName();//name
+            data[i][2] = rawPeople.get(i).getLastName();//surname
+            data[i][3] = rawPeople.get(i).getDescription();//desc
+            data[i][4] = rawPeople.get(i).getYear();//year
             
         }
         
@@ -141,7 +146,17 @@ public class directorsPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
             
-           System.out.println("EDIT");
+           if(dataTable.getSelectedRow() != -1){
+                Object idDirector = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Person human = rawPeople.get(Integer.parseInt(idDirector.toString())-1);
+                personDialog dialog = null;
+                try {
+                    dialog = new personDialog(idUser,human,'U','D');
+                } catch (IOException ex) {
+                    Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.setVisible(true);
+            }
 
         }
     };

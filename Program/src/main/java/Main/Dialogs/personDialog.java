@@ -5,6 +5,7 @@
  */
 package Main.Dialogs;
 
+import Main.Database;
 import Main.Person;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -12,6 +13,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -76,6 +79,7 @@ public class personDialog extends JDialog{
                 break;
         }
         buttonPane.add(close);
+        close.addActionListener(closeAction);
         
         switch (Who) {
             case 'A':
@@ -121,12 +125,22 @@ public class personDialog extends JDialog{
         nameField.setText(person.getName());
         surnameField.setText(person.getLastName());
         yearField.setText(String.valueOf(person.getYear()));
+        
+        descArea.setLineWrap(true);
         descArea.setText(person.getDescription());
         
     }
-
     
+    ActionListener closeAction = (ActionEvent actionEvent) -> {
+        this.dispose();
+    };
     
+    ActionListener updateAction = (ActionEvent actionEvent) -> {
+        this.dispose();
+    };
     
+    ActionListener insertAction = (ActionEvent actionEvent) -> {
+        this.dispose();
+    };
     
 }
