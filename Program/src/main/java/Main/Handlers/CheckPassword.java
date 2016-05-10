@@ -16,14 +16,10 @@ public class CheckPassword {
         if(pass.isEmpty()){
             msg="You need to choose your password!";
             return msg;
-        }else if(checkPass.isEmpty()){
-            msg="You need to re-enter your password to proceed.";
-            return msg;
         }else if(pass.length()<8){
             msg="Password too short! Minimum: 8, Given: " + pass.length();
             return msg;
         }else if(checkPass.isEmpty() | !pass.equals(checkPass)){
-            System.out.println("checking pass: " + pass + ", checkpass: " + checkPass);
             msg="You need to re-enter your password to proceed.";
             return msg;
         }else{
