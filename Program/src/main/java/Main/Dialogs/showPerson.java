@@ -56,6 +56,8 @@ private String screenwriting;
     
     private void initComponents() throws IOException{        
         
+        String subHeadingText="";
+        
         //TODO proper description
         acting="";
         for (int i = 0; i < person.getMoviesActed().length; i++){
@@ -91,13 +93,18 @@ private String screenwriting;
         // SETTING OF UPPER PANEL
         Label headline = new Label(person.getFullName());
         headline.setFont(new Font("Arial",Font.BOLD,18));
+        
+        Label subHeading = new Label(person.getFullName());
+        
         gbc.insets = new Insets(5, 5, 5, 5);      
         
         upperPanel.add(headline,BorderLayout.WEST);        
         
         // SETING OF INFO PANEL
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 0;        
+        
+        upperPanel.add(subHeading,BorderLayout.WEST);   
         
         gbc.gridy = 4;
         infoPanel.add(actedIn,gbc);
