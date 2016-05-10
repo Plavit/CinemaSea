@@ -151,6 +151,53 @@ public class Database {
        return user;
    }
    
+    public boolean isUserRegistered(String nick){
+       boolean registered = false;
+       Statement stmt = null;
+       try {
+           // PREPARING THE SQL REQUEST
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+           String sql = "SELECT * FROM users WHERE nickname LIKE '" + nick + "'";
+           
+           // COLLECTING OF DATA
+           ResultSet rs = stmt.executeQuery(sql);
+
+           if(rs.next()){
+               registered = true;
+           }
+
+           // CLOSING THE CONNECTION
+           stmt.close();
+           conn.close();
+           rs.close();
+
+       } catch (SQLException se) {
+           System.out.println("FAIL #1");
+       } catch (ClassNotFoundException e) {
+           System.out.println("FAIL #2");
+       } finally {
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try
+       return registered;
+   }
+   
    public void clearViews(){
        Statement stmt = null;
        try {
