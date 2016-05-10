@@ -99,6 +99,8 @@ public class actorsPanel extends JPanel{
             for(int j = 0; j < movies[i].getActors().length; j++){
                 //System.out.println("actor nr" + j);
                 rawPeople.add(movies[i].getActors()[j]);
+                //adding movies to actors starring in them
+                movies[i].getActors()[j].addMovieActed(movies[i]);
             }
         }
         
