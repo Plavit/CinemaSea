@@ -5,6 +5,9 @@
  */
 package Main.panels;
 
+import Main.Dialogs.personDialog;
+import Main.Dialogs.showMovie;
+import Main.Dialogs.showPerson;
 import Main.Movie;
 import Main.Person;
 import java.awt.BorderLayout;
@@ -13,7 +16,10 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -142,7 +148,17 @@ public class scenaristsPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
             
-           System.out.println("EDIT");
+           if(dataTable.getSelectedRow() != -1){
+                Object idScenarists = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Person human = rawPeople.get(Integer.parseInt(idScenarists.toString())-1);
+                personDialog dialog = null;
+                try {
+                    dialog = new personDialog(id_user,human,'U','S');
+                } catch (IOException ex) {
+                    Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.setVisible(true);
+            }
 
         }
     };

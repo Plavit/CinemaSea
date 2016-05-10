@@ -5,20 +5,10 @@
  */
 package Main.Dialogs;
 
-import javax.swing.JDialog;
-
 /**
  *
  * @author David Löffler
  */
-public class scenaristsDialog extends JDialog{
-    
-    private char typeOfDialog;
-
-    public scenaristsDialog(char typeOfDialog) {
-        this.typeOfDialog = typeOfDialog;
-    }
-    
-    
+public class showPerson {
     
 }
