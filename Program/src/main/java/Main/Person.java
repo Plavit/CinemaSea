@@ -84,6 +84,46 @@ public class Person {
         this.moviesActed.remove(movie);
     }
 
+    public Movie[] getMoviesDirected() {
+        Movie[] movie = new Movie[moviesDirected.size()];
+        for(int i=0;i<moviesDirected.size();i++){
+            movie[i]=moviesDirected.get(i);
+        }
+        return movie;
+    }
+    
+    public void addMovieDirected(Movie movie) {
+        //check if Movie to be added isn't included yet
+        if(!this.moviesDirected.contains(movie)){
+            //if not, add movie
+            this.moviesDirected.add(movie);
+        }
+    }
+    
+    public void removeMovieDirected(Movie movie){
+        this.moviesDirected.remove(movie);
+    }
+    
+    public Movie[] getMoviesScreenwritten() {
+        Movie[] movie = new Movie[moviesScreenwritten.size()];
+        for(int i=0;i<moviesScreenwritten.size();i++){
+            movie[i]=moviesScreenwritten.get(i);
+        }
+        return movie;
+    }
+    
+    public void addMovieScreenwritten(Movie movie) {
+        //check if Movie to be added isn't included yet
+        if(!this.moviesScreenwritten.contains(movie)){
+            //if not, add movie
+            this.moviesScreenwritten.add(movie);
+        }
+    }
+    
+    public void removeMovieScreenwritten(Movie movie){
+        this.moviesScreenwritten.remove(movie);
+    }
+    
     public int getId() {
         return Id;
     }

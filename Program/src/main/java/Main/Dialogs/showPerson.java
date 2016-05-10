@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -35,10 +36,13 @@ import javax.swing.JTextArea;
 
 /**
  *
- * @author David Löffler
+ * @author Marek Szeles, David Löffler
  */
 public class showPerson extends JDialog {
 private Person person;    
+private String acting;
+private String directing;
+private String screenwriting;
         
     public showPerson(Person person) throws IOException {        
         this.person = person;
@@ -52,18 +56,42 @@ private Person person;
     
     private void initComponents() throws IOException{        
         
+        String subHeadingText="";
+        acting="";
+        //TODO proper description
+        if(person.getMoviesActed().length!=0){
+
+            for (int i = 0; i < person.getMoviesActed().length; i++){
+                acting+=person.getMoviesActed()[i].getNameCZ()+"[EN: "+person.getMoviesActed()[i].getNameEN()+"]";
+                subHeadingText+="Actor";
+                if(person.getMoviesDirected().length!=0||person.getMoviesScreenwritten().length!=0){
+                    subHeadingText+=", ";
+                }
+            }
+        }
+
+        
+        directing="";
+        for (int i = 0; i < person.getMoviesDirected().length; i++){
+            directing+=person.getMoviesDirected()[i].getNameCZ()+"[EN: "+person.getMoviesDirected()[i].getNameEN()+"]";
+        }
+        
+        screenwriting="";
+        for (int i = 0; i < person.getMoviesScreenwritten().length; i++){
+            screenwriting+=person.getMoviesScreenwritten()[i].getNameCZ()+"[EN: "+person.getMoviesScreenwritten()[i].getNameEN()+"]";
+        }
+        
         JPanel upperPanel = new JPanel();
-        JPanel ratePanel = new JPanel();
         JPanel infoPanel = new JPanel();
         JPanel coverPanel = new JPanel();
         
-        ratePanel.setLayout(new GridBagLayout());
         infoPanel.setLayout(new GridBagLayout());
         upperPanel.setLayout(new BorderLayout());
         coverPanel.setLayout(new BorderLayout());     
         
         GridBagConstraints gbc = new GridBagConstraints();
-        Label actedIn = new Label("Starrs in movies: " + person.getMoviesActed());
+        //TODO formatting
+        Label actedIn = new Label("Starring in movies: " + acting + "Directing movies: " + directing);
         JTextArea descriptArea = new JTextArea("Description: " + prepareDescription(person.getDescription()));
         descriptArea.setEditable(false);
         descriptArea.setHighlighter(null);
@@ -72,14 +100,19 @@ private Person person;
         // SETTING OF UPPER PANEL
         Label headline = new Label(person.getFullName());
         headline.setFont(new Font("Arial",Font.BOLD,18));
+        
+        Label subHeading = new Label(subHeadingText);
+        headline.setFont(new Font("Arial",Font.ITALIC,14));
+        
         gbc.insets = new Insets(5, 5, 5, 5);      
         
-        upperPanel.add(ratePanel,BorderLayout.EAST);
         upperPanel.add(headline,BorderLayout.WEST);        
         
         // SETING OF INFO PANEL
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 0;        
+        
+        infoPanel.add(subHeading,gbc);   
         
         gbc.gridy = 4;
         infoPanel.add(actedIn,gbc);
