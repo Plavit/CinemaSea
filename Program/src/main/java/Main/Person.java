@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 public class Person {
     
+    private final int Id;
     private String Name;
     private String LastName;
     private String FullName;
@@ -19,6 +20,10 @@ public class Person {
     private ArrayList<Movie> moviesScreenwritten = new ArrayList<Movie>(0);
     
     public Person() {
+    }
+
+    public Person(int Id) {
+        this.Id = Id;
     }
 
     public String getName() {
@@ -79,6 +84,10 @@ public class Person {
     
     public void removeMovieActed(Movie movie){
         this.moviesActed.remove(movie);
+    }
+
+    public int getId() {
+        return Id;
     }
     
 }

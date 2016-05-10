@@ -16,9 +16,7 @@
  */
 package Main.Threads;
 
-import Main.Movie;
 import Main.Person;
-import static Main.Threads.selectAllMovies.DB_URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -81,7 +79,7 @@ public class selectPersons extends Thread{
             ResultSet rs = stmt.executeQuery(sql);
             
             while(rs.next() && isRunning){
-                result = new Person();
+                result = new Person(rs.getInt(1));
                 result.setName(rs.getString("name"));
                 result.setLastName(rs.getString("surname"));
                 result.setFullName(result.getName() + " " + result.getLastName());
