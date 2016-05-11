@@ -16,6 +16,7 @@
  */
 package Main.panels;
 
+import Main.Dialogs.movieDialog;
 import Main.Dialogs.showMovie;
 import Main.Movie;
 import Main.User;
@@ -91,18 +92,18 @@ public class allMoviesPanel extends JPanel{
         add(scrollPane, BorderLayout.CENTER);
     }
     
-    public void passData(Movie[] rated, boolean isAdmin){
+    public void passData(Movie[] Movies, boolean isAdmin){
         this.isAdmin = isAdmin;
-        this.movies = rated;        
-        data = new Object[rated.length][6];
+        this.movies = Movies;        
+        data = new Object[Movies.length][6];
         
-        for(int i = 0; i < rated.length; i++){
-            data[i][0] = rated[i].getId();
-            data[i][1] = rated[i].getNameCZ();
-            data[i][2] = rated[i].getNameEN();           
-            data[i][3] = rated[i].genresToString();
-            data[i][4] = rated[i].getYear();
-            data[i][5] = rated[i].getRating();
+        for(int i = 0; i < Movies.length; i++){
+            data[i][0] = Movies[i].getId();
+            data[i][1] = Movies[i].getNameCZ();
+            data[i][2] = Movies[i].getNameEN();           
+            data[i][3] = Movies[i].genresToString();
+            data[i][4] = Movies[i].getYear();
+            data[i][5] = Movies[i].getRating();
         }      
         initComponents();
     }
@@ -122,7 +123,6 @@ public class allMoviesPanel extends JPanel{
                 }
                 dialog.setVisible(true);
             }
-
         }
     };
     
@@ -130,16 +130,36 @@ public class allMoviesPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
             
-           System.out.println("none");
+           if(dataTable.getSelectedRow() != -1){
+                Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
+                movieDialog dialog = null;
+                try {
+                    dialog = new movieDialog(passMovie.getId(),null,'I');
+                } catch (IOException ex) {
+                    Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.setVisible(true);
+            }
 
         }
     };
     
     ActionListener editListener = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {            
+        public void actionPerformed(ActionEvent actionEvent) {
             
-           System.out.println("EDIT");
+           if(dataTable.getSelectedRow() != -1){
+                Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
+                movieDialog dialog = null;
+                try {
+                    dialog = new movieDialog(passMovie.getId(),passMovie,'U');
+                } catch (IOException ex) {
+                    Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.setVisible(true);
+            }
 
         }
     };

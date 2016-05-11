@@ -10,6 +10,7 @@ import Main.Movie;
 import Main.Person;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -43,7 +44,11 @@ public class movieDialog  extends JDialog{
     private JTextField nameCZField = new JTextField(30);
     private JTextField nameENField = new JTextField(30);
     private JTextField yearField = new JTextField(30);
-    private JTextArea descArea = new JTextArea(10, 30);
+    private JTextArea descArea = new JTextArea(25, 40);
+    private String[] columnNames = {"ID","Name"};
+    private Object[][] dataA = new Object[0][2];
+    private Object[][] dataD = new Object[0][2];
+    private Object[][] dataS = new Object[0][2];
 
     public movieDialog(int id, Movie movie, char typeOfDialog) throws IOException {
         this.lastID = id;
@@ -52,7 +57,7 @@ public class movieDialog  extends JDialog{
         setLayout(new BorderLayout());
         
         setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        setBounds(0,0,500,380);
+        setBounds(0,0,1150,700);
         setLocationRelativeTo(null);
         setTitle("Data editor");        
         setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo_icon.png")));
@@ -93,7 +98,10 @@ public class movieDialog  extends JDialog{
         JLabel nameCZLab = new JLabel("Name CZ:");
         JLabel nameENLab = new JLabel("Name EN:");
         JLabel yearLab = new JLabel("Year:");
-        JLabel descLab = new JLabel("Description:");        
+        JLabel descLab = new JLabel("Description:");    
+        JLabel actLab = new JLabel("Actors:");
+        JLabel dirLab = new JLabel("Directors:");
+        JLabel scnLab = new JLabel("Scenarists:");
         JScrollPane scrollDesc = new JScrollPane(descArea);
         descArea.setLineWrap(true);
         
@@ -115,23 +123,62 @@ public class movieDialog  extends JDialog{
         gbc.gridy = 3;
         fieldsPane.add(scrollDesc,gbc);
         
-        //PERSONS FIELDS
-        JTable actors;
-        JTable directors;
-        JTable scenarists;
+        //PERSONS FIELDS   
+        JTable actors, directors, scenarists;
         
-        
-        add(fieldsPane,BorderLayout.WEST);
-        
-        if (movie != null) {
+        if(movie != null){
+            dataA = new Object[movie.getActors().length][2];
+            dataD = new Object[movie.getDirectors().length][2];
+            dataS = new Object[movie.getScenarists().length][2];
+            
+            for(int i = 0; i < movie.getActors().length; i++){
+                dataA[i][0] = movie.getActors()[i].getId();
+                dataA[i][1] = movie.getActors()[i].getFullName();
+            }
+            
+            for(int i = 0; i < movie.getDirectors().length; i++){
+                dataD[i][0] = movie.getDirectors()[i].getId();
+                dataD[i][1] = movie.getDirectors()[i].getFullName();
+            }
+            
+            for(int i = 0; i < movie.getScenarists().length; i++){
+                dataS[i][0] = movie.getScenarists()[i].getId();
+                dataS[i][1] = movie.getScenarists()[i].getFullName();
+            }
+
             nameCZField.setText(movie.getNameCZ());
             nameENField.setText(movie.getNameEN());
             yearField.setText(String.valueOf(movie.getYear()));
             descArea.setText(movie.getDescription());
+            
         }
+        actors = new JTable(dataA,columnNames);
+        directors = new JTable(dataD,columnNames);
+        scenarists = new JTable(dataS,columnNames);
         
+        JScrollPane scrollActors = new JScrollPane(actors);
+        JScrollPane scrollDirectors = new JScrollPane(directors);
+        JScrollPane scrollscenarists = new JScrollPane(scenarists);       
         
+        // POSITIONING OF PERSONS FIELDS
         
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        fieldsPane.add(actLab,gbc);        
+        gbc.gridx = 3;
+        fieldsPane.add(scrollActors,gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        fieldsPane.add(dirLab,gbc);
+        gbc.gridx = 1;
+        fieldsPane.add(scrollDirectors,gbc);
+        gbc.gridx = 2;
+        fieldsPane.add(scnLab,gbc);
+        gbc.gridx = 3;
+        fieldsPane.add(scrollscenarists,gbc);        
+        
+        JScrollPane main = new JScrollPane(fieldsPane);
+        add(main,BorderLayout.CENTER);
     }
     
     ActionListener closeAction = (ActionEvent actionEvent) -> {

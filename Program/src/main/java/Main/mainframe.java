@@ -248,7 +248,7 @@ public class mainframe extends JFrame{
     public void updateMainFrame() throws InterruptedException{
         
         
-        ratePane.passData(user.getRated());
+        ratePane.passData(user);
         moviesPane.passData(allMovies,user.isIsAdmin());
         actPane.passData(allMovies, user.isIsAdmin(),actors);
         scePane.passData(allMovies, user.isIsAdmin(),scenarists);
