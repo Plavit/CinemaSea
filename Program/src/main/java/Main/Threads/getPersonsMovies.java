@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author David Löffler
  */
-public class getActorsMovies extends Thread{
+public class getPersonsMovies extends Thread{
     
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
@@ -30,7 +30,7 @@ public class getActorsMovies extends Thread{
     private final char Who;
     private final int id;
     
-    public getActorsMovies(char who,int id){
+    public getPersonsMovies(char who,int id){
         this.Who = who;
         this.id = id;
     }

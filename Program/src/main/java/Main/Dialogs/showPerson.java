@@ -65,24 +65,24 @@ private String screenwriting;
         if(person.getMoviesActed().length!=0){
             for (Movie moviesActed : person.getMoviesActed()) {
                 acting += moviesActed.getNameCZ() + " [EN: " + moviesActed.getNameEN() + "]";
-                if(person.getMoviesDirected().length!=0||person.getMoviesScreenwritten().length!=0){
-                    subHeadingText+=", ";
-                    movieInfoText+= "\n";
-                }
             }
             subHeadingText+="Actor";
             movieInfoText+="Starring in movies: " + acting;
+            if(person.getMoviesDirected().length!=0||person.getMoviesScreenwritten().length!=0){
+                subHeadingText+=", ";
+                movieInfoText+= "\n";
+            }
         }
         if(person.getMoviesDirected().length!=0){
             for (Movie moviesDirected : person.getMoviesDirected()) {
                 directing += moviesDirected.getNameCZ() + " [EN: " + moviesDirected.getNameEN() + "]";
-                if(person.getMoviesScreenwritten().length!=0){
-                    subHeadingText+=", ";
-                    movieInfoText+= "\n";
-                }
             }
             subHeadingText+="Director";
             movieInfoText+="Directed movies: " + directing;
+            if(person.getMoviesScreenwritten().length!=0){
+                subHeadingText+=", ";
+                movieInfoText+= "\n";
+            }
         }
         if(person.getMoviesDirected().length!=0){
             for (Movie moviesScreenwritten : person.getMoviesScreenwritten()) {
