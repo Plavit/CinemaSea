@@ -209,8 +209,6 @@ public class mainframe extends JFrame{
     }
     
     public void updateMainFrame(){
-        
-        
         ratePane.passData(user.getRated());
         moviesPane.passData(allMovies,user.isIsAdmin());
         actPane.passData(allMovies, user.isIsAdmin(),actors);
