@@ -70,8 +70,8 @@ public class getPersonsMovies extends Thread{
             
             while(rs.next() && isRunning){
                 result = new Movie(rs.getInt(1));
-                result.setNameCZ(USER);
-                result.setNameEN(USER);
+                result.setNameCZ(rs.getString("namecz"));
+                result.setNameEN(rs.getString("nameen"));
                 list.add(result);
             }
             //System.out.println("RUNNING");

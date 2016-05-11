@@ -9,6 +9,7 @@ import Main.Dialogs.personDialog;
 import Main.Dialogs.showPerson;
 import Main.Movie;
 import Main.Person;
+import Main.Threads.getPersonsMovies;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -86,10 +87,29 @@ public class actorsPanel extends JPanel{
         
     }
     
-    public void passData(Movie[] movies, boolean isAdmin, Person[] Actors){
+    public void passData(Movie[] movies, boolean isAdmin, Person[] Actors) throws InterruptedException{
         this.actors = Actors;
         this.isAdmin = isAdmin;     
-        
+        /*
+        Thread getMovies = new Thread(){
+            @Override
+            public void run(){
+                getPersonsMovies movies;
+                for(Person pr : actors){
+                    movies = new getPersonsMovies('A',pr.getId());
+                    movies.start();
+                    try {
+                        movies.join();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(actorsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    pr.setMoviesActed(movies.returnMoviesArray());
+                }
+            }
+        };
+        getMovies.start();
+        getMovies.join();
+        */
         data = new Object[actors.length][5];
         
         //assign relevant people values to table        
