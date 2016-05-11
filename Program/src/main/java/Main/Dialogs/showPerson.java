@@ -57,72 +57,78 @@ private String screenwriting;
     private void initComponents() throws IOException{        
         
         String subHeadingText="";
+        String movieInfoText="";
         acting="";
-        //TODO proper description
+        directing="";
+        screenwriting="";
+        
         if(person.getMoviesActed().length!=0){
-
-            for (int i = 0; i < person.getMoviesActed().length; i++){
-                acting+=person.getMoviesActed()[i].getNameCZ()+"[EN: "+person.getMoviesActed()[i].getNameEN()+"]";
+            for (Movie moviesActed : person.getMoviesActed()) {
+                acting += moviesActed.getNameCZ() + " [EN: " + moviesActed.getNameEN() + "]";
                 subHeadingText+="Actor";
+                movieInfoText+="Starring in movies: " + acting;
                 if(person.getMoviesDirected().length!=0||person.getMoviesScreenwritten().length!=0){
                     subHeadingText+=", ";
+                    movieInfoText+= "\n";
                 }
             }
         }
-
-        
-        directing="";
-        for (int i = 0; i < person.getMoviesDirected().length; i++){
-            directing+=person.getMoviesDirected()[i].getNameCZ()+"[EN: "+person.getMoviesDirected()[i].getNameEN()+"]";
+        if(person.getMoviesDirected().length!=0){
+            for (Movie moviesDirected : person.getMoviesDirected()) {
+                directing += moviesDirected.getNameCZ() + " [EN: " + moviesDirected.getNameEN() + "]";
+                subHeadingText+="Director";
+                movieInfoText+="Directed movies: " + directing;
+                if(person.getMoviesScreenwritten().length!=0){
+                    subHeadingText+=", ";
+                    movieInfoText+= "\n";
+                }
+            }
+        }
+        if(person.getMoviesDirected().length!=0){
+            for (Movie moviesScreenwritten : person.getMoviesScreenwritten()) {
+                screenwriting += moviesScreenwritten.getNameCZ() + " [EN: " + moviesScreenwritten.getNameEN() + "]";
+                subHeadingText+="Scenarist";
+                movieInfoText+="Screenwritten movies: " + screenwriting;
+            }
         }
         
-        screenwriting="";
-        for (int i = 0; i < person.getMoviesScreenwritten().length; i++){
-            screenwriting+=person.getMoviesScreenwritten()[i].getNameCZ()+"[EN: "+person.getMoviesScreenwritten()[i].getNameEN()+"]";
-        }
-        
-        JPanel upperPanel = new JPanel();
         JPanel infoPanel = new JPanel();
         JPanel coverPanel = new JPanel();
         
         infoPanel.setLayout(new GridBagLayout());
-        upperPanel.setLayout(new BorderLayout());
         coverPanel.setLayout(new BorderLayout());     
         
         GridBagConstraints gbc = new GridBagConstraints();
         //TODO formatting
-        Label actedIn = new Label("Starring in movies: " + acting + "Directing movies: " + directing);
+        Label moviesInfo = new Label(movieInfoText);
         JTextArea descriptArea = new JTextArea("Description: " + prepareDescription(person.getDescription()));
         descriptArea.setEditable(false);
         descriptArea.setHighlighter(null);
         descriptArea.setOpaque(false);
         
-        // SETTING OF UPPER PANEL
         Label headline = new Label(person.getFullName());
         headline.setFont(new Font("Arial",Font.BOLD,18));
         
         Label subHeading = new Label(subHeadingText);
         subHeading.setFont(new Font("Arial",Font.ITALIC,14));
         
-        gbc.insets = new Insets(5, 5, 5, 5);      
-        
-        upperPanel.add(headline,BorderLayout.WEST);        
+        gbc.insets = new Insets(5, 5, 5, 5);         
         
         // SETING OF INFO PANEL
-        gbc.gridx = 1;
         gbc.gridy = 0;        
+        infoPanel.add(headline,gbc);
         
+        gbc.gridy = 1; 
         infoPanel.add(subHeading,gbc);   
         
         gbc.gridy = 4;
-        infoPanel.add(actedIn,gbc);
+        infoPanel.add(moviesInfo,gbc);
         gbc.gridy = 5;
         infoPanel.add(descriptArea,gbc);
         
         
         
         // ADDING THE PANELS        
-        add(upperPanel,BorderLayout.NORTH);
         add(coverPanel,BorderLayout.WEST);
         add(infoPanel, BorderLayout.CENTER);
         

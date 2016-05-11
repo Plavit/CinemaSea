@@ -152,16 +152,12 @@ public class RegisterFrame implements ActionListener{
                 }
             }
         }
-        if(valCheckOutcome=="OK"){
-            
-        } else {
-            System.out.println("error signup");
+        if(valCheckOutcome!="OK"){
             JOptionPane.showMessageDialog(new JFrame(),
                     valCheckOutcome,
                     "Signup error",
                     JOptionPane.ERROR_MESSAGE);
         }
-    
     }
     
     ActionListener signinListener = new ActionListener() {
