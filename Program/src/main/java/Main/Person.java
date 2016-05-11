@@ -82,11 +82,10 @@ public class Person{
     }
     
     public void setMoviesActed(Movie[] movies) {
-        ArrayList<Movie> setMoviesActed = new ArrayList<Movie>(0);
         for (Movie movie : movies) {
-            setMoviesActed.add(movie);
+            this.moviesActed.add(movie);
         }
-        this.moviesActed=setMoviesActed;
+        
 
     }
     

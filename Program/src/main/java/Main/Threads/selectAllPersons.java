@@ -79,7 +79,6 @@ public class selectAllPersons extends Thread{
             rs.close();
             people = new Person[list.size()];            
             people = list.toArray(people);
-            System.out.println(people.length);
             isRunning = false;
         } catch (SQLException se) {
             System.out.println("FAIL #1");

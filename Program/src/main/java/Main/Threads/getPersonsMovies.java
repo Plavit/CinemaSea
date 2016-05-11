@@ -47,19 +47,19 @@ public class getPersonsMovies extends Thread{
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
                     ResultSet.CONCUR_READ_ONLY);
-            String sql = null;
+            String sql = null;            
             
             switch(Who){
                 case 'A':
-                    sql = "SELECT movie FROM movieactors, movie WHERE " + id + " = movieactors.id_actor AND\n" +
+                    sql = "SELECT movie.id_movie, movie.namecz, movie.nameen FROM movieactors, movie WHERE " + id + " = movieactors.id_actor AND\n" +
 "movieactors.id_movie = movie.id_movie;";
                     break;
                 case 'S':
-                    sql = "SELECT movie FROM moviescenarist, movie WHERE " + id + " = moviescenarist.id_actor AND\n" +
+                    sql = "SELECT movie.id_movie, movie.namecz, movie.nameen FROM moviescenarist, movie WHERE " + id + " = moviescenarist.id_scenarist AND\n" +
 "moviescenarist.id_movie = movie.id_movie;";
                     break;
                 case 'D':
-                    sql = "SELECT movie FROM moviedirectors, movie WHERE " + id + " = moviedirectors.id_actor AND\n" +
+                    sql = "SELECT movie.id_movie, movie.namecz, movie.nameen FROM moviedirectors, movie WHERE " + id + " = moviedirectors.id_director AND\n" +
 "moviedirectors.id_movie = movie.id_movie;";
                     break;
             }            
@@ -67,6 +67,8 @@ public class getPersonsMovies extends Thread{
             ResultSet rs = stmt.executeQuery(sql);
             Movie result;
             ArrayList<Movie> list = new ArrayList<>();
+            
+            
             
             while(rs.next() && isRunning){
                 result = new Movie(rs.getInt(1));
