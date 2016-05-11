@@ -51,6 +51,7 @@ public class actorsPanel extends JPanel{
     private void initComponents(){
         JPanel buttPane = new JPanel(new FlowLayout());
         dataTable = new JTable(data,columnNames);        
+        dataTable.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollPane = new JScrollPane(dataTable);
         JPanel toolPane = new JPanel();
         toolPane.setLayout(new BorderLayout());
