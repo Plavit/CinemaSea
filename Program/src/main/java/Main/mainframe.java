@@ -31,6 +31,9 @@ public class mainframe extends JFrame{
     private User user;
     private Movie[] allMovies;
     private Database db;
+    private Person[] directors;
+    private Person[] scenarists;
+    private Person[] actors;
     
     JProgressBar bar = new JProgressBar();
     JTabbedPane mainPanel = new JTabbedPane();
@@ -121,6 +124,14 @@ public class mainframe extends JFrame{
                 selectUserMovies thUserMovies = new selectUserMovies(user.getId());
                 thUserMovies.start();
                 
+                selectAllPersons allActors = new selectAllPersons('A');
+                selectAllPersons allScenarists = new selectAllPersons('D');
+                selectAllPersons allDirectors = new selectAllPersons('S');
+                
+                allActors.start();
+                allScenarists.start();
+                allDirectors.start();
+                
                 int count = 0;
                 for (Movie mv : allMovies) {
                     
@@ -174,6 +185,18 @@ public class mainframe extends JFrame{
                 }
                 user.setRated(userMovieTMP);
                 
+                try {
+                    allActors.join();
+                    allDirectors.join();
+                    allScenarists.join();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                actors = allActors.returnPersonArray();
+                directors = allDirectors.returnPersonArray();
+                scenarists = allScenarists.returnPersonArray();
+                
                 updateMainFrame();
                 
                 System.out.println("ALL DATA SET");
@@ -190,9 +213,9 @@ public class mainframe extends JFrame{
         
         ratePane.passData(user.getRated());
         moviesPane.passData(allMovies,user.isIsAdmin());
-        actPane.passData(allMovies, user.isIsAdmin());
-        scePane.passData(allMovies, user.isIsAdmin());
-        dirPane.passData(allMovies, user.isIsAdmin());
+        actPane.passData(allMovies, user.isIsAdmin(),actors);
+        scePane.passData(allMovies, user.isIsAdmin(),scenarists);
+        dirPane.passData(allMovies, user.isIsAdmin(),directors);
     }
     
 }

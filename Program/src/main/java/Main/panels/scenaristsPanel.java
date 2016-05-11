@@ -41,6 +41,7 @@ public class scenaristsPanel extends JPanel{
                         "Surname",
                         "Description",
                         "Year"};
+    private Person[] scenarists;
     
     public scenaristsPanel(int idUser){
         this.id_user = idUser;
@@ -86,11 +87,9 @@ public class scenaristsPanel extends JPanel{
         
     }
     
-    public void passData(Movie[] movies, boolean isAdmin){
-        
+    public void passData(Movie[] movies, boolean isAdmin,Person[] Scenarists){
+        this.scenarists = Scenarists;
         this.isAdmin = isAdmin;
-        boolean isThere = false;
-        Person curPerson;
         
         //get out all the actors
         //System.out.println("getting actors");
@@ -116,8 +115,19 @@ public class scenaristsPanel extends JPanel{
         }
         //System.out.println("removing finished");
         
-        
-        
+        // ADD directors without movies
+        for (Person scenarist : scenarists) {
+            Person pr = scenarist.copy();
+            boolean insert = true;
+            for (int k = 0; k < rawPeople.size(); k++) {
+                if (pr.getId() == rawPeople.get(k).getId()) {
+                    insert = false;
+                }
+            }
+            if (insert) {
+                rawPeople.add(pr);
+            }
+        }    
         
         data = new Object[rawPeople.size()][5];
         

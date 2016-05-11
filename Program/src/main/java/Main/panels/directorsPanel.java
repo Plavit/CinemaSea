@@ -39,6 +39,7 @@ public class directorsPanel extends JPanel{
                         "Surname",
                         "Description",
                         "Year"};
+    private Person[] directors;
     
     public directorsPanel(int idUser){
         this.idUser = idUser;
@@ -84,8 +85,8 @@ public class directorsPanel extends JPanel{
         
     }
     
-    public void passData(Movie[] movies, boolean isAdmin){
-        
+    public void passData(Movie[] movies, boolean isAdmin,Person[] Directors){
+        this.directors = Directors;
         this.isAdmin = isAdmin;
         boolean isThere = false;
         Person curPerson;
@@ -114,8 +115,19 @@ public class directorsPanel extends JPanel{
         }
         //System.out.println("removing finished");
         
-        
-        
+        // ADD directors without movies
+        for (Person director : directors) {
+            Person pr = director.copy();
+            boolean insert = true;
+            for (int k = 0; k < rawPeople.size(); k++) {
+                if (pr.getId() == rawPeople.get(k).getId()) {
+                    insert = false;
+                }
+            }
+            if (insert) {
+                rawPeople.add(pr);
+            }
+        }     
         
         data = new Object[rawPeople.size()][5];
         
