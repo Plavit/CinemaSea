@@ -2,6 +2,7 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -78,6 +79,15 @@ public class Person{
             //if not, add movie
             this.moviesActed.add(movie);
         }
+    }
+    
+    public void setMoviesActed(Movie[] movies) {
+        ArrayList<Movie> setMoviesActed = new ArrayList<Movie>(0);
+        for (Movie movie : movies) {
+            setMoviesActed.add(movie);
+        }
+        this.moviesActed=setMoviesActed;
+
     }
     
     public void removeMovieActed(Movie movie){

@@ -131,6 +131,13 @@ public class mainframe extends JFrame{
                 allActors.start();
                 allScenarists.start();
                 allDirectors.start();
+                try {
+                    allActors.join();
+                    allDirectors.join();
+                    allScenarists.join();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
                 int count = 0;
                 for (Movie mv : allMovies) {
@@ -185,19 +192,49 @@ public class mainframe extends JFrame{
                 }
                 user.setRated(userMovieTMP);
                 
-                try {
-                    allActors.join();
-                    allDirectors.join();
-                    allScenarists.join();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
                 actors = allActors.returnPersonArray();
                 directors = allDirectors.returnPersonArray();
                 scenarists = allScenarists.returnPersonArray();
                 
-                updateMainFrame();
+                getPersonsMovies movies;
+                for(Person pr : actors){
+                    movies = new getPersonsMovies('A',pr.getId());
+                    movies.start();
+                    try {
+                        movies.join();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(actorsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    pr.setMoviesActed(movies.returnMoviesArray());
+                }
+                
+                for(Person pr : directors){
+                    movies = new getPersonsMovies('D',pr.getId());
+                    movies.start();
+                    try {
+                        movies.join();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(actorsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    pr.setMoviesActed(movies.returnMoviesArray());
+                }
+                
+                for(Person pr : scenarists){
+                    movies = new getPersonsMovies('S',pr.getId());
+                    movies.start();
+                    try {
+                        movies.join();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(actorsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    pr.setMoviesActed(movies.returnMoviesArray());
+                }
+                
+                try {
+                    updateMainFrame();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
                 System.out.println("ALL DATA SET");
                 bar.setVisible(false);
@@ -208,7 +245,7 @@ public class mainframe extends JFrame{
         
     }
     
-    public void updateMainFrame(){
+    public void updateMainFrame() throws InterruptedException{
         
         
         ratePane.passData(user.getRated());
