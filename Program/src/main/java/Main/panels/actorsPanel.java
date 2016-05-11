@@ -33,7 +33,6 @@ public class actorsPanel extends JPanel{
     
     private int idUser;
     private boolean isAdmin = false;
-    private ArrayList<Person> rawPeople = new ArrayList<Person>(0);
     private Object[][] data;    
     private JTable dataTable;
     private final String[] columnNames = {"ID","Name",
@@ -89,58 +88,18 @@ public class actorsPanel extends JPanel{
     
     public void passData(Movie[] movies, boolean isAdmin, Person[] Actors){
         this.actors = Actors;
-        this.isAdmin = isAdmin;
+        this.isAdmin = isAdmin;     
         
-        //get out all the actors
-        //System.out.println("getting actors");
-        for(int i = 0; i < movies.length; i++){
-            //System.out.println("movie nr" + i);
-            for(int j = 0; j < movies[i].getActors().length; j++){
-                //System.out.println("actor nr" + j);
-                rawPeople.add(movies[i].getActors()[j]);
-                //adding movies to actors starring in them
-                movies[i].getActors()[j].addMovieActed(movies[i]);
-            }
-        }
+        data = new Object[actors.length][5];
         
-        //delete duplicate persons
-        //System.out.println("removing process commenced");
-        for(int i = 0; i < rawPeople.size(); i++){
-            for(int j = 1+i; j < rawPeople.size(); j++){
-                //System.out.println("index: [" + i + "," + j + "]");
-                if(rawPeople.get(i).getId()==(rawPeople.get(j).getId())){
-                    rawPeople.remove(j);
-                    //System.out.println("removed:" + j);
-                    j--;
-                }
-            }
-        }
-        //System.out.println("removing finished");
-        // ADD actors without movies
-        for (Person actor : actors) {
-            Person pr = actor.copy();
-            boolean insert = true;
-            for (int k = 0; k < rawPeople.size(); k++) {
-                if (pr.getId() == rawPeople.get(k).getId()) {
-                    insert = false;
-                }
-            }
-            if (insert) {
-                rawPeople.add(pr);
-            }
-        }
-
+        //assign relevant people values to table        
         
-        data = new Object[rawPeople.size()][5];
-        
-        //assign relevant people values to table
-        
-        for(int i = 0; i < rawPeople.size(); i++){
-            data[i][0] = rawPeople.get(i).getId();//ID
-            data[i][1] = rawPeople.get(i).getName();//name
-            data[i][2] = rawPeople.get(i).getLastName();//surname
-            data[i][3] = rawPeople.get(i).getDescription();//desc
-            data[i][4] = rawPeople.get(i).getYear();//year            
+        for(int i = 0; i < actors.length; i++){
+            data[i][0] = actors[i].getId();//ID
+            data[i][1] = actors[i].getName();//name
+            data[i][2] = actors[i].getLastName();//surname
+            data[i][3] = actors[i].getDescription();//desc
+            data[i][4] = actors[i].getYear();//year            
         }
         
         initComponents();
@@ -150,7 +109,7 @@ public class actorsPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             int lastID = 0;
-            for(Person pr : rawPeople){
+            for(Person pr : actors){
                 if(pr.getId() > lastID) lastID = pr.getId();
             }
 
@@ -172,7 +131,7 @@ public class actorsPanel extends JPanel{
                 Object idActor = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
                 Person human = null;
                 
-                for(Person pr : rawPeople){
+                for(Person pr : actors){
                     if(pr.getId() == Integer.parseInt(idActor.toString())){
                         human = pr;
                     }                        
@@ -191,11 +150,11 @@ public class actorsPanel extends JPanel{
     };
         ActionListener showListener = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {            
+        public void actionPerformed(ActionEvent actionEvent) {     
             //fill up people array from rawPeople arraylist
-            people = new Person[rawPeople.size()];
+            people = new Person[actors.length];
             for(int i=0;i<people.length;i++){
-                people[i]=rawPeople.get(i);
+                people[i]=actors[i];
             }
             if(dataTable.getSelectedRow() != -1){
                 Object idPerson = dataTable.getValueAt(dataTable.getSelectedRow(), 0);

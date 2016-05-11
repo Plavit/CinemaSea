@@ -32,7 +32,6 @@ public class directorsPanel extends JPanel{
     
     private int idUser;
     private boolean isAdmin = false;
-    private ArrayList<Person> rawPeople = new ArrayList<Person>(0);
     private Object[][] data;    
     private JTable dataTable;
     private String[] columnNames = {"ID","Name",
@@ -87,58 +86,18 @@ public class directorsPanel extends JPanel{
     
     public void passData(Movie[] movies, boolean isAdmin,Person[] Directors){
         this.directors = Directors;
-        this.isAdmin = isAdmin;
-        boolean isThere = false;
-        Person curPerson;
+        this.isAdmin = isAdmin;         
         
-        //get out all the actors
-        //System.out.println("getting actors");
-        for(int i = 0; i < movies.length; i++){
-            //System.out.println("movie nr" + i);
-            for(int j = 0; j < movies[i].getDirectors().length; j++){
-                //System.out.println("actor nr" + j);
-                    rawPeople.add(movies[i].getDirectors()[j]);
-                }
-        }
-        
-        //delete duplicate persons
-        //System.out.println("removing process commenced");
-        for(int i = 0; i < rawPeople.size(); i++){
-            for(int j = 1+i; j < rawPeople.size(); j++){
-                //System.out.println("index: [" + i + "," + j + "]");
-                if(rawPeople.get(i).getId()==(rawPeople.get(j).getId())){
-                    rawPeople.remove(j);
-                    //System.out.println("removed:" + j);
-                    j--;
-                }
-            }
-        }
-        //System.out.println("removing finished");
-        
-        // ADD directors without movies
-        for (Person director : directors) {
-            Person pr = director.copy();
-            boolean insert = true;
-            for (int k = 0; k < rawPeople.size(); k++) {
-                if (pr.getId() == rawPeople.get(k).getId()) {
-                    insert = false;
-                }
-            }
-            if (insert) {
-                rawPeople.add(pr);
-            }
-        }     
-        
-        data = new Object[rawPeople.size()][5];
+        data = new Object[directors.length][5];
         
         //assign relevant people values to table
         
-        for(int i = 0; i < rawPeople.size(); i++){
-            data[i][0] = rawPeople.get(i).getId();//ID
-            data[i][1] = rawPeople.get(i).getName();//name
-            data[i][2] = rawPeople.get(i).getLastName();//surname
-            data[i][3] = rawPeople.get(i).getDescription();//desc
-            data[i][4] = rawPeople.get(i).getYear();//year
+        for(int i = 0; i < directors.length; i++){
+            data[i][0] = directors[i].getId();//ID
+            data[i][1] = directors[i].getName();//name
+            data[i][2] = directors[i].getLastName();//surname
+            data[i][3] = directors[i].getDescription();//desc
+            data[i][4] = directors[i].getYear();//year
             
         }
         
@@ -149,7 +108,7 @@ public class directorsPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            
             int lastID = 0;
-            for(Person pr : rawPeople){
+            for(Person pr : directors){
                 if(pr.getId() > lastID) lastID = pr.getId();
             }
             
@@ -169,10 +128,10 @@ public class directorsPanel extends JPanel{
             
            if(dataTable.getSelectedRow() != -1){
                 Object idDirector = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Person human = rawPeople.get(Integer.parseInt(idDirector.toString())-1);
+                Person human = directors[Integer.parseInt(idDirector.toString())-1];
                 personDialog dialog = null;
                 
-                for(Person pr : rawPeople){
+                for(Person pr : directors){
                     if(pr.getId() == Integer.parseInt(idDirector.toString())){
                         human = pr;
                     }                        
