@@ -7,7 +7,7 @@ import java.util.ArrayList;
  *
  * @author Löffler David, Szeles Marek
  */
-public class Person {
+public class Person{
     
     private final int Id;
     private String Name;
@@ -126,6 +126,16 @@ public class Person {
     
     public int getId() {
         return Id;
+    }
+    
+    public Person copy(){
+        Person newPR = new Person(this.Id);
+        newPR.setFullName(this.FullName);
+        newPR.setName(this.Name);
+        newPR.setLastName(this.LastName);
+        newPR.setYear(this.Year);
+        newPR.setDescription(this.Description);
+        return newPR;
     }
     
 }
