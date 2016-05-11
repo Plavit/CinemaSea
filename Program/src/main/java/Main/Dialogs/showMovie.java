@@ -28,7 +28,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -154,6 +156,10 @@ public class showMovie extends JDialog{
         Object obj = rateBox.getSelectedItem();
         double rate = Double.valueOf(obj.toString());
         db.rateMovie(rate, movie.getId(),user);
+        JOptionPane.showMessageDialog(new JFrame(),
+                    "Movie has been rated!",
+                    "Rating accepted",
+                    JOptionPane.PLAIN_MESSAGE);
     }; 
    
 }

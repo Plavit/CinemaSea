@@ -159,7 +159,7 @@ public class movieDialog  extends JDialog{
         JScrollPane scrollActors = new JScrollPane(actors);
         JScrollPane scrollDirectors = new JScrollPane(directors);
         JScrollPane scrollscenarists = new JScrollPane(scenarists);       
-        
+        scrollActors.setPreferredSize(new Dimension(300,100));
         // POSITIONING OF PERSONS FIELDS
         
         gbc.gridx = 2;

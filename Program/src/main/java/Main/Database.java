@@ -36,7 +36,8 @@ public class Database {
            Class.forName("org.postgresql.Driver");
            System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("CONNECTION SUCCESFUL");           
+           System.out.println("CONNECTION SUCCESFUL");  
+           conn.close();
        }
        catch(Exception e){
            JOptionPane.showMessageDialog(new JFrame(),
@@ -282,8 +283,62 @@ public class Database {
     }
    
    public void rateMovie(double rate, int id_movie, User user){
+       Double rating = rate;
+       boolean alreadyRated = false;
+       for(Movie mv : user.getRated()){
+           if(mv.getId() == id_movie) alreadyRated = true;
+       }
        
-       System.out.println("rate: " + String.valueOf(rate));
+       ResultSet rs = null;
+       Statement stmt = null;
+       try {
+           // PREPARING THE SQL REQUEST
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+                
+           String sql = "";
+           
+           if(alreadyRated){
+               sql = "UPDATE rating SET stars = "+ rating.intValue() + "\n" +
+        "WHERE (SELECT rr.id_rate FROM rating_related AS rr\n" +
+        "WHERE "+ id_movie +" = rr.id_movie) = id_rate AND id_user = " + user.getId();
+               stmt.executeUpdate(sql);
+           }else{
+               sql = "INSERT INTO rating VALUES((SELECT MAX(id_rate) FROM rating)+1," + user.getId() + ","+ rating.intValue() +");\n" +
+                    "INSERT INTO rating_related VALUES((SELECT MAX(id_rate) FROM rating),"+ id_movie +");";
+               stmt.executeUpdate(sql);
+           }
+           
+           // CLOSING THE CONNECTION
+           stmt.close();
+           conn.close();           
+
+       } catch (SQLException se) {
+           System.out.println("FAIL #1");
+           se.printStackTrace();
+       } catch (Exception e) {
+           System.out.println("FAIL #2");
+           e.printStackTrace();
+       } finally {
+           //finally block used to close resources
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try  
        
    }
 
