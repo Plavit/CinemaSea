@@ -244,14 +244,10 @@ public class mainframe extends JFrame{
         gatherPersons.start();
         
     }
-    
-<<<<<<< HEAD
-    public void updateMainFrame(){
-=======
+
     public void updateMainFrame() throws InterruptedException{
         
         
->>>>>>> 63ac5b1d6fe4a9497cce2e05040dfc96ec4a194c
         ratePane.passData(user.getRated());
         moviesPane.passData(allMovies,user.isIsAdmin());
         actPane.passData(allMovies, user.isIsAdmin(),actors);
