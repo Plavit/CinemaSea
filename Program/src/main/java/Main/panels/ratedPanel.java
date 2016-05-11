@@ -16,10 +16,17 @@
  */
 package Main.panels;
 
+import Main.Dialogs.showMovie;
 import Main.Movie;
+import Main.User;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,11 +41,12 @@ public class ratedPanel extends JPanel{
     
     private Object[][] data;    
     private JTable dataTable;
-    private String[] columnNames = {"Name CZ",
+    private String[] columnNames = {"ID", "Name CZ",
                         "Name EN",
                         "Genres",
                         "Release date", "Rating"};
-    
+    private Movie[] rated;
+    private User user;
     public ratedPanel(){
         setLayout(new BorderLayout());
     }    
@@ -52,6 +60,7 @@ public class ratedPanel extends JPanel{
         Label headline = new Label("Rated movies");
         headline.setFont(new Font("Arial",Font.PLAIN,18));
         JButton btn = new JButton("Show");
+        btn.addActionListener(showListener);
         toolPane.add(headline, BorderLayout.WEST);
         toolPane.add(btn, BorderLayout.EAST);
         
@@ -69,13 +78,15 @@ public class ratedPanel extends JPanel{
         
     }
     
-    public void passData(Movie[] rated){
-        
-        data = new Object[rated.length][5];
+    public void passData(User user){
+        this.rated = user.getRated();
+        this.user = user;
+        data = new Object[rated.length][6];
         
         for(int i = 0; i < rated.length; i++){
-            data[i][0] = rated[i].getNameCZ();
-            data[i][1] = rated[i].getNameEN();
+            data[i][0] = rated[i].getId();
+            data[i][1] = rated[i].getNameCZ();
+            data[i][2] = rated[i].getNameEN();
             
             String genres = "";
             
@@ -88,14 +99,30 @@ public class ratedPanel extends JPanel{
                 }
             }
             
-            data[i][2] = genres;
-            data[i][3] = rated[i].getYear();
-            data[i][4] = rated[i].getRating();
+            data[i][3] = genres;
+            data[i][4] = rated[i].getYear();
+            data[i][5] = rated[i].getRating();
         }      
         initComponents();
     }
     
-    
+    ActionListener showListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {            
+            
+            if(dataTable.getSelectedRow() != -1){
+                Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Movie passMovie = rated[Integer.parseInt(idMovie.toString()) - 1];
+                showMovie dialog = null;
+                try {
+                    dialog = new showMovie(passMovie,user);
+                } catch (IOException ex) {
+                    Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.setVisible(true);
+            }
+        }
+    };
     
     
 }
