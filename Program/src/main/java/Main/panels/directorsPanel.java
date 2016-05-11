@@ -6,6 +6,7 @@
 package Main.panels;
 
 import Main.Dialogs.personDialog;
+import Main.Dialogs.showPerson;
 import Main.Movie;
 import Main.Person;
 import java.awt.BorderLayout;
@@ -38,6 +39,7 @@ public class directorsPanel extends JPanel{
                         "Surname",
                         "Description",
                         "Year"};
+    private Person[] people;
     private Person[] directors;
     
     public directorsPanel(int idUser){
@@ -58,7 +60,7 @@ public class directorsPanel extends JPanel{
         toolPane.add(headline, BorderLayout.WEST);
         JButton btnAdd = new JButton("Add");
         JButton btnEdit = new JButton("Edit");
-        //btn.addActionListener(showListener);
+        btn.addActionListener(showListener);
         btnAdd.addActionListener(addListener);
         btnEdit.addActionListener(editListener);        
         
@@ -142,6 +144,28 @@ public class directorsPanel extends JPanel{
                     dialog = new personDialog(idUser,human,'U','D');
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.setVisible(true);
+            }
+
+        }
+    };
+        ActionListener showListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {     
+            //fill up people array from rawPeople arraylist
+            people = new Person[directors.length];
+            for(int i=0;i<people.length;i++){
+                people[i]=directors[i];
+            }
+            if(dataTable.getSelectedRow() != -1){
+                Object idPerson = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Person passPerson = people[dataTable.getSelectedRow()];
+                showPerson dialog = null;
+                try {
+                    dialog = new showPerson(passPerson);
+                } catch (IOException ex) {
+                    Logger.getLogger(actorsPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.setVisible(true);
             }

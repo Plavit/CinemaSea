@@ -40,6 +40,7 @@ public class scenaristsPanel extends JPanel{
                         "Surname",
                         "Description",
                         "Year"};
+    private Person[] people;
     private Person[] scenarists;
     
     public scenaristsPanel(int idUser){
@@ -151,7 +152,27 @@ public class scenaristsPanel extends JPanel{
         }
     };
     
-    ActionListener showListener = (ActionEvent actionEvent) -> {
-        System.out.println("EDIT");
+        ActionListener showListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {     
+            //fill up people array from rawPeople arraylist
+            people = new Person[scenarists.length];
+            for(int i=0;i<people.length;i++){
+                people[i]=scenarists[i];
+            }
+            if(dataTable.getSelectedRow() != -1){
+                Object idPerson = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+                Person passPerson = people[dataTable.getSelectedRow()];
+                showPerson dialog = null;
+                try {
+                    dialog = new showPerson(passPerson);
+                } catch (IOException ex) {
+                    Logger.getLogger(actorsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.setVisible(true);
+            }
+
+        }
     };
+    
 }
