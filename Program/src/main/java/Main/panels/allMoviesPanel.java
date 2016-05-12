@@ -140,7 +140,7 @@ public class allMoviesPanel extends JPanel{
                 Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
                 movieDialog dialog = null;
                 try {
-                    dialog = new movieDialog(passMovie.getId(),null,'I',allActors,allDirectors,allScenarists);
+                    dialog = new movieDialog(passMovie.getId(),null,null,'I',allActors,allDirectors,allScenarists);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -159,7 +159,7 @@ public class allMoviesPanel extends JPanel{
                 Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
                 movieDialog dialog = null;
                 try {
-                    dialog = new movieDialog(passMovie.getId(),passMovie,'U',allActors,allDirectors,allScenarists);
+                    dialog = new movieDialog(passMovie.getId(),passMovie,passMovie,'U',allActors,allDirectors,allScenarists);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -5,6 +5,8 @@
  */
 package Main;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Löffler David, Szeles Marek
@@ -240,4 +242,77 @@ public class Movie {
         }
         return genres;
     }
+    
+    public void addActor(Person pr){
+        Person[] newPPL = new Person[this.Actors.length+1];
+        for(int i = 0; i < newPPL.length-1; i++){
+            newPPL[i] = this.Actors[i];
+        }
+        newPPL[newPPL.length-1] = pr;
+        this.Actors = newPPL;
+    }
+    
+    public void addDirector(Person pr){
+        Person[] newPPL = new Person[this.Directors.length+1];
+        for(int i = 0; i < newPPL.length-1; i++){
+            newPPL[i] = this.Directors[i];
+        }
+        newPPL[newPPL.length-1] = pr;
+        this.Directors = newPPL;
+    }
+    
+    public void addScenarist(Person pr){
+        Person[] newPPL = new Person[this.Scenarists.length+1];
+        for(int i = 0; i < newPPL.length-1; i++){
+            newPPL[i] = this.Scenarists[i];
+        }
+        newPPL[newPPL.length-1] = pr;
+        this.Scenarists = newPPL;
+    }
+    
+    public void rmActor(Person pr){
+        ArrayList<Person> ppl = new ArrayList<>(0);
+        for(int i = 0; i < this.Actors.length; i++){
+            if(pr.getId() != this.Actors[i].getId()){
+                ppl.add(this.Actors[i]);
+            }
+        }
+        this.Actors = new Person[ppl.size()];
+        int k = 0;
+        for(Person man : ppl){
+            this.Actors[k] = man;
+            k++;
+        }
+    }
+    
+    public void rmDirector(Person pr){
+        ArrayList<Person> ppl = new ArrayList<>(0);
+        for(int i = 0; i < this.Directors.length; i++){
+            if(pr.getId() != this.Directors[i].getId()){
+                ppl.add(this.Directors[i]);
+            }
+        }
+        this.Directors = new Person[ppl.size()];
+        int k = 0;
+        for(Person man : ppl){
+            this.Directors[k] = man;
+            k++;
+        }
+    }
+    
+    public void rmScenarist(Person pr){
+        ArrayList<Person> ppl = new ArrayList<>(0);
+        for(int i = 0; i < this.Scenarists.length; i++){
+            if(pr.getId() != this.Scenarists[i].getId()){
+                ppl.add(this.Scenarists[i]);
+            }
+        }
+        this.Scenarists = new Person[ppl.size()];
+        int k = 0;
+        for(Person man : ppl){
+            this.Scenarists[k] = man;
+            k++;
+        }
+    }
+    
 }

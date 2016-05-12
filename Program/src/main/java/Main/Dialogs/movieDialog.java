@@ -36,6 +36,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -52,15 +53,18 @@ public class movieDialog extends JDialog{
     private JTextField yearField = new JTextField(30);
     private JTextArea descArea = new JTextArea(25, 40);
     private String[] columnNames = {"ID","Name"};
+    DefaultTableModel modelA = new DefaultTableModel();
+    DefaultTableModel modelD = new DefaultTableModel(); 
+    DefaultTableModel modelS = new DefaultTableModel(); 
     private Object[][] dataA = new Object[0][2];
     private Object[][] dataD = new Object[0][2];
     private Object[][] dataS = new Object[0][2];
     private Person[] allActors, allDirectors, allScenarits;
 
-    public movieDialog(int id, Movie movie, char typeOfDialog,Person[] actors, Person[] directors, Person[] scenarists) throws IOException {
+    public movieDialog(int id, Movie movie,Movie copy, char typeOfDialog,Person[] actors, Person[] directors, Person[] scenarists) throws IOException {
         this.lastID = id;
         this.movie = movie;
-        this.copy = movie;
+        this.copy = copy;
         this.allActors = actors;
         this.allDirectors = directors;
         this.allScenarits = scenarists;
@@ -241,6 +245,16 @@ public class movieDialog extends JDialog{
         
         JScrollPane main = new JScrollPane(fieldsPane);
         add(main,BorderLayout.CENTER);
+        
+        // LISTENERS
+        
+        addAct.addActionListener(addActorListener);
+        addDir.addActionListener(addDirectorListener);
+        addScn.addActionListener(addScenaristsListener);
+        delAct.addActionListener(delActorListener);
+        delScn.addActionListener(delScenaristsListener);
+        delDir.addActionListener(delDirectorListener);
+        
     }
     
     private boolean checkYear(String year){
@@ -253,11 +267,71 @@ public class movieDialog extends JDialog{
         }
         return valid;
     }
-    
-    public void updateTable(Person pr){
-        
+
+    public boolean updateTable(Person pr, char Who) {
+        boolean isThere = false;
+        System.out.println("UPDATE TABLE");
+        switch (Who) {
+            case 'A':
+                for (int i = 0; i < movie.getActors().length; i++) {
+                    if (dataA[i][0] == Integer.valueOf(pr.getId())) {
+                        isThere = true;
+                    }
+                }
+
+                if (!isThere) {
+                    movie.addActor(pr);
+                    this.dispose();
+                    try {
+                        movieDialog refresh = new movieDialog(this.lastID, this.movie,this.copy, this.typeOfDialog, this.allActors, this.allDirectors, this.allScenarits);                        
+                        refresh.setVisible(true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }                    
+                }
+                break;
+            case 'D':
+                for (int i = 0; i < movie.getDirectors().length; i++) {
+                    if (dataD[i][0] == Integer.valueOf(pr.getId())) {
+                        isThere = true;
+                    }
+                }
+
+                if (!isThere) {
+                    movie.addDirector(pr);
+                    this.dispose();
+                    try {
+                        movieDialog refresh = new movieDialog(this.lastID, this.movie,this.copy, this.typeOfDialog, this.allActors, this.allDirectors, this.allScenarits);                        
+                        refresh.setVisible(true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }                    
+                }
+                break;
+                
+            case 'S':
+                for (int i = 0; i < movie.getScenarists().length; i++) {
+                    if (dataS[i][0] == Integer.valueOf(pr.getId())) {
+                        isThere = true;
+                    }
+                }
+
+                if (!isThere) {
+                    movie.addScenarist(pr);
+                    this.dispose();
+                    try {
+                        movieDialog refresh = new movieDialog(this.lastID, this.movie,this.copy, this.typeOfDialog, this.allActors, this.allDirectors, this.allScenarits);                        
+                        refresh.setVisible(true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }                    
+                }
+                break;
+        }
+
+        return isThere;
     }
-    
+
     ActionListener closeAction = (ActionEvent actionEvent) -> {
         this.dispose();
     };
@@ -277,16 +351,31 @@ public class movieDialog extends JDialog{
     ActionListener addActorListener = (ActionEvent actionEvent) -> {
         getPersonDialog pd;
         try {
-            pd = new getPersonDialog(movieDialog.this, 'A');
+            pd = new getPersonDialog(movieDialog.this, 'A',allActors);
+            pd.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     };
     
     ActionListener addDirectorListener = (ActionEvent actionEvent) -> {
+        getPersonDialog pd;
+        try {
+            pd = new getPersonDialog(movieDialog.this, 'D',allDirectors);
+            pd.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
     };
     
     ActionListener addScenaristsListener = (ActionEvent actionEvent) -> {
+        getPersonDialog pd;
+        try {
+            pd = new getPersonDialog(movieDialog.this, 'S',allScenarits);
+            pd.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
     };
     
     ActionListener delScenaristsListener = (ActionEvent actionEvent) -> {
