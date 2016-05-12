@@ -8,6 +8,8 @@ package Main.Dialogs;
 import Main.Database;
 import Main.Movie;
 import Main.Person;
+import Main.panels.actorsPanel;
+import Main.panels.allMoviesPanel;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -20,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -31,15 +35,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author David Löffler
  */
-public class movieDialog  extends JDialog{
+public class movieDialog extends JDialog{
     
     private int lastID;
     private Movie movie;
+    private Movie copy;
     private char typeOfDialog;
     private JTextField nameCZField = new JTextField(30);
     private JTextField nameENField = new JTextField(30);
@@ -49,10 +55,15 @@ public class movieDialog  extends JDialog{
     private Object[][] dataA = new Object[0][2];
     private Object[][] dataD = new Object[0][2];
     private Object[][] dataS = new Object[0][2];
+    private Person[] allActors, allDirectors, allScenarits;
 
-    public movieDialog(int id, Movie movie, char typeOfDialog) throws IOException {
+    public movieDialog(int id, Movie movie, char typeOfDialog,Person[] actors, Person[] directors, Person[] scenarists) throws IOException {
         this.lastID = id;
         this.movie = movie;
+        this.copy = movie;
+        this.allActors = actors;
+        this.allDirectors = directors;
+        this.allScenarits = scenarists;
         this.typeOfDialog = typeOfDialog;
         setLayout(new BorderLayout());
         
@@ -98,10 +109,7 @@ public class movieDialog  extends JDialog{
         JLabel nameCZLab = new JLabel("Name CZ:");
         JLabel nameENLab = new JLabel("Name EN:");
         JLabel yearLab = new JLabel("Year:");
-        JLabel descLab = new JLabel("Description:");    
-        JLabel actLab = new JLabel("Actors:");
-        JLabel dirLab = new JLabel("Directors:");
-        JLabel scnLab = new JLabel("Scenarists:");
+        JLabel descLab = new JLabel("Description:");
         JScrollPane scrollDesc = new JScrollPane(descArea);
         descArea.setLineWrap(true);
         
@@ -156,29 +164,98 @@ public class movieDialog  extends JDialog{
         directors = new JTable(dataD,columnNames);
         scenarists = new JTable(dataS,columnNames);
         
+        // Setting of table ACTOR
+        actors.getTableHeader().setReorderingAllowed(false);        
+        for (int c = 0; c < actors.getColumnCount(); c++) {
+            Class<?> col_class = actors.getColumnClass(c);
+            actors.setDefaultEditor(col_class, null);        // remove editor
+        }        
+        actors.setRowSelectionAllowed(true);
+        actors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        // Setting of table Director
+        directors.getTableHeader().setReorderingAllowed(false);        
+        for (int c = 0; c < directors.getColumnCount(); c++) {
+            Class<?> col_class = directors.getColumnClass(c);
+            directors.setDefaultEditor(col_class, null);        // remove editor
+        }        
+        directors.setRowSelectionAllowed(true);
+        directors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        // Setting of table Scenarists
+        scenarists.getTableHeader().setReorderingAllowed(false);        
+        for (int c = 0; c < scenarists.getColumnCount(); c++) {
+            Class<?> col_class = scenarists.getColumnClass(c);
+            scenarists.setDefaultEditor(col_class, null);        // remove editor
+        }        
+        scenarists.setRowSelectionAllowed(true);
+        scenarists.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         JScrollPane scrollActors = new JScrollPane(actors);
         JScrollPane scrollDirectors = new JScrollPane(directors);
         JScrollPane scrollscenarists = new JScrollPane(scenarists);       
-        scrollActors.setPreferredSize(new Dimension(300,100));
-        // POSITIONING OF PERSONS FIELDS
+        scrollActors.setPreferredSize(new Dimension(350,100));
+        scrollscenarists.setPreferredSize(new Dimension(350,100));
+        scrollDirectors.setPreferredSize(new Dimension(350,100));
+        JPanel actHolder = new JPanel(new GridBagLayout());
+        JPanel scnHolder = new JPanel(new GridBagLayout());
+        JPanel dirHolder = new JPanel(new GridBagLayout());
+        JPanel personsHolder = new JPanel(new GridBagLayout());
+        JPanel actBtns = new JPanel(new FlowLayout());
+        JPanel scnBtns = new JPanel(new FlowLayout());
+        JPanel dirBtns = new JPanel(new FlowLayout());
+        JButton addAct = new JButton("Add actor");
+        JButton addDir = new JButton("Add director");
+        JButton addScn = new JButton("Add scenarist");
+        JButton delAct = new JButton("Remove actor");
+        JButton delDir = new JButton("Remove director");
+        JButton delScn = new JButton("Remove scenarist");
+        actBtns.add(addAct);
+        actBtns.add(delAct);
+        scnBtns.add(addScn);
+        scnBtns.add(delScn);
+        dirBtns.add(addDir);
+        dirBtns.add(delDir);
+        
+        // POSITIONING OF PERSONS FIELDS    
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        actHolder.add(actBtns,gbc);
+        dirHolder.add(dirBtns,gbc);
+        scnHolder.add(scnBtns,gbc);
+        gbc.gridy = 1;
+        actHolder.add(scrollActors,gbc);
+        dirHolder.add(scrollDirectors,gbc);
+        scnHolder.add(scrollscenarists,gbc);
+        gbc.gridy = 0;
+        personsHolder.add(actHolder,gbc);
+        gbc.gridy = 1;
+        personsHolder.add(dirHolder,gbc);
+        gbc.gridy = 2;
+        personsHolder.add(scnHolder,gbc);
         
         gbc.gridx = 2;
         gbc.gridy = 3;
-        fieldsPane.add(actLab,gbc);        
-        gbc.gridx = 3;
-        fieldsPane.add(scrollActors,gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        fieldsPane.add(dirLab,gbc);
-        gbc.gridx = 1;
-        fieldsPane.add(scrollDirectors,gbc);
-        gbc.gridx = 2;
-        fieldsPane.add(scnLab,gbc);
-        gbc.gridx = 3;
-        fieldsPane.add(scrollscenarists,gbc);        
+        fieldsPane.add(personsHolder,gbc);
         
         JScrollPane main = new JScrollPane(fieldsPane);
         add(main,BorderLayout.CENTER);
+    }
+    
+    private boolean checkYear(String year){
+        boolean valid = false;        
+        try{
+            int convert = Integer.parseInt(year);
+            valid = true;
+        }catch(Exception ex){
+            valid = false;
+        }
+        return valid;
+    }
+    
+    public void updateTable(Person pr){
+        
     }
     
     ActionListener closeAction = (ActionEvent actionEvent) -> {
@@ -194,17 +271,31 @@ public class movieDialog  extends JDialog{
         
         System.out.println("insert");
         
+    };    
+    
+    
+    ActionListener addActorListener = (ActionEvent actionEvent) -> {
+        getPersonDialog pd;
+        try {
+            pd = new getPersonDialog(movieDialog.this, 'A');
+        } catch (Exception ex) {
+            Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
     };
     
-    private boolean checkYear(String year){
-        boolean valid = false;        
-        try{
-            int convert = Integer.parseInt(year);
-            valid = true;
-        }catch(Exception ex){
-            valid = false;
-        }
-        return valid;
-    }
+    ActionListener addDirectorListener = (ActionEvent actionEvent) -> {
+    };
+    
+    ActionListener addScenaristsListener = (ActionEvent actionEvent) -> {
+    };
+    
+    ActionListener delScenaristsListener = (ActionEvent actionEvent) -> {
+    };
+    
+    ActionListener delActorListener = (ActionEvent actionEvent) -> {
+    };
+    
+    ActionListener delDirectorListener = (ActionEvent actionEvent) -> {
+    };    
     
 }

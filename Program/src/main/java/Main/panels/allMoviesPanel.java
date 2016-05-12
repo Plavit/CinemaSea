@@ -19,6 +19,7 @@ package Main.panels;
 import Main.Dialogs.movieDialog;
 import Main.Dialogs.showMovie;
 import Main.Movie;
+import Main.Person;
 import Main.User;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -46,9 +47,10 @@ public class allMoviesPanel extends JPanel{
                         "Genres",
                         "Release date", "Rating"};
     private Movie[] movies;
+    private Person[] allActors, allDirectors, allScenarists;
     
     public allMoviesPanel(User user){
-        this.user = user;
+        this.user = user;        
         setLayout(new BorderLayout());
     }
     
@@ -92,9 +94,12 @@ public class allMoviesPanel extends JPanel{
         add(scrollPane, BorderLayout.CENTER);
     }
     
-    public void passData(Movie[] Movies, boolean isAdmin){
+    public void passData(Movie[] Movies, boolean isAdmin, Person[] actors, Person[] directors, Person[] scenarists){
         this.isAdmin = isAdmin;
         this.movies = Movies;        
+        this.allActors = actors;
+        this.allDirectors = directors;
+        this.allScenarists = scenarists;
         data = new Object[Movies.length][6];
         
         for(int i = 0; i < Movies.length; i++){
@@ -135,7 +140,7 @@ public class allMoviesPanel extends JPanel{
                 Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
                 movieDialog dialog = null;
                 try {
-                    dialog = new movieDialog(passMovie.getId(),null,'I');
+                    dialog = new movieDialog(passMovie.getId(),null,'I',allActors,allDirectors,allScenarists);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -154,7 +159,7 @@ public class allMoviesPanel extends JPanel{
                 Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
                 movieDialog dialog = null;
                 try {
-                    dialog = new movieDialog(passMovie.getId(),passMovie,'U');
+                    dialog = new movieDialog(passMovie.getId(),passMovie,'U',allActors,allDirectors,allScenarists);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
