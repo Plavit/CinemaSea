@@ -139,10 +139,16 @@ public class mainframe extends JFrame{
                     Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
+                actors = allActors.returnPersonArray();
+                directors = allDirectors.returnPersonArray();
+                scenarists = allScenarists.returnPersonArray();
+                
+                int allData = allMovies.length + actors.length + scenarists.length + directors.length;
                 int count = 0;
+                int percentage = 0;
                 for (Movie mv : allMovies) {
                     
-                    int percentage = (int)(double)(((double)count++ / allMovies.length) * 100);
+                    percentage = (int)(double)(((double)count++ / allData) * 100);
                     bar.setValue(percentage);
                     bar.setString("Gathering data from database " + percentage + "%");
                     
@@ -190,14 +196,16 @@ public class mainframe extends JFrame{
                 for(int i = 0; i < tmpId.length; i++){
                     userMovieTMP[i] = allMovies[tmpId[i]-1];                    
                 }
-                user.setRated(userMovieTMP);
                 
-                actors = allActors.returnPersonArray();
-                directors = allDirectors.returnPersonArray();
-                scenarists = allScenarists.returnPersonArray();
+                user.setRated(userMovieTMP);
                 
                 getPersonsMovies movies;
                 for(Person pr : actors){
+                    
+                    percentage = (int)(double)(((double)count++ / allData) * 100);
+                    bar.setValue(percentage);
+                    bar.setString("Gathering data from database " + percentage + "%");
+                    
                     movies = new getPersonsMovies('A',pr.getId());
                     movies.start();
                     try {
@@ -209,6 +217,11 @@ public class mainframe extends JFrame{
                 }
                 
                 for(Person pr : directors){
+                    
+                    percentage = (int)(double)(((double)count++ / allData) * 100);
+                    bar.setValue(percentage);
+                    bar.setString("Gathering data from database " + percentage + "%");
+                    
                     movies = new getPersonsMovies('D',pr.getId());
                     movies.start();
                     try {
@@ -220,6 +233,11 @@ public class mainframe extends JFrame{
                 }
                 
                 for(Person pr : scenarists){
+                    
+                    percentage = (int)(double)(((double)count++ / allData) * 100);
+                    bar.setValue(percentage);
+                    bar.setString("Gathering data from database " + percentage + "%");
+                    
                     movies = new getPersonsMovies('S',pr.getId());
                     movies.start();
                     try {
