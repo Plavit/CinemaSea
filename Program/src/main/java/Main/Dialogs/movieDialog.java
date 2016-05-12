@@ -60,6 +60,7 @@ public class movieDialog extends JDialog{
     private Object[][] dataD = new Object[0][2];
     private Object[][] dataS = new Object[0][2];
     private Person[] allActors, allDirectors, allScenarits;
+    JTable actors, directors, scenarists;
 
     public movieDialog(int id, Movie movie,Movie copy, char typeOfDialog,Person[] actors, Person[] directors, Person[] scenarists) throws IOException {
         this.lastID = id;
@@ -135,27 +136,32 @@ public class movieDialog extends JDialog{
         gbc.gridy = 3;
         fieldsPane.add(scrollDesc,gbc);
         
-        //PERSONS FIELDS   
-        JTable actors, directors, scenarists;
+        //PERSONS FIELDS           
         
         if(movie != null){
-            dataA = new Object[movie.getActors().length][2];
-            dataD = new Object[movie.getDirectors().length][2];
-            dataS = new Object[movie.getScenarists().length][2];
             
+            if(!movie.isEmpty('A')){
+            dataA = new Object[movie.getActors().length][2];
             for(int i = 0; i < movie.getActors().length; i++){
                 dataA[i][0] = movie.getActors()[i].getId();
                 dataA[i][1] = movie.getActors()[i].getFullName();
             }
+            }
             
+            if(!movie.isEmpty('D')){
+            dataD = new Object[movie.getDirectors().length][2];
             for(int i = 0; i < movie.getDirectors().length; i++){
                 dataD[i][0] = movie.getDirectors()[i].getId();
                 dataD[i][1] = movie.getDirectors()[i].getFullName();
             }
+            }
             
+            if(!movie.isEmpty('S')){
+            dataS = new Object[movie.getScenarists().length][2];
             for(int i = 0; i < movie.getScenarists().length; i++){
                 dataS[i][0] = movie.getScenarists()[i].getId();
                 dataS[i][1] = movie.getScenarists()[i].getFullName();
+            }
             }
 
             nameCZField.setText(movie.getNameCZ());
@@ -269,14 +275,16 @@ public class movieDialog extends JDialog{
     }
 
     public boolean updateTable(Person pr, char Who) {
+        if(typeOfDialog == 'I') movie = new Movie(lastID);
         boolean isThere = false;
-        System.out.println("UPDATE TABLE");
         switch (Who) {
             case 'A':
+                if(typeOfDialog == 'U'){
                 for (int i = 0; i < movie.getActors().length; i++) {
                     if (dataA[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
+                }
                 }
 
                 if (!isThere) {
@@ -291,10 +299,12 @@ public class movieDialog extends JDialog{
                 }
                 break;
             case 'D':
+                if(typeOfDialog == 'U'){
                 for (int i = 0; i < movie.getDirectors().length; i++) {
                     if (dataD[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
+                }
                 }
 
                 if (!isThere) {
@@ -310,10 +320,12 @@ public class movieDialog extends JDialog{
                 break;
                 
             case 'S':
+                if(typeOfDialog == 'U'){
                 for (int i = 0; i < movie.getScenarists().length; i++) {
                     if (dataS[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
+                }
                 }
 
                 if (!isThere) {
@@ -342,9 +354,44 @@ public class movieDialog extends JDialog{
     };
     
     ActionListener insertAction = (ActionEvent actionEvent) -> {
+        String namecz = nameCZField.getText();
+        String nameen = nameENField.getText();
+        String year = yearField.getText();
+        String description = descArea.getText();
+        int id = this.lastID+1;
+        int[] acts = new int[dataA.length];
+        int[] dirs = new int[dataD.length];
+        int[] scns = new int[dataS.length];
         
-        System.out.println("insert");
+        for(int i = 0; i < dataA.length; i++){
+            acts[i] = Integer.valueOf(dataA[i][0].toString());
+        }
         
+        for(int i = 0; i < dataD.length; i++){
+            dirs[i] = Integer.valueOf(dataD[i][0].toString());
+        }
+        
+        for(int i = 0; i < dataS.length; i++){
+            scns[i] = Integer.valueOf(dataS[i][0].toString());
+        }       
+        
+        if(!namecz.equals("") && !nameen.equals("") && checkYear(year)){
+            
+            Database db = new Database();
+            db.inserMovie(id,namecz,nameen,year,description,acts,dirs,scns);
+            
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Movie insert has been sucesfull!",
+                    "Movie inserted",
+                    JOptionPane.PLAIN_MESSAGE);
+            
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Name CZ,EN and Year have to be filled in!",
+                    "Data error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+ 
     };    
     
     
@@ -379,12 +426,48 @@ public class movieDialog extends JDialog{
     };
     
     ActionListener delScenaristsListener = (ActionEvent actionEvent) -> {
+        if (scenarists.getSelectedRow() != -1) {
+            Object idPerson = scenarists.getValueAt(scenarists.getSelectedRow(), 0);
+            int id = Integer.parseInt(idPerson.toString());
+            movie.rmScenarist(id);
+            this.dispose();
+            try {
+                movieDialog refresh = new movieDialog(this.lastID, this.movie, this.copy, this.typeOfDialog, this.allActors, this.allDirectors, this.allScenarits);
+                refresh.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     };
     
     ActionListener delActorListener = (ActionEvent actionEvent) -> {
+        if (actors.getSelectedRow() != -1) {
+            Object idPerson = actors.getValueAt(actors.getSelectedRow(), 0);
+            int id = Integer.parseInt(idPerson.toString());
+            movie.rmActor(id);
+            this.dispose();
+            try {
+                movieDialog refresh = new movieDialog(this.lastID, this.movie, this.copy, this.typeOfDialog, this.allActors, this.allDirectors, this.allScenarits);
+                refresh.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     };
     
     ActionListener delDirectorListener = (ActionEvent actionEvent) -> {
+        if (directors.getSelectedRow() != -1) {
+            Object idPerson = directors.getValueAt(directors.getSelectedRow(), 0);
+            int id = Integer.parseInt(idPerson.toString());
+            movie.rmDirector(id);
+            this.dispose();
+            try {
+                movieDialog refresh = new movieDialog(this.lastID, this.movie, this.copy, this.typeOfDialog, this.allActors, this.allDirectors, this.allScenarits);
+                refresh.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(movieDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     };    
     
 }

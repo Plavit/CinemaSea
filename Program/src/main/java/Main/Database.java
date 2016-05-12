@@ -506,4 +506,64 @@ public class Database {
        }//end try
     }
     
+    public void inserMovie(int id, String nameCZ, String nameEN,String year, String desc, int[] actors, int[] directors, int[] scenarists){
+         Statement stmt = null;
+       try {
+           // PREPARING THE SQL REQUEST
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+           
+           String sql = "INSERT INTO movie (id_movie,'cover image',namecz,nameen,year,description)"
+                   + "\nVALUES (" + id + ",'null', '" + nameCZ + "', '" + nameEN + "', " + year
+                   + ", '" + desc + "')";
+           stmt.executeUpdate(sql);
+           
+           for(int idMan : actors){
+               sql = "INSERT INTO plays VALUES(" + idMan + ", " + id + ");";
+               stmt.executeUpdate(sql);
+           }
+           
+           for(int idMan : directors){
+               sql = "INSERT INTO shoots VALUES(" + idMan + ", " + id + ");";
+               stmt.executeUpdate(sql);
+           }
+           
+           for(int idMan : scenarists){
+               sql = "INSERT INTO screenplay VALUES(" + idMan + ", " + id + ");";
+               stmt.executeUpdate(sql);
+           }
+           
+           // CLOSING THE CONNECTION
+           stmt.close();
+           conn.close();           
+
+       } catch (SQLException se) {
+           System.out.println("FAIL #1");
+           se.printStackTrace();
+       } catch (Exception e) {
+           System.out.println("FAIL #2");
+           e.printStackTrace();
+       } finally {
+           //finally block used to close resources
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try
+    }
+    
+    
 }

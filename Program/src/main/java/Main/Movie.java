@@ -244,12 +244,17 @@ public class Movie {
     }
     
     public void addActor(Person pr){
+        if(this.Actors != null){
         Person[] newPPL = new Person[this.Actors.length+1];
         for(int i = 0; i < newPPL.length-1; i++){
             newPPL[i] = this.Actors[i];
         }
         newPPL[newPPL.length-1] = pr;
         this.Actors = newPPL;
+        }else{
+            this.Actors = new Person[1];
+            Actors[0] = pr;
+        }
     }
     
     public void addDirector(Person pr){
@@ -270,10 +275,10 @@ public class Movie {
         this.Scenarists = newPPL;
     }
     
-    public void rmActor(Person pr){
+    public void rmActor(int id){
         ArrayList<Person> ppl = new ArrayList<>(0);
         for(int i = 0; i < this.Actors.length; i++){
-            if(pr.getId() != this.Actors[i].getId()){
+            if(id != this.Actors[i].getId()){
                 ppl.add(this.Actors[i]);
             }
         }
@@ -285,10 +290,10 @@ public class Movie {
         }
     }
     
-    public void rmDirector(Person pr){
+    public void rmDirector(int id){
         ArrayList<Person> ppl = new ArrayList<>(0);
         for(int i = 0; i < this.Directors.length; i++){
-            if(pr.getId() != this.Directors[i].getId()){
+            if(id != this.Directors[i].getId()){
                 ppl.add(this.Directors[i]);
             }
         }
@@ -300,10 +305,10 @@ public class Movie {
         }
     }
     
-    public void rmScenarist(Person pr){
+    public void rmScenarist(int id){
         ArrayList<Person> ppl = new ArrayList<>(0);
         for(int i = 0; i < this.Scenarists.length; i++){
-            if(pr.getId() != this.Scenarists[i].getId()){
+            if(id != this.Scenarists[i].getId()){
                 ppl.add(this.Scenarists[i]);
             }
         }
@@ -313,6 +318,22 @@ public class Movie {
             this.Scenarists[k] = man;
             k++;
         }
+    }
+    
+    public boolean isEmpty(char what){
+        boolean decide = false;
+        switch(what){
+            case 'A':
+                if(this.Actors == null) decide = true;
+                break;
+            case 'S':
+                if(this.Scenarists == null) decide = true;
+                break;
+            case 'D':
+                if(this.Directors == null) decide = true;
+                break;
+        }
+        return decide;
     }
     
 }

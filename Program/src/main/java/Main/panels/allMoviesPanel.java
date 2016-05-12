@@ -133,19 +133,21 @@ public class allMoviesPanel extends JPanel{
     
     ActionListener addListener = new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {            
-            
-           if(dataTable.getSelectedRow() != -1){
-                Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
-                movieDialog dialog = null;
+        public void actionPerformed(ActionEvent actionEvent) {
+
+                int idMax = 0;
+                for(Movie mv : movies){
+                    if(mv.getId() > idMax) idMax = mv.getId();
+                }
+                
+                movieDialog dialog = null;        
                 try {
-                    dialog = new movieDialog(passMovie.getId(),null,null,'I',allActors,allDirectors,allScenarists);
+                    dialog = new movieDialog(idMax,null,null,'I',allActors,allDirectors,allScenarists);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.setVisible(true);
-            }
+            
 
         }
     };
