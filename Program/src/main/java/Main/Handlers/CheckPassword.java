@@ -10,7 +10,15 @@ package Main.Handlers;
  * @author Marek
  */
 public class CheckPassword {
-
+    
+    /**
+     * Method checking password validity.
+     * 
+     * Accepts @pass as entered password, @checkPass as a control 
+     * re-typing value of password
+     * 
+     */
+    
     public static String checkPasswords(String pass, String checkPass) {
         String msg = "";
         if(pass.isEmpty()){

@@ -275,17 +275,25 @@ public class movieDialog extends JDialog{
     }
 
     public boolean updateTable(Person pr, char Who) {
-        if(typeOfDialog == 'I') movie = new Movie(lastID);
-        boolean isThere = false;
+        String namecz = nameCZField.getText();
+        String nameen = nameENField.getText();
+        String year = yearField.getText();
+        String description = descArea.getText();
+        movie.setNameCZ(namecz);
+        movie.setNameEN(nameen);
+        movie.setDescription(description);
+        if(checkYear(year)) movie.setYear(Integer.valueOf(year));
+        boolean isThere = false;        
         switch (Who) {
             case 'A':
-                if(typeOfDialog == 'U'){
+                if(!movie.isEmpty('A')){
                 for (int i = 0; i < movie.getActors().length; i++) {
                     if (dataA[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
                 }
                 }
+                
 
                 if (!isThere) {
                     movie.addActor(pr);
@@ -299,13 +307,14 @@ public class movieDialog extends JDialog{
                 }
                 break;
             case 'D':
-                if(typeOfDialog == 'U'){
+                if(!movie.isEmpty('D')){
                 for (int i = 0; i < movie.getDirectors().length; i++) {
                     if (dataD[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
                 }
                 }
+                
 
                 if (!isThere) {
                     movie.addDirector(pr);
@@ -320,13 +329,14 @@ public class movieDialog extends JDialog{
                 break;
                 
             case 'S':
-                if(typeOfDialog == 'U'){
+                if(!movie.isEmpty('S')){
                 for (int i = 0; i < movie.getScenarists().length; i++) {
                     if (dataS[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
                 }
                 }
+                
 
                 if (!isThere) {
                     movie.addScenarist(pr);

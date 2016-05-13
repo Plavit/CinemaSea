@@ -55,7 +55,7 @@ public class showMovie extends JDialog{
         setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo_icon.png")));
     }
     
-    private void initComponents() throws IOException{        
+    private void initComponents() throws IOException{                
         
         JPanel upperPanel = new JPanel();
         JPanel ratePanel = new JPanel();

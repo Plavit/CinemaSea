@@ -115,7 +115,7 @@ public class scenaristsPanel extends JPanel{
             for(Person pr : scenarists){
                 if(pr.getId() > lastID) lastID = pr.getId();
             }
-            
+           
            try {
                 personDialog dialog = new personDialog(lastID, null, 'I', 'S');
                 dialog.setVisible(true);

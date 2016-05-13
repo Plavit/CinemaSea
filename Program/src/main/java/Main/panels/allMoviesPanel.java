@@ -142,7 +142,7 @@ public class allMoviesPanel extends JPanel{
                 
                 movieDialog dialog = null;        
                 try {
-                    dialog = new movieDialog(idMax,null,null,'I',allActors,allDirectors,allScenarists);
+                    dialog = new movieDialog(idMax,new Movie(idMax+1),null,'I',allActors,allDirectors,allScenarists);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
