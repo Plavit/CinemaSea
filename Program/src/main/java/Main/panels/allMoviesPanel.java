@@ -119,8 +119,15 @@ public class allMoviesPanel extends JPanel{
             
             if(dataTable.getSelectedRow() != -1){
                 Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
+                Movie passMovie = null;
                 showMovie dialog = null;
+                
+                for(Movie mv : movies){
+                    if(mv.getId() == Integer.parseInt(idMovie.toString())){
+                        passMovie = mv;
+                    }                        
+                }
+                
                 try {
                     dialog = new showMovie(passMovie,user);
                 } catch (IOException ex) {
@@ -158,8 +165,15 @@ public class allMoviesPanel extends JPanel{
             
            if(dataTable.getSelectedRow() != -1){
                 Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
+                Movie passMovie = null;
                 movieDialog dialog = null;
+                
+                for(Movie mv : movies){
+                    if(mv.getId() == Integer.parseInt(idMovie.toString())){
+                        passMovie = mv;
+                    }                        
+                }
+                
                 try {
                     dialog = new movieDialog(passMovie.getId(),passMovie,passMovie,'U',allActors,allDirectors,allScenarists);
                 } catch (IOException ex) {

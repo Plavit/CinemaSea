@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -540,6 +541,65 @@ public class Database {
                sql = "INSERT INTO screenplay VALUES(" + idMan + ", " + id + ");";
                stmt.executeUpdate(sql);
            }
+           
+           // CLOSING THE CONNECTION
+           stmt.close();
+           conn.close();           
+
+       } catch (SQLException se) {
+           System.out.println("FAIL #1");
+           se.printStackTrace();
+       } catch (Exception e) {
+           System.out.println("FAIL #2");
+           e.printStackTrace();
+       } finally {
+           //finally block used to close resources
+           //finally block used to close resources
+           try {
+               if (stmt != null) {
+                   stmt.close();
+               }
+           } catch (SQLException se2) {
+           }// nothing we can do
+           try {
+               if (conn != null) {
+                   conn.close();
+               }
+           } catch (SQLException se) {
+               se.printStackTrace();
+           }//end finally try
+       }//end try
+    }
+    
+    public void updateMovie(Movie movie,ArrayList<Integer> addActors, ArrayList<Integer> addDirectors,
+            ArrayList<Integer> addScenarists,ArrayList<Integer> rmActors, ArrayList<Integer> rmDirectors,
+            ArrayList<Integer> rmScenarists){
+       Statement stmt = null;
+       String sql = "";
+       try {
+           // PREPARING THE SQL REQUEST
+           Class.forName("org.postgresql.Driver");
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                           ResultSet.CONCUR_READ_ONLY);
+           
+           sql = "UPDATE movie SET namecz = '" + movie.getNameCZ() + "', "
+                   + "nameen = '" + movie.getNameEN() + "', "
+                   + "year = " + movie.getYear() + ", "
+                   + "description = '" + movie.getDescription() + "'"
+                   + "\nWHERE id_movie = " + movie.getId();
+           stmt.executeUpdate(sql);
+           
+           if(rmActors.size() > 0){
+               for(int rmID : rmActors){
+                   sql = "DELETE FROM plays WHERE id_movie = " + movie.getId() + " AND id_actor = " + rmID;
+                   stmt.executeUpdate(sql);
+                   System.out.println("DELETING ACTORS");
+               }
+           }
+           
+           
            
            // CLOSING THE CONNECTION
            stmt.close();

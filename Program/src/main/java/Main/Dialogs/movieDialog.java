@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -359,8 +360,81 @@ public class movieDialog extends JDialog{
     };
     
     ActionListener updateAction = (ActionEvent actionEvent) -> {
-             
-        System.out.println("insert");
+        String namecz = nameCZField.getText();
+        String nameen = nameENField.getText();
+        String year = yearField.getText();
+        String description = descArea.getText();
+        
+        ArrayList<Integer> rmActors = new ArrayList<>(0);
+        ArrayList<Integer> rmDirectors = new ArrayList<>(0);
+        ArrayList<Integer> rmScenarists = new ArrayList<>(0);
+        ArrayList<Integer> addActors = new ArrayList<>(0);
+        ArrayList<Integer> addDirectors = new ArrayList<>(0);
+        ArrayList<Integer> addScenarists = new ArrayList<>(0);
+    
+        if (!namecz.equals("") && !nameen.equals("") && checkYear(year)) {
+            // ACTORS EDITTED
+            if (!movie.isEmpty('A') && !copy.isEmpty('A')) {
+                // DELETED PERSONS
+                rmActors = findPeople(copy.getActors(), movie.getActors());
+                // ADDED PERSONS
+                addActors = findPeople(movie.getActors(), copy.getActors());
+            } else if (!movie.isEmpty('A') && copy.isEmpty('A')) {
+                for (Person pr : movie.getActors()) {
+                    addActors.add(pr.getId());
+                }
+            } else if (movie.isEmpty('A') && !copy.isEmpty('A')) {
+                for (Person pr : movie.getActors()) {
+                    rmActors.add(pr.getId());
+                }
+            }
+            
+            // DIRECTORS EDITTED
+            if (!movie.isEmpty('D') && !copy.isEmpty('D')) {
+                // DELETED PERSONS
+                rmDirectors = findPeople(copy.getDirectors(), movie.getDirectors());
+                // ADDED PERSONS
+                addDirectors = findPeople(movie.getDirectors(), copy.getDirectors());
+            } else if (!movie.isEmpty('D') && copy.isEmpty('D')) {
+                for (Person pr : movie.getDirectors()) {
+                    addDirectors.add(pr.getId());
+                }
+            } else if (movie.isEmpty('D') && !copy.isEmpty('D')) {
+                for (Person pr : movie.getDirectors()) {
+                    rmDirectors.add(pr.getId());
+                }
+            }
+            
+            // SCENARISTS EDITTED
+            if (!movie.isEmpty('S') && !copy.isEmpty('S')) {
+                // DELETED PERSONS
+                rmScenarists = findPeople(copy.getScenarists(), movie.getScenarists());
+                // ADDED PERSONS
+                addScenarists = findPeople(movie.getScenarists(), copy.getScenarists());
+            } else if (!movie.isEmpty('S') && copy.isEmpty('S')) {
+                for (Person pr : movie.getScenarists()) {
+                    addScenarists.add(pr.getId());
+                }
+            } else if (movie.isEmpty('S') && !copy.isEmpty('S')) {
+                for (Person pr : movie.getScenarists()) {
+                    rmScenarists.add(pr.getId());
+                }
+            }
+            
+            Database db = new Database();
+            db.updateMovie(movie,addActors,addDirectors,addScenarists,rmActors,rmDirectors,rmScenarists);
+            
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Movie update has been sucesfull!",
+                    "Movie updated",
+                    JOptionPane.PLAIN_MESSAGE);
+
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Name CZ,EN and Year have to be filled in!",
+                    "Data error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     };
     
     ActionListener insertAction = (ActionEvent actionEvent) -> {
@@ -479,5 +553,22 @@ public class movieDialog extends JDialog{
             }
         }
     };    
+    
+    private ArrayList<Integer> findPeople(Person[] film, Person[] backup){
+        ArrayList<Integer> ids = new ArrayList<>(0);
+        for (Person prc : backup) {
+            boolean found = false;
+            for (Person prm : film) {
+                if (prc.getId() == prm.getId()) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                ids.add(prc.getId());
+            }
+        }
+        return ids;
+    }
     
 }
