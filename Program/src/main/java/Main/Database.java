@@ -443,33 +443,33 @@ public class Database {
                case 'A':
                    if(year != null){
                    sql = "INSERT INTO actor (id_actor, name, surname, year, description)" 
-                           +"VALUES(" + id + ", '" + name
+                           +"VALUES(" + "(SELECT MAX(id_actor)+1 FROM actor)" + ", '" + name
                            + "', '" + surname + "', " + year + ",'" + desc + "');";
                    }else{
                        sql = "INSERT INTO actor (id_actor, name, surname, description)" 
-                           +"VALUES(" + id + ", '" + name
+                           +"VALUES(" + "(SELECT MAX(id_actor)+1 FROM actor)" + ", '" + name
                            + "', '" + surname + "', '" + desc + "');";
                    }                    
                    break;
                case 'D':
                    if(year != null){
                    sql = "INSERT INTO director (id_director, name, surname, year, description)" 
-                           +"VALUES(" + id + ", '" + name
+                           +"VALUES(" + "(SELECT MAX(id_director)+1 FROM director)" + ", '" + name
                            + "', '" + surname + "', " + year + ",'" + desc + "');";
                    }else{
                        sql = "INSERT INTO director (id_director, name, surname, description)" 
-                           +"VALUES(" + id + ", '" + name
+                           +"VALUES(" + "(SELECT MAX(id_director)+1 FROM director)" + ", '" + name
                            + "', '" + surname + "', '" + desc + "');";
                    }                   
                    break;
                case 'S':
                    if(year != null){
                    sql = "INSERT INTO scenarist (id_scenarist, name, surname, year, description)" 
-                           +"VALUES(" + id + ", '" + name
+                           +"VALUES(" + "(SELECT MAX(id_scenarist)+1 FROM scenarist)" + ", '" + name
                            + "', '" + surname + "', " + year + ",'" + desc + "');";
                    }else{
                        sql = "INSERT INTO scenarist (id_scenarist, name, surname, description)" 
-                           +"VALUES(" + id + ", '" + name
+                           +"VALUES(" + "(SELECT MAX(id_scenarist)+1 FROM scenarist)" + ", '" + name
                            + "', '" + surname + "', '" + desc + "');";
                    }
                    break;
@@ -515,8 +515,13 @@ public class Database {
 
            stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
                            ResultSet.CONCUR_READ_ONLY);
+           String sql = "SELECT MAX(id_movie)+1 FROM movie";
+           ResultSet rs = stmt.executeQuery(sql);
+           while(rs.next()){
+               id = rs.getInt(1);               
+           }
            
-           String sql = "INSERT INTO movie (id_movie,'cover image',namecz,nameen,year,description)"
+           sql = "INSERT INTO movie"
                    + "\nVALUES (" + id + ",'null', '" + nameCZ + "', '" + nameEN + "', " + year
                    + ", '" + desc + "')";
            stmt.executeUpdate(sql);

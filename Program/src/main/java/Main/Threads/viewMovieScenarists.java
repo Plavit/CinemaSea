@@ -48,7 +48,7 @@ public class viewMovieScenarists extends Thread{
             String sql = "CREATE VIEW moviescenarist AS "
                     + "SELECT movie.id_movie, scenarist.id_scenarist, scenarist.name, scenarist.surname, scenarist.year, scenarist.description\n"
                     + "FROM movie, scenarist, screenplay\n"
-                    + "WHERE movie.id_movie = screenplay.id_movie AND screenplay.id_movie = scenarist.id_scenarist;";
+                    + "WHERE movie.id_movie = screenplay.id_movie AND screenplay.id_scenarist = scenarist.id_scenarist;";
             stmt.executeUpdate(sql);
             
             System.out.println("VIEW(scenarists) CREATED");

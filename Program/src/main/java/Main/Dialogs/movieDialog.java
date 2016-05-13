@@ -274,18 +274,16 @@ public class movieDialog extends JDialog{
         return valid;
     }
 
-    public boolean updateTable(Person pr, char Who) {
-        if(typeOfDialog == 'I') movie = new Movie(lastID);
-        boolean isThere = false;
+    public boolean updateTable(Person pr, char Who) {      
+        boolean isThere = false;        
         switch (Who) {
-            case 'A':
-                if(typeOfDialog == 'U'){
+            case 'A':                
                 for (int i = 0; i < movie.getActors().length; i++) {
                     if (dataA[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
                 }
-                }
+                
 
                 if (!isThere) {
                     movie.addActor(pr);
@@ -299,13 +297,13 @@ public class movieDialog extends JDialog{
                 }
                 break;
             case 'D':
-                if(typeOfDialog == 'U'){
+                
                 for (int i = 0; i < movie.getDirectors().length; i++) {
                     if (dataD[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
                 }
-                }
+                
 
                 if (!isThere) {
                     movie.addDirector(pr);
@@ -320,13 +318,13 @@ public class movieDialog extends JDialog{
                 break;
                 
             case 'S':
-                if(typeOfDialog == 'U'){
+                
                 for (int i = 0; i < movie.getScenarists().length; i++) {
                     if (dataS[i][0] == Integer.valueOf(pr.getId())) {
                         isThere = true;
                     }
                 }
-                }
+                
 
                 if (!isThere) {
                     movie.addScenarist(pr);

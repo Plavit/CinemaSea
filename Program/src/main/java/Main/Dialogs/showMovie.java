@@ -8,6 +8,7 @@ package Main.Dialogs;
 import Main.Database;
 import Main.Login.LoginFrame;
 import Main.Movie;
+import Main.Person;
 import Main.User;
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -56,6 +57,10 @@ public class showMovie extends JDialog{
     }
     
     private void initComponents() throws IOException{        
+        
+        for(Person pr : movie.getScenarists()){
+            System.out.println(pr.getId() + " " + pr.getFullName());
+        }
         
         JPanel upperPanel = new JPanel();
         JPanel ratePanel = new JPanel();
