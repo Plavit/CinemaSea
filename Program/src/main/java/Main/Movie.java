@@ -258,21 +258,31 @@ public class Movie {
     }
     
     public void addDirector(Person pr){
+        if(this.Directors != null){
         Person[] newPPL = new Person[this.Directors.length+1];
         for(int i = 0; i < newPPL.length-1; i++){
             newPPL[i] = this.Directors[i];
         }
         newPPL[newPPL.length-1] = pr;
         this.Directors = newPPL;
+        }else{
+            this.Directors = new Person[1];
+            Directors[0] = pr;
+        }
     }
     
     public void addScenarist(Person pr){
+        if(this.Scenarists != null){
         Person[] newPPL = new Person[this.Scenarists.length+1];
         for(int i = 0; i < newPPL.length-1; i++){
             newPPL[i] = this.Scenarists[i];
         }
         newPPL[newPPL.length-1] = pr;
         this.Scenarists = newPPL;
+        }else{
+            this.Scenarists = new Person[1];
+            Scenarists[0] = pr;
+        }
     }
     
     public void rmActor(int id){
