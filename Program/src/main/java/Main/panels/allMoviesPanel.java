@@ -172,10 +172,10 @@ public class allMoviesPanel extends JPanel{
                     if(mv.getId() == Integer.parseInt(idMovie.toString())){
                         passMovie = mv;
                     }                        
-                }
+                }               
                 
                 try {
-                    dialog = new movieDialog(passMovie.getId(),passMovie,passMovie,'U',allActors,allDirectors,allScenarists);
+                    dialog = new movieDialog(passMovie.getId(),passMovie,passMovie.clone(),'U',allActors,allDirectors,allScenarists);
                 } catch (IOException ex) {
                     Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }

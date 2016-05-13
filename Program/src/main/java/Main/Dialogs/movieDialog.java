@@ -364,6 +364,10 @@ public class movieDialog extends JDialog{
         String nameen = nameENField.getText();
         String year = yearField.getText();
         String description = descArea.getText();
+        movie.setNameCZ(namecz);
+        movie.setNameEN(nameen);
+        movie.setDescription(description);
+        if(checkYear(year)) movie.setYear(Integer.valueOf(year));
         
         ArrayList<Integer> rmActors = new ArrayList<>(0);
         ArrayList<Integer> rmDirectors = new ArrayList<>(0);
@@ -375,10 +379,13 @@ public class movieDialog extends JDialog{
         if (!namecz.equals("") && !nameen.equals("") && checkYear(year)) {
             // ACTORS EDITTED
             if (!movie.isEmpty('A') && !copy.isEmpty('A')) {
+                
                 // DELETED PERSONS
-                rmActors = findPeople(copy.getActors(), movie.getActors());
+                rmActors = new ArrayList<>(findPeople(movie.getActors(), copy.getActors()));
                 // ADDED PERSONS
-                addActors = findPeople(movie.getActors(), copy.getActors());
+                addActors = new ArrayList<>(findPeople(copy.getActors(), movie.getActors()));
+                
+                
             } else if (!movie.isEmpty('A') && copy.isEmpty('A')) {
                 for (Person pr : movie.getActors()) {
                     addActors.add(pr.getId());
@@ -392,9 +399,9 @@ public class movieDialog extends JDialog{
             // DIRECTORS EDITTED
             if (!movie.isEmpty('D') && !copy.isEmpty('D')) {
                 // DELETED PERSONS
-                rmDirectors = findPeople(copy.getDirectors(), movie.getDirectors());
+                rmDirectors = new ArrayList<>(findPeople(movie.getDirectors(), copy.getDirectors()));
                 // ADDED PERSONS
-                addDirectors = findPeople(movie.getDirectors(), copy.getDirectors());
+                addDirectors = new ArrayList<>(findPeople(copy.getDirectors(), movie.getDirectors()));
             } else if (!movie.isEmpty('D') && copy.isEmpty('D')) {
                 for (Person pr : movie.getDirectors()) {
                     addDirectors.add(pr.getId());
@@ -408,9 +415,9 @@ public class movieDialog extends JDialog{
             // SCENARISTS EDITTED
             if (!movie.isEmpty('S') && !copy.isEmpty('S')) {
                 // DELETED PERSONS
-                rmScenarists = findPeople(copy.getScenarists(), movie.getScenarists());
+                rmScenarists = new ArrayList<>(findPeople(movie.getScenarists(), copy.getScenarists()));
                 // ADDED PERSONS
-                addScenarists = findPeople(movie.getScenarists(), copy.getScenarists());
+                addScenarists = new ArrayList<>(findPeople(copy.getScenarists(), movie.getScenarists()));
             } else if (!movie.isEmpty('S') && copy.isEmpty('S')) {
                 for (Person pr : movie.getScenarists()) {
                     addScenarists.add(pr.getId());
@@ -510,6 +517,14 @@ public class movieDialog extends JDialog{
     };
     
     ActionListener delScenaristsListener = (ActionEvent actionEvent) -> {
+        String namecz = nameCZField.getText();
+        String nameen = nameENField.getText();
+        String year = yearField.getText();
+        String description = descArea.getText();
+        movie.setNameCZ(namecz);
+        movie.setNameEN(nameen);
+        movie.setDescription(description);
+        if(checkYear(year)) movie.setYear(Integer.valueOf(year));
         if (scenarists.getSelectedRow() != -1) {
             Object idPerson = scenarists.getValueAt(scenarists.getSelectedRow(), 0);
             int id = Integer.parseInt(idPerson.toString());
@@ -525,6 +540,14 @@ public class movieDialog extends JDialog{
     };
     
     ActionListener delActorListener = (ActionEvent actionEvent) -> {
+        String namecz = nameCZField.getText();
+        String nameen = nameENField.getText();
+        String year = yearField.getText();
+        String description = descArea.getText();
+        movie.setNameCZ(namecz);
+        movie.setNameEN(nameen);
+        movie.setDescription(description);
+        if(checkYear(year)) movie.setYear(Integer.valueOf(year));
         if (actors.getSelectedRow() != -1) {
             Object idPerson = actors.getValueAt(actors.getSelectedRow(), 0);
             int id = Integer.parseInt(idPerson.toString());
@@ -540,6 +563,14 @@ public class movieDialog extends JDialog{
     };
     
     ActionListener delDirectorListener = (ActionEvent actionEvent) -> {
+        String namecz = nameCZField.getText();
+        String nameen = nameENField.getText();
+        String year = yearField.getText();
+        String description = descArea.getText();
+        movie.setNameCZ(namecz);
+        movie.setNameEN(nameen);
+        movie.setDescription(description);
+        if(checkYear(year)) movie.setYear(Integer.valueOf(year));
         if (directors.getSelectedRow() != -1) {
             Object idPerson = directors.getValueAt(directors.getSelectedRow(), 0);
             int id = Integer.parseInt(idPerson.toString());

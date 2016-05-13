@@ -595,11 +595,43 @@ public class Database {
                for(int rmID : rmActors){
                    sql = "DELETE FROM plays WHERE id_movie = " + movie.getId() + " AND id_actor = " + rmID;
                    stmt.executeUpdate(sql);
-                   System.out.println("DELETING ACTORS");
                }
            }
            
+           if(rmDirectors.size() > 0){
+               for(int rmID : rmDirectors){
+                   sql = "DELETE FROM shoots WHERE id_movie = " + movie.getId() + " AND id_director = " + rmID;
+                   stmt.executeUpdate(sql);
+               }
+           }
            
+           if(rmScenarists.size() > 0){
+               for(int rmID : rmScenarists){
+                   sql = "DELETE FROM screenplay WHERE id_movie = " + movie.getId() + " AND id_scenarist = " + rmID;
+                   stmt.executeUpdate(sql);
+               }
+           }
+           
+           if(addActors.size() > 0){
+               for(int addID : addActors){
+                    sql = "INSERT INTO plays VALUES(" + addID + ", " + movie.getId() + ")";
+                    stmt.executeUpdate(sql);
+               }
+           }
+           
+           if(addDirectors.size() > 0){
+               for(int addID : addDirectors){
+                    sql = "INSERT INTO shoots VALUES(" + addID + ", " + movie.getId() + ")";
+                    stmt.executeUpdate(sql);
+               }
+           }
+           
+           if(addScenarists.size() > 0){
+               for(int addID : addScenarists){
+                    sql = "INSERT INTO screenplay VALUES(" + addID + ", " + movie.getId() + ")";
+                    stmt.executeUpdate(sql);
+               }
+           }
            
            // CLOSING THE CONNECTION
            stmt.close();
