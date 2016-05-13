@@ -8,7 +8,6 @@ package Main.Dialogs;
 import Main.Database;
 import Main.Login.LoginFrame;
 import Main.Movie;
-import Main.Person;
 import Main.User;
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -56,11 +55,7 @@ public class showMovie extends JDialog{
         setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo_icon.png")));
     }
     
-    private void initComponents() throws IOException{        
-        
-        for(Person pr : movie.getScenarists()){
-            System.out.println(pr.getId() + " " + pr.getFullName());
-        }
+    private void initComponents() throws IOException{                
         
         JPanel upperPanel = new JPanel();
         JPanel ratePanel = new JPanel();
