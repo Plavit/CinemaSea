@@ -63,6 +63,9 @@ public class movieDialog extends JDialog{
     private Person[] allActors, allDirectors, allScenarits;
     JTable actors, directors, scenarists;
 
+    public movieDialog() {
+    }
+
     public movieDialog(int id, Movie movie,Movie copy, char typeOfDialog,Person[] actors, Person[] directors, Person[] scenarists) throws IOException {
         this.lastID = id;
         this.movie = movie;
@@ -585,7 +588,9 @@ public class movieDialog extends JDialog{
         }
     };    
     
-    private ArrayList<Integer> findPeople(Person[] film, Person[] backup){
+    // FOR UNIT TEST THIS METHOD IS PUBLIC
+    // FUNCTION for finding duplicits
+    public ArrayList<Integer> findPeople(Person[] film, Person[] backup){
         ArrayList<Integer> ids = new ArrayList<>(0);
         for (Person prc : backup) {
             boolean found = false;

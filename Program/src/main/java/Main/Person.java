@@ -3,6 +3,7 @@ package Main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  *
@@ -146,5 +147,37 @@ public class Person{
         newPR.setDescription(this.Description);
         return newPR;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + this.Id;
+        hash = 53 * hash + Objects.hashCode(this.FullName);
+        hash = 53 * hash + this.Year;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Person other = (Person) obj;
+        if (this.Id != other.Id) {
+            return false;
+        }
+        if (!Objects.equals(this.FullName, other.FullName)) {
+            return false;
+        }
+        if (this.Year != other.Year) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

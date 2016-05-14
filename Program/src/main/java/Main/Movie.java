@@ -361,5 +361,37 @@ public class Movie {
         clon.setYear(Year);
         return clon;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + this.Id;
+        hash = 71 * hash + (int) (Double.doubleToLongBits(this.Rating) ^ (Double.doubleToLongBits(this.Rating) >>> 32));
+        hash = 71 * hash + this.Year;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Movie other = (Movie) obj;
+        if (this.Id != other.Id) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.Rating) != Double.doubleToLongBits(other.Rating)) {
+            return false;
+        }
+        if (this.Year != other.Year) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }
