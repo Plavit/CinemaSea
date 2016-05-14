@@ -346,4 +346,20 @@ public class Movie {
         return decide;
     }
     
+    public Movie clone(){
+        Movie clon = new Movie(Id);
+        clon.setActors(Actors);
+        clon.setCoverImage(CoverImage);
+        clon.setDirectors(Directors);
+        clon.setDescription(Description);
+        clon.setGenres(Genres);
+        clon.setNameCZ(NameCZ);
+        clon.setNameEN(NameEN);
+        clon.setRating(Rating);
+        clon.setScenarists(Scenarists);
+        clon.setTags(Tags);
+        clon.setYear(Year);
+        return clon;
+    }
+    
 }

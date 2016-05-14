@@ -5,10 +5,14 @@
  */
 package Main;
 
+import Main.Login.LoginFrame;
+import Main.Register.RegisterFrame;
 import Main.Threads.*;
 import Main.panels.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -65,6 +69,8 @@ public class mainframe extends JFrame{
         actPane = new actorsPanel(user.getId());
         dirPane = new directorsPanel(user.getId());
         scePane = new scenaristsPanel(user.getId());
+        JButton reloadButt = new JButton("RELOAD");
+        reloadButt.addActionListener(reloadListener);
         
         bar.setStringPainted(true);
         bar.setString("Gathering data from database 0%");
@@ -75,10 +81,7 @@ public class mainframe extends JFrame{
         mainPanel.addTab("Actors", actPane);
         mainPanel.addTab("Rated", ratePane);
         mainPanel.addTab("All movies", moviesPane);
-        mainPanel.addTab("Search", srchPane);
-        if(user.isIsAdmin()){
-            mainPanel.addTab("Database", dataPane);
-        }
+        mainPanel.addTab(null, reloadButt);
         
 
         // DOPORUCUJU DOPLNIT KOMPONENTY DO DANYCH CLASS PANELU KVULI PREHLEDNOSTI
@@ -271,5 +274,23 @@ public class mainframe extends JFrame{
         scePane.passData(allMovies, user.isIsAdmin(),scenarists);
         dirPane.passData(allMovies, user.isIsAdmin(),directors);
     }
+    
+    ActionListener reloadListener = (ActionEvent actionEvent) -> {
+        Database db = new Database();
+        try {
+            if (db.updateViews()) {
+                mainframe mf = new mainframe();
+                this.dispose();
+                mf.setMainFrame(user);
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }; 
     
 }

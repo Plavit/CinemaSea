@@ -119,8 +119,15 @@ public class allMoviesPanel extends JPanel{
             
             if(dataTable.getSelectedRow() != -1){
                 Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
+                Movie passMovie = null;
                 showMovie dialog = null;
+                
+                for(Movie mv : movies){
+                    if(mv.getId() == Integer.parseInt(idMovie.toString())){
+                        passMovie = mv;
+                    }                        
+                }
+                
                 try {
                     dialog = new showMovie(passMovie,user);
                 } catch (IOException ex) {
@@ -152,22 +159,26 @@ public class allMoviesPanel extends JPanel{
         }
     };
     
-    ActionListener editListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
+    ActionListener editListener = (ActionEvent actionEvent) -> {
+        if(dataTable.getSelectedRow() != -1){
+            Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
+            Movie passMovie = null;
+            movieDialog dialog = null;
             
-           if(dataTable.getSelectedRow() != -1){
-                Object idMovie = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Movie passMovie = movies[Integer.parseInt(idMovie.toString()) - 1];
-                movieDialog dialog = null;
-                try {
-                    dialog = new movieDialog(passMovie.getId(),passMovie,passMovie,'U',allActors,allDirectors,allScenarists);
-                } catch (IOException ex) {
-                    Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+            for(Movie mv : movies){
+                if(mv.getId() == Integer.parseInt(idMovie.toString())){
+                    passMovie = mv;
                 }
-                dialog.setVisible(true);
             }
 
+            try {
+                dialog = new movieDialog(passMovie.getId(),passMovie,passMovie.clone(),'U',allActors,allDirectors,allScenarists);
+            } catch (IOException ex) {
+                Logger.getLogger(allMoviesPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            dialog.setVisible(true);
         }
     };
+    
+    
 }
