@@ -175,9 +175,12 @@ public class Movie {
         return Id;
     }
 
+    /**
+     * @return string that has all information about movie 
+     */
     @Override
     public String toString() {
-        
+        // Basic info
         String show = Id + " | " + NameCZ + " / " + NameEN + " - " + Year + " | RT: " + Rating;
         
         show += "\nGenres: ";
@@ -249,6 +252,11 @@ public class Movie {
         return show;
     }
     
+    /**
+     * Method that creates string of impartant information about people (actors,scenarists,directors)
+     * @param Who determine who is gonna be prepared to string actors or scenarists or directors
+     * @return string with important information from certain group of people
+     */
     public String personsToString(char Who){
         String str = "";
         switch (Who) {
@@ -283,6 +291,9 @@ public class Movie {
         return str;
     }
 
+    /**
+     * @return string that contains genres of movie 
+     */
     public String genresToString() {
         String genres = "";
 
@@ -296,6 +307,9 @@ public class Movie {
         return genres;
     }
     
+    /**
+     * @param pr is person to be added to this movie 
+     */
     public void addActor(Person pr){
         if(this.Actors != null){
         Person[] newPPL = new Person[this.Actors.length+1];
@@ -310,6 +324,9 @@ public class Movie {
         }
     }
     
+    /**
+     * @param pr is person to be added to this movie 
+     */
     public void addDirector(Person pr){
         if(this.Directors != null){
         Person[] newPPL = new Person[this.Directors.length+1];
@@ -324,6 +341,9 @@ public class Movie {
         }
     }
     
+    /**
+     * @param pr is person to be added to this movie 
+     */
     public void addScenarist(Person pr){
         if(this.Scenarists != null){
         Person[] newPPL = new Person[this.Scenarists.length+1];
@@ -338,6 +358,9 @@ public class Movie {
         }
     }
     
+    /**
+     * @param id of person to be deleted from this movie 
+     */
     public void rmActor(int id){
         ArrayList<Person> ppl = new ArrayList<>(0);
         for(int i = 0; i < this.Actors.length; i++){
@@ -353,6 +376,9 @@ public class Movie {
         }
     }
     
+    /**
+     * @param id of person to be deleted from this movie 
+     */
     public void rmDirector(int id){
         ArrayList<Person> ppl = new ArrayList<>(0);
         for(int i = 0; i < this.Directors.length; i++){
@@ -368,6 +394,9 @@ public class Movie {
         }
     }
     
+    /**
+     * @param id of person to be deleted from this movie 
+     */
     public void rmScenarist(int id){
         ArrayList<Person> ppl = new ArrayList<>(0);
         for(int i = 0; i < this.Scenarists.length; i++){
@@ -383,6 +412,10 @@ public class Movie {
         }
     }
     
+    /** 
+     * @param what should be check as isEmpty
+     * @return true or false depending on whether movie contains some
+     */
     public boolean isEmpty(char what){
         boolean decide = false;
         switch(what){

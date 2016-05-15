@@ -9,7 +9,6 @@ import Main.Dialogs.personDialog;
 import Main.Dialogs.showPerson;
 import Main.Movie;
 import Main.Person;
-import Main.Threads.getPersonsMovies;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -17,7 +16,6 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -27,11 +25,12 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 /**
- *
- * @author David Löffler, Marek Szeles
+ * Panel showing all actors
+ * @author Löffler David, Szeles Marek
  */
 public class actorsPanel extends JPanel{
     
+    // INIT OF MAIN VARS AND COMPONENTS
     private int idUser;
     private boolean isAdmin = false;
     private Object[][] data;    
@@ -47,7 +46,9 @@ public class actorsPanel extends JPanel{
         this.idUser = idUser;
         setLayout(new BorderLayout());
     }    
-    
+    /**
+     * Positioning and adding all components
+     */
     private void initComponents(){
         JPanel buttPane = new JPanel(new FlowLayout());
         dataTable = new JTable(data,columnNames);        
@@ -88,6 +89,13 @@ public class actorsPanel extends JPanel{
         
     }
     
+    /**
+     * Function that builds whole panel
+     * @param movies all movies in database
+     * @param isAdmin if user is admin it will show him extra buttons
+     * @param Actors all actors
+     * @throws InterruptedException 
+     */
     public void passData(Movie[] movies, boolean isAdmin, Person[] Actors) throws InterruptedException{
         this.actors = Actors;
         this.isAdmin = isAdmin;     
@@ -158,7 +166,6 @@ public class actorsPanel extends JPanel{
                 people[i]=actors[i];
             }
             if(dataTable.getSelectedRow() != -1){
-                Object idPerson = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
                 Person passPerson = people[dataTable.getSelectedRow()];
                 showPerson dialog = null;
                 try {

@@ -19,7 +19,6 @@ package Main.panels;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -30,11 +29,10 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 /**
- *
- * @author David Löffler, Marek Szeles
+ * Panel showing basic informatin about the program
+ * @author David Loffler, Marek Szeles
  */
 public class homePanel extends JPanel{
     
@@ -46,7 +44,7 @@ public class homePanel extends JPanel{
     
     public homePanel(){
         
-        //TODO: Move to separate package
+        // Loading of fonts
         try {
             h1 = Font.createFont(Font.TRUETYPE_FONT, new File(".\\src\\main\\java\\Main\\Resources\\Fonts\\BCGHENSANSBOLD.TTF"));
             h1 = h1.deriveFont(36F);
@@ -63,6 +61,9 @@ public class homePanel extends JPanel{
         initComponents();
     }
     
+    /**
+     * Positioning and adding all components
+     */
     private void initComponents(){
      
         //setting the logo

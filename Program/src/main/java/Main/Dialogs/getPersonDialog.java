@@ -5,9 +5,7 @@
  */
 package Main.Dialogs;
 
-import Main.Movie;
 import Main.Person;
-import Main.panels.allMoviesPanel;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
@@ -15,23 +13,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
- *
- * @author David Löffler
+ * Dialog that shows certain group of people to be added
+ * @author David Loffler, Marek Szeles
  */
 public class getPersonDialog extends JDialog{
 
@@ -40,8 +32,7 @@ public class getPersonDialog extends JDialog{
     private Person[] people;
     private JTable table;
     private Object[][] data;
-    private String[] columnNames = {"ID","Name"};
-    private JTextField search = new JTextField(10);    
+    private String[] columnNames = {"ID","Name"}; 
     
     public getPersonDialog(movieDialog parent, char Who,Person[] people) throws IOException {        
         this.md = parent;
@@ -57,26 +48,25 @@ public class getPersonDialog extends JDialog{
         initComponents();
     }
     
+    /**
+     * Positioning and adding all components
+     */
     public void initComponents(){        
         JPanel upperTools = new JPanel(new BorderLayout());
         JPanel buttons = new JPanel(new FlowLayout());        
         JButton close = new JButton("Close");
         JButton addBtn = new JButton("Add");
-        JButton findBtn = new JButton("Find");
         
         close.addActionListener(closeAction);
         addBtn.addActionListener(addAction);
-        findBtn.addActionListener(findAction);
         
-        buttons.add(findBtn);
         buttons.add(addBtn);
         buttons.add(close);
-        upperTools.add(search,BorderLayout.WEST);
         upperTools.add(buttons,BorderLayout.EAST);
         add(upperTools, BorderLayout.NORTH);
         
         data = new Object[people.length][2];
-
+        // setting of data in table
         for (int i = 0; i < people.length; i++) {
             data[i][0] = people[i].getId();
             data[i][1] = people[i].getFullName();
@@ -112,33 +102,6 @@ public class getPersonDialog extends JDialog{
                 this.dispose();
                 md.updateTable(passPerson,Who);
             }
-    }; 
-    
-    ActionListener findAction = (ActionEvent actionEvent) -> {
-        System.out.println("FIND THAT");        
-
-        String name = search.getText();
-        ArrayList<Person> found = new ArrayList<>(0);
-        
-        for(int i = 0; i < people.length; i++){
-            String pplName = people[i].getName();
-            String pplLast = people[i].getLastName();
-            String pplFull = people[i].getFullName();
-            if(name.equals(pplName) || name.equals(pplLast) || name.equals(pplFull)
-               || pplName.contains(name) || pplLast.contains(name) || pplFull.contains(name)){
-                found.add(people[i]);
-            }
-        }
-        data = new Object[found.size()][2];
-        int count = 0;
-        for(Person pr : found){
-            data[count][0] = pr.getId();
-            data[count][1] = pr.getFullName();
-            count++;
-        }
-        
-        table = new JTable(data,columnNames);        
-        
-    }; 
+    };     
     
 }

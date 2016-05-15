@@ -16,7 +16,6 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -26,7 +25,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 /**
- *
+ * Panel showing all directors
  * @author David Loffler, Marek Szeles
  */
 public class directorsPanel extends JPanel{
@@ -47,6 +46,9 @@ public class directorsPanel extends JPanel{
         setLayout(new BorderLayout());
     }    
     
+    /**
+     * Positioning and adding all components
+     */
     private void initComponents(){
         JPanel buttPane = new JPanel(new FlowLayout());
         dataTable = new JTable(data,columnNames);        
@@ -87,6 +89,12 @@ public class directorsPanel extends JPanel{
         
     }
     
+    /**
+     * Function that builds whole panel
+     * @param movies all movies from database
+     * @param isAdmin if user is admin panel will show extra buttons
+     * @param Directors all directors to show in table
+     */
     public void passData(Movie[] movies, boolean isAdmin,Person[] Directors){
         this.directors = Directors;
         this.isAdmin = isAdmin;         
@@ -131,7 +139,7 @@ public class directorsPanel extends JPanel{
             
            if(dataTable.getSelectedRow() != -1){
                 Object idDirector = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Person human = directors[Integer.parseInt(idDirector.toString())-1];
+                Person human = null;//directors[Integer.parseInt(idDirector.toString())-1];
                 personDialog dialog = null;
                 
                 for(Person pr : directors){

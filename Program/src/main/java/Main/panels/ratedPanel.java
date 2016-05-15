@@ -34,8 +34,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 /**
- *
- * @author David Löffler
+ * Panel showing all movies that user rated
+ * @author David Loffler, Marek Szeles
  */
 public class ratedPanel extends JPanel{
     
@@ -51,6 +51,9 @@ public class ratedPanel extends JPanel{
         setLayout(new BorderLayout());
     }    
     
+    /**
+     * Positioning and adding all components
+     */
     private void initComponents(){
         dataTable = new JTable(data,columnNames);        
         dataTable.getTableHeader().setReorderingAllowed(false);
@@ -78,6 +81,10 @@ public class ratedPanel extends JPanel{
         
     }
     
+    /**
+     * Function that builds whole panel
+     * @param user that contains array of his rated movies
+     */
     public void passData(User user){
         this.rated = user.getRated();
         this.user = user;

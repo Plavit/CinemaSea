@@ -33,8 +33,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
- *
- * @author David Löffler, Marek Szeles
+ * Panel showing all movies
+ * @author Löffler David, Szeles Marek
  */
 public class allMoviesPanel extends JPanel{
     
@@ -54,6 +54,9 @@ public class allMoviesPanel extends JPanel{
         setLayout(new BorderLayout());
     }
     
+    /**
+     * Positioning and adding all components
+     */
     private void initComponents(){
         JPanel buttPane = new JPanel(new FlowLayout());
         dataTable = new JTable(data,columnNames);        
@@ -94,6 +97,14 @@ public class allMoviesPanel extends JPanel{
         add(scrollPane, BorderLayout.CENTER);
     }
     
+    /**
+     * Function that builds whole panel
+     * @param Movies all movies from database
+     * @param isAdmin if user is admin panel will show extra buttons
+     * @param actors all actors that can be added to movie if user is admin
+     * @param directors all directors that can be added to movie if user is admin
+     * @param scenarists all scenarists that can be added to movie if user is admin
+     */
     public void passData(Movie[] Movies, boolean isAdmin, Person[] actors, Person[] directors, Person[] scenarists){
         this.isAdmin = isAdmin;
         this.movies = Movies;        

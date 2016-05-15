@@ -28,11 +28,12 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
- *
+ * Frame for registering user
  * @author Löffler David, Szeles Marek
  */
 public class RegisterFrame implements ActionListener{
     
+    // INIT OF MAIN COMPONENTS
     JLabel logoLabel = new JLabel(new ImageIcon(".\\src\\main\\java\\Main\\Resources\\Logo_label_small.png"));
     JFrame frame = new JFrame("CINSEA - Register");
     JPanel logoPane = new JPanel();
@@ -64,6 +65,7 @@ public class RegisterFrame implements ActionListener{
     
     private void initComponents(){        
        
+        // POSITIONING AND ADDING COMPONENTS
         
         RegPane.setLayout(new GridBagLayout());
         btnLogin.addActionListener(signinListener);
@@ -107,6 +109,7 @@ public class RegisterFrame implements ActionListener{
         
     }
 
+    // REGISTER ACTION
     @Override
     public void actionPerformed(ActionEvent e) {
         
@@ -117,7 +120,7 @@ public class RegisterFrame implements ActionListener{
         String pass = String.valueOf(pswC);
         String checkPass = String.valueOf(checkPswC);
         
-        //TODO: check if username valid and not taken
+        //check if username valid and not taken
         String valCheckOutcome=CheckUsername.checkUsername(nick);
         if("OK".equals(valCheckOutcome)){
             //check if passwords are valid
@@ -132,6 +135,7 @@ public class RegisterFrame implements ActionListener{
                 db.register(pass,nick);
                 user = db.login(pass,nick);
 
+                // IF EVERYWHING IS OK THEN LOG IN AND TURN THE APP ON
                 if(user != null){
                     System.out.println("SUCCESFULY REGISTERED AND LOGGED");
 
@@ -160,6 +164,7 @@ public class RegisterFrame implements ActionListener{
         }
     }
     
+    // GET TO THE PREVIOUS FRAME
     ActionListener signinListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {            

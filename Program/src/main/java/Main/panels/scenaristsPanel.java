@@ -6,7 +6,6 @@
 package Main.panels;
 
 import Main.Dialogs.personDialog;
-import Main.Dialogs.showMovie;
 import Main.Dialogs.showPerson;
 import Main.Movie;
 import Main.Person;
@@ -17,7 +16,6 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -27,8 +25,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 /**
- *
- * @author David Löffler, Marek Szeles
+ * Panel showing all scenarists
+ * @author David Loffler, Marek Szeles
  */
 public class scenaristsPanel extends JPanel{
     
@@ -48,6 +46,9 @@ public class scenaristsPanel extends JPanel{
         setLayout(new BorderLayout());
     }    
     
+    /**
+     * Positioning and adding all components
+     */
     private void initComponents(){
         JPanel buttPane = new JPanel(new FlowLayout());
         dataTable = new JTable(data,columnNames);      
@@ -88,6 +89,12 @@ public class scenaristsPanel extends JPanel{
         
     }
     
+    /**
+     * Function that builds whole panel
+     * @param movies all movies from database
+     * @param isAdmin if user is admin panel will show extra buttons
+     * @param Scenarists all scenarists to show in table
+     */
     public void passData(Movie[] movies, boolean isAdmin,Person[] Scenarists){
         this.scenarists = Scenarists;
         this.isAdmin = isAdmin;        
@@ -132,7 +139,7 @@ public class scenaristsPanel extends JPanel{
             
            if(dataTable.getSelectedRow() != -1){
                 Object idScenarists = dataTable.getValueAt(dataTable.getSelectedRow(), 0);
-                Person human = scenarists[Integer.parseInt(idScenarists.toString())-1];
+                Person human = null;//scenarists[Integer.parseInt(idScenarists.toString())-1];
                 personDialog dialog = null;
                 
                 for(Person pr : scenarists){

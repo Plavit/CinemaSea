@@ -17,7 +17,6 @@
 package Main;
 
 import Main.Login.LoginFrame;
-import Main.Register.RegisterFrame;
 import Main.Threads.*;
 import Main.panels.*;
 import java.awt.BorderLayout;
@@ -54,7 +53,6 @@ public class mainframe extends JFrame{
     JTabbedPane mainPanel = new JTabbedPane();
     homePanel homePane = new homePanel();
     allMoviesPanel moviesPane;
-    databasePanel dataPane = new databasePanel();
     ratedPanel ratePane = new ratedPanel();
     searchPanel srchPane = new searchPanel();
     actorsPanel actPane;
@@ -114,30 +112,36 @@ public class mainframe extends JFrame{
         }
     }
     
+    /**
+     * Method for gathering all data
+     * @throws InterruptedException 
+     */
     private void gatherAllData() throws InterruptedException{
-        
+        // get all movies
         Callable<Movie[]> allFilms = new selectAllMovies();
         
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Movie[]> films = executor.submit(allFilms);        
         
+        // assigne movies from Future to global array
         try {
             allMovies = films.get();            
         } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
         }        
         executor.shutdown();
-        
-        int onePercent = allMovies.length/100;
 
+        // thread that controls work of all other threads
         Thread gatherPersons = new Thread() {
             @Override
             public void run() {
-
+                
+                // progressbar text
                 System.out.println("Gathering data, initiated...");
                 selectUserMovies thUserMovies = new selectUserMovies(user.getId());
-                thUserMovies.start();
+                thUserMovies.start(); // gather user movies
                 
+                // gather all persons
                 selectAllPersons allActors = new selectAllPersons('A');
                 selectAllPersons allScenarists = new selectAllPersons('D');
                 selectAllPersons allDirectors = new selectAllPersons('S');
@@ -153,19 +157,23 @@ public class mainframe extends JFrame{
                     Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
+                // assigne groups of people to their arrays
                 actors = allActors.returnPersonArray();
                 directors = allDirectors.returnPersonArray();
                 scenarists = allScenarists.returnPersonArray();
                 
+                // the amount of all data and prepating of percentage
                 int allData = allMovies.length + actors.length + scenarists.length + directors.length;
                 int count = 0;
                 int percentage = 0;
+                // gather all data related to movies
                 for (Movie mv : allMovies) {
-                    
+                    // re-calculate the progress
                     percentage = (int)(double)(((double)count++ / allData) * 100);
                     bar.setValue(percentage);
                     bar.setString("Gathering data from database " + percentage + "%");
                     
+                    // set threads to certain movie
                     selectPersons thActors = new selectPersons(mv.getId(), 'A');
                     selectPersons thScenarists = new selectPersons(mv.getId(), 'S');
                     selectPersons thDirectors = new selectPersons(mv.getId(), 'D');
@@ -180,6 +188,7 @@ public class mainframe extends JFrame{
                     thTags.start();
                     thRating.start();
 
+                    // wait for their END
                     try {
                         thActors.join();
                         thScenarists.join();
@@ -191,6 +200,7 @@ public class mainframe extends JFrame{
                         Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
                     }                    
 
+                    // get data from threads
                     mv.setActors(thActors.returnPersonArray());
                     mv.setScenarists(thScenarists.returnPersonArray());
                     mv.setDirectors(thDirectors.returnPersonArray());
@@ -205,6 +215,7 @@ public class mainframe extends JFrame{
                     Logger.getLogger(mainframe.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
+                // prepare valid format of movies that user rated
                 int[] tmpId = thUserMovies.getIdMovies();
                 Movie[] userMovieTMP = new Movie[tmpId.length]; 
                 for(int i = 0; i < tmpId.length; i++){
@@ -213,6 +224,7 @@ public class mainframe extends JFrame{
                 
                 user.setRated(userMovieTMP);
                 
+                // add all belongings to every Actor
                 getPersonsMovies movies;
                 for(Person pr : actors){
                     
@@ -230,6 +242,7 @@ public class mainframe extends JFrame{
                     pr.setMoviesActed(movies.returnMoviesArray());
                 }
                 
+                // add all belongings to every Director
                 for(Person pr : directors){
                     
                     percentage = (int)(double)(((double)count++ / allData) * 100);
@@ -246,6 +259,7 @@ public class mainframe extends JFrame{
                     pr.setMoviesActed(movies.returnMoviesArray());
                 }
                 
+                // add all belongings to every Scenarist
                 for(Person pr : scenarists){
                     
                     percentage = (int)(double)(((double)count++ / allData) * 100);
@@ -262,6 +276,7 @@ public class mainframe extends JFrame{
                     pr.setMoviesActed(movies.returnMoviesArray());
                 }
                 
+                // EVFERYTHING IS SET SO UPDATE MAINFRAME
                 try {
                     updateMainFrame();
                 } catch (InterruptedException ex) {
@@ -277,6 +292,10 @@ public class mainframe extends JFrame{
         
     }
 
+    /**
+     * Method for updating mainframe
+     * @throws InterruptedException 
+     */
     public void updateMainFrame() throws InterruptedException{        
         
         ratePane.passData(user);
