@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
+ * Class representing the login window shown at program startup
  *
  * @author Löffler David, Szeles Marek
  */
