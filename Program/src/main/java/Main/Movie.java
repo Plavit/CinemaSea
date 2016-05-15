@@ -51,6 +51,11 @@ public class Movie {
         this.Id = id;
     }
 
+    /**
+     * Returns Czech name of given movie
+     * 
+     * @return Czech name of given movie
+     */
     public String getNameCZ() {
         return NameCZ;
     }
