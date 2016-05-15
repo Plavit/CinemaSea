@@ -20,9 +20,13 @@ package Main;
 import java.util.ArrayList;
 
 /**
+ * Class representing a general movie object, it contains basic information 
+ * about the movie corresponding to the database columns, such as Czech name, 
+ * English name, year of theatrical release, etc.
  *
  * @author Löffler David, Szeles Marek
  */
+
 public class Movie {
     
     private final int Id;
@@ -38,6 +42,11 @@ public class Movie {
     private String Description;
     private int Year;
 
+    /**
+     * Sets id of the Movie on Movie initialization
+     * 
+     * @param id new Movie ID
+     */
     public Movie(int id) {
         this.Id = id;
     }

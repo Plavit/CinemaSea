@@ -18,13 +18,15 @@
 package Main;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
+ * Class representing a general person object, unifying the actor, director and
+ * scenarist tables in the database.
  *
  * @author Löffler David, Szeles Marek
  */
+
 public class Person{
     
     private final int Id;
@@ -38,6 +40,11 @@ public class Person{
     private ArrayList<Movie> moviesScreenwritten = new ArrayList<Movie>(0);
     
 
+    /**
+     * Sets ID of the Person on Person initialization
+     * 
+     * @param Id new Person ID
+     */
     public Person(int Id) {
         this.Id = Id;
     }
