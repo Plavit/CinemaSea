@@ -1,8 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016 CinemaSea
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package Main;
 
 import Main.Threads.*;
@@ -19,11 +31,15 @@ import javax.swing.JOptionPane;
 
 
 /**
+ * Class to connect to the given database at {@link slon.fel.cvut.cz}
  *
  * @author Löffler David, Szeles Marek
  */
 public class Database {
     
+   /**
+    * Setting up the parameters vital for database connection.
+    */
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
    static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
    
@@ -32,6 +48,13 @@ public class Database {
    
    private Connection conn = null;
    
+   /**
+    * Method attempting to connect to a database based on the parameters given
+    * at the class declaration. @see Database
+    * 
+    * @exception e if server can't connect to database, or other server problems
+    * 
+    */
    public void Database(){
        try{
            Class.forName("org.postgresql.Driver");
@@ -57,18 +80,29 @@ public class Database {
        
    }
    
+    /**
+     * returns the state of database connection at the given moment.
+     * @return conn 
+     */
    public Connection getConnection(){
        return this.conn;
    }
    
+   /**
+    * Attempts to register a new user by adding a new entry to 
+    * the user database.
+    * 
+    * @param psw the password passed to be processed
+    * @param nick the username picked by the user
+    * @return the {@link User} object of the newly registered user
+    */
    public User register(String psw, String nick){
        User user = null;
        Statement stmt = null;
        //TODO: change to MAX id found + 1
        java.util.Date date= new java.util.Date();
-       String idHash="4"+date.getTime();
+       String idHash=""+date.getTime();
        idHash=idHash.substring(5, 12);
-       //System.out.println("TIME: "+date.getTime());
         try {
            // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
@@ -99,11 +133,18 @@ public class Database {
            } catch (SQLException se) {
            }//end finally try
        }//end try      
-       //TBD
        
        return user;
    }
    
+    /**
+    * Attempts to log in a new user by adding a new entry to 
+    * the user database.
+     * 
+     * @param psw
+     * @param nick
+     * @return the {@link User} object of the newly logged in user
+     */
    public User login(String psw, String nick){
        User user = null;
        Statement stmt = null;
@@ -153,6 +194,12 @@ public class Database {
        return user;
    }
    
+    /**
+     * Check if a user with a given name is already registered or not.
+     * 
+     * @param nick the username to be checked
+     * @return boolean value of true if such user already exists, false if not
+     */
     public boolean isUserRegistered(String nick){
        boolean registered = false;
        Statement stmt = null;
@@ -200,6 +247,9 @@ public class Database {
        return registered;
    }
    
+    /**
+     * Clears the views created in the database.
+     */
    public void clearViews(){
        Statement stmt = null;
        try {
@@ -248,6 +298,12 @@ public class Database {
        }//end try       
    }
    
+   /**
+    * Updates views in the database
+    * 
+    * @return true after finished
+    * @throws InterruptedException if thread is interrupted
+    */
    public boolean updateViews() throws InterruptedException{
        clearViews();       
        Thread[] threads = {new viewMovieActors(), new viewMovieDirectors(),
@@ -270,6 +326,16 @@ public class Database {
       return true;
    }
    
+   /**
+    * Creates a hash (immutable code impossible to un-hash) of a given String, 
+    * used for password protection when storing in database.
+    * 
+    * @param init the String to be hashed
+    * @return the hashed product of the method
+    * @throws InvalidKeySpecException
+    * @throws NoSuchAlgorithmException 
+    */
+   
    public String HashPSW(String init) throws InvalidKeySpecException, NoSuchAlgorithmException{
         byte[] salt = {15,32,54,3,45,2,5,3,1,4,87,9,6,89,99,17};
         KeySpec spec = new PBEKeySpec(init.toCharArray(), salt, 98434, 256);
@@ -283,6 +349,14 @@ public class Database {
         return enc.encodeToString(hash);
     }
    
+   /**
+    * Passes information about movie rating to the database.
+    * 
+    * 
+    * @param rate the value of the rating (standard values 1 to 5)
+    * @param id_movie the unique id of the movie being rated
+    * @param user the user that rated the movie
+    */
    public void rateMovie(double rate, int id_movie, User user){
        Double rating = rate;
        boolean alreadyRated = false;
