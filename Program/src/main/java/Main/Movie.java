@@ -428,6 +428,9 @@ public class Movie {
             case 'D':
                 if(this.Directors == null) decide = true;
                 break;
+            case 'G':
+                if(this.Genres == null) decide = true;
+                break;
         }
         return decide;
     }

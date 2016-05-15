@@ -35,6 +35,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -86,6 +88,7 @@ public class mainframe extends JFrame{
         scePane = new scenaristsPanel(user.getId());
         JButton reloadButt = new JButton("RELOAD");
         reloadButt.addActionListener(reloadListener);
+        mainPanel.addChangeListener(reloadMF);
         
         bar.setStringPainted(true);
         bar.setString("Gathering data from database 0%");
@@ -96,8 +99,8 @@ public class mainframe extends JFrame{
         mainPanel.addTab("Actors", actPane);
         mainPanel.addTab("Rated", ratePane);
         mainPanel.addTab("All movies", moviesPane);
-        mainPanel.addTab(null, reloadButt);
-        
+        mainPanel.addTab("RELOAD",reloadButt);
+        mainPanel.setBackgroundAt(6, java.awt.Color.cyan);
 
         // DOPORUCUJU DOPLNIT KOMPONENTY DO DANYCH CLASS PANELU KVULI PREHLEDNOSTI
         
@@ -315,7 +318,7 @@ public class mainframe extends JFrame{
         dirPane.passData(allMovies, user.isIsAdmin(),directors);
     }
     
-    ActionListener reloadListener = (ActionEvent actionEvent) -> {
+    private void reloadFunc() {
         Database db = new Database();
         try {
             if (db.updateViews()) {
@@ -330,7 +333,24 @@ public class mainframe extends JFrame{
         } catch (IOException ex) {
             Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    ActionListener reloadListener = (ActionEvent actionEvent) -> {
+        reloadFunc();
+    };
+    
+    ChangeListener reloadMF = new ChangeListener(){
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            if (mainPanel.getSelectedIndex() == 6) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Reload will terminate this window and run new one with long loading procedure. Would you like to continue?", "Reload warning", dialogButton);
 
-    }; 
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    reloadFunc();
+                }
+            }
+        }
+    };
     
 }

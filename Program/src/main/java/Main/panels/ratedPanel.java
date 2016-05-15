@@ -96,7 +96,7 @@ public class ratedPanel extends JPanel{
             data[i][2] = rated[i].getNameEN();
             
             String genres = "";
-            
+            if(rated != null){
             for(int k = 0; k < rated[i].getGenres().length; k++){
                 if(rated[i].getGenres().length > 1 && rated[i].getGenres().length != k+1){
                     genres += rated[i].getGenres()[k] + " / ";
@@ -104,6 +104,7 @@ public class ratedPanel extends JPanel{
                 else{
                     genres += rated[i].getGenres()[k];
                 }
+            }
             }
             
             data[i][3] = genres;
