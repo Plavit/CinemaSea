@@ -25,11 +25,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
+ * Thread that gather all persons from database that has relation to some movie
  *
- * @author David Löffler, Marek Szeles
+ * @author Löffler David, Szeles Marek
  */
 public class selectPersons extends Thread{
     
+    /**
+    * Setting up the parameters vital for database connection.
+    */
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
     static final String USER = "db16_loffldav";
@@ -40,11 +44,19 @@ public class selectPersons extends Thread{
     private Person[] people = null;
     private final char Who;
     
+    /**
+     * Constructor of class
+     * @param who receive character that determine relation between movie and person
+     * @param id unique number of certain movie
+     */
     public selectPersons(int id,char who){
         this.Id = id;
         this.Who = who;
     }
     
+    /**
+     * Overwritten func for gathering all data we want actors or scenarists or directors of certain movie
+     */
     @Override
     public void run(){
         
@@ -61,6 +73,7 @@ public class selectPersons extends Thread{
                     ResultSet.CONCUR_READ_ONLY);
             String sql = null;
             
+            // PREPARING OF SQL STATEMENT
             switch(Who){
                 case 'A':
                     sql = "SELECT * FROM movieactors "
@@ -123,14 +136,23 @@ public class selectPersons extends Thread{
         
     }
     
+    /**
+    * If thread gets into deadlock this function will terminate it
+    */
     public void killThread(){
         this.isRunning = false;
     }
     
+    /**
+    * @return the status of thread whether is running or not 
+    */
     public boolean isRunning(){
         return isRunning;
     }
     
+    /**
+    * @return array of persons (actors or scenarists or directors) that has relation to the certain movie
+    */
     public Person[] returnPersonArray(){
         return people;
     }

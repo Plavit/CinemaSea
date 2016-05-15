@@ -23,8 +23,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
+ * Thread that creates VIEW in database called movietags
  *
- * @author leffly
+ * @author Löffler David, Szeles Marek
  */
 public class viewMovieTags extends Thread{
     

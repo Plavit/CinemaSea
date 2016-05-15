@@ -23,16 +23,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
+ * Thread that creates VIEW in database called movieactors
  *
- * @author David Löffler
+ * @author Löffler David, Szeles Marek
  */
 public class viewMovieActors extends Thread{
     
+    /**
+    * Setting up the parameters vital for database connection.
+    */
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
     static final String USER = "db16_loffldav";
     static final String PASS = "db16_loffldav";
     
+    /**
+     * Function that creates the certain VIEW
+     */
     @Override
     public void run(){
         

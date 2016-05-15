@@ -6,7 +6,6 @@
 package Main.Threads;
 
 import Main.Movie;
-import Main.Person;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,11 +14,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
+ * Thread which determine who plays where
  *
- * @author David Löffler
+ * @author Löffler David, Szeles Marek
  */
 public class getPersonsMovies extends Thread{
     
+    /**
+    * Setting up the parameters vital for database connection.
+    */
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
     static final String USER = "db16_loffldav";
@@ -28,13 +31,21 @@ public class getPersonsMovies extends Thread{
     private boolean isRunning = true;
     private Movie[] movies = null;
     private final char Who;
-    private final int id;
+    private final int id;    
     
+    /**
+    * Constructor receives id of person and whether person is actor, scenarist or director
+    * @param who character which categorize the person
+    * @param id unique number of certain person
+    */
     public getPersonsMovies(char who,int id){
         this.Who = who;
         this.id = id;
     }
     
+    /**
+    * Thread will find all movies that has a relation to the certain person
+    */
     @Override
     public void run(){
           
@@ -112,14 +123,23 @@ public class getPersonsMovies extends Thread{
         
     }
     
+    /**
+    * If thread gets into deadlock this function will terminate it
+    */
     public void killThread(){
         this.isRunning = false;
     }
     
+    /**
+    * @return the status of thread whether is running or not 
+    */
     public boolean isRunning(){
         return isRunning;
     }
     
+    /**
+    * @return array of movies related to the certain person
+    */
     public Movie[] returnMoviesArray(){
         return movies;
     }

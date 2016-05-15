@@ -26,18 +26,25 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 /**
+ * Callable thread that gather all movies from database
  *
- * @author David Löffler
+ * @author Löffler David, Szeles Marek
  */
 public class selectAllMovies implements Callable<Movie[]>{
     
+    /**
+    * Setting up the parameters vital for database connection.
+    */
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
     static final String USER = "db16_loffldav";
     static final String PASS = "db16_loffldav";
 
+    /** 
+    * @return array of all movies or nothing
+    */
     @Override
-    public Movie[] call() throws Exception {
+    public Movie[] call(){
         ArrayList<Movie> list = new ArrayList<>();
         Movie result;        
         Connection conn = null;

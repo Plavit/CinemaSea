@@ -16,7 +16,6 @@
  */
 package Main.Threads;
 
-import Main.Person;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,11 +24,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
+ * Thread for gathering additional data of movies
  *
- * @author leffly
+ * @author Löffler David, Szeles Marek
  */
 public class selectAdditions extends Thread{
     
+    /**
+    * Setting up the parameters vital for database connection.
+    */
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
     static final String USER = "db16_loffldav";
@@ -40,11 +43,19 @@ public class selectAdditions extends Thread{
     private double rating;
     private String[] additions;
 
+    /**
+    * Constructor receives id of movie and whether should be gathering genres, tags or rating
+    * @param What character which determine what should be downloaded from database
+    * @param Id unique number of certain movie
+    */
     public selectAdditions(int Id, char What) {
         this.Id = Id;
         this.What = What;
     }
     
+    /**
+    * Thread will find all additional data that has a relation to the certain movie
+    */
     @Override
     public void run(){
         
@@ -61,6 +72,7 @@ public class selectAdditions extends Thread{
             String sql = null;
             ResultSet rs;
             
+            // PREPARING SQL STATEMENT
             switch(What){
                 case 'G':
                     sql = "SELECT * FROM moviegenres "                    
@@ -131,10 +143,16 @@ public class selectAdditions extends Thread{
         
     }
 
+    /**
+    * @return rating of certain movie
+    */
     public double getRating() {
         return rating;
     }
 
+    /**
+    * @return array of additional information about certain movie
+    */
     public String[] getAdditions() {
         return additions;
     }

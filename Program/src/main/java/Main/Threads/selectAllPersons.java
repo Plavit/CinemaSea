@@ -14,11 +14,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
+ * Thread that gather all persons from database
  *
- * @author David Löffler
+ * @author Löffler David, Szeles Marek
  */
 public class selectAllPersons extends Thread{
     
+    /**
+    * Setting up the parameters vital for database connection.
+    */
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
     static final String USER = "db16_loffldav";
@@ -27,11 +31,17 @@ public class selectAllPersons extends Thread{
     private boolean isRunning = true;
     private Person[] people = null;
     private final char Who;
-    
+    /**
+     * Constructor of class
+     * @param who receive character that determine who will be downloaded (actors,scenarists,directors)
+     */
     public selectAllPersons(char who){
         this.Who = who;
     }
     
+    /**
+     * Overwritten func for gathering all data we want (actors,scenarists,directors)
+     */
     @Override
     public void run(){
         
@@ -48,6 +58,7 @@ public class selectAllPersons extends Thread{
                     ResultSet.CONCUR_READ_ONLY);
             String sql = null;
             
+            // PREPARING OF SQL STATEMENT
             switch(Who){
                 case 'A':
                     sql = "SELECT * FROM actor";
@@ -107,14 +118,23 @@ public class selectAllPersons extends Thread{
         
     }
     
+    /**
+    * If thread gets into deadlock this function will terminate it
+    */
     public void killThread(){
         this.isRunning = false;
     }
     
+    /**
+    * @return the status of thread whether is running or not 
+    */
     public boolean isRunning(){
         return isRunning;
     }
     
+    /**
+    * @return array of persons (actors or scenarists or directors)
+    */
     public Person[] returnPersonArray(){
         return people;
     }

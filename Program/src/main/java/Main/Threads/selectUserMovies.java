@@ -16,7 +16,6 @@
  */
 package Main.Threads;
 
-import Main.Person;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,11 +24,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
+ * Thread that gather all rated movies of certain user
  *
- * @author leffly
+ * @author Löffler David, Szeles Marek
  */
 public class selectUserMovies  extends Thread{
     
+    /**
+    * Setting up the parameters vital for database connection.
+    */
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     static final String DB_URL = "jdbc:postgresql://slon.felk.cvut.cz:5432/db16_loffldav";
     static final String USER = "db16_loffldav";
@@ -38,10 +41,17 @@ public class selectUserMovies  extends Thread{
     private final int idUser;
     private int[] idMovies;
 
+    /**
+     * Constructor
+     * @param idUser unique number of user 
+     */
     public selectUserMovies(int idUser) {
         this.idUser = idUser;
     }
     
+    /**
+     * Method for gathering all IDs of movies that user rated
+     */
     @Override
     public void run(){
         ArrayList<Integer> movies = new ArrayList<>();
@@ -96,10 +106,18 @@ public class selectUserMovies  extends Thread{
         
     }
 
+    /** 
+     * @return array of IDs of movies
+     */
     public int[] getIdMovies() {
         return idMovies;
     }
 
+    /**
+     * Method for converting ArrayList of Integers to array of int
+     * @param integers ArrayList of gathered IDs
+     * @return array of gathered IDs
+     */
     private static int[] convertIntegers(ArrayList<Integer> integers) {
         int[] ret = new int[integers.size()];
         for (int i = 0; i < ret.length; i++) {
