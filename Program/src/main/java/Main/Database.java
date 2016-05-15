@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
 
 
 /**
- * Class to connect to the given database at {@link slon.fel.cvut.cz}
+ * Class to connect to the given database
  *
  * @author Löffler David, Szeles Marek
  */
@@ -51,9 +51,6 @@ public class Database {
    /**
     * Method attempting to connect to a database based on the parameters given
     * at the class declaration. @see Database
-    * 
-    * @exception e if server can't connect to database, or other server problems
-    * 
     */
    public void Database(){
        try{

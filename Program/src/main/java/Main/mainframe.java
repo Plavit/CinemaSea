@@ -59,7 +59,11 @@ public class mainframe extends JFrame{
     directorsPanel dirPane;
     scenaristsPanel scePane;
     
-    
+    /**
+     * Constructor for mainframe, setting the frame
+     * @throws MalformedURLException loading of icon
+     * @throws IOException loading of icon
+     */
     public mainframe() throws MalformedURLException, IOException{
         setTitle("Cinsea - Home");
         setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo_icon.png")));
@@ -72,7 +76,9 @@ public class mainframe extends JFrame{
         setVisible(true);
     }
     
-    // ADDING COMPONENTS
+    /**
+     * ADDING AND POSITIONING OF COMPONENTS
+     */
     public void initComponents(){
         moviesPane = new allMoviesPanel(user);
         actPane = new actorsPanel(user.getId());
@@ -101,6 +107,10 @@ public class mainframe extends JFrame{
         add(bar,BorderLayout.SOUTH);
     }
     
+    /**
+     * Updates mainframe
+     * @param user receive current user
+     */
     public void setMainFrame(User user){
         this.user = user;
         initComponents();
