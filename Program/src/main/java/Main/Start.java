@@ -11,7 +11,11 @@ import java.io.IOException;
 
 /**
  *
+ * File containing the main class to start up the program by invoking 
+ * the login screen.
+ * 
  * @author Löffler David, Szeles Marek
+ * 
  */
 public class Start {
     
