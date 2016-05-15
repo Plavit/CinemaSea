@@ -60,22 +60,49 @@ public class Movie {
         return NameCZ;
     }
 
+    /**
+     * Assigns new value to the parameter representing the Czech name of the
+     * movie.
+     * 
+     * @param NameCZ New String value of the Czech movie name
+     */
     public void setNameCZ(String NameCZ) {
         this.NameCZ = NameCZ;
     }
 
+    /**
+     * Returns English name of given movie
+     * 
+     * @return English name of given movie
+     */
     public String getNameEN() {
         return NameEN;
     }
 
+    /**
+     * Assigns new value to the parameter representing the English name of the
+     * movie.
+     * 
+     * @param NameEN New String value of the English movie name
+     */
     public void setNameEN(String NameEN) {
         this.NameEN = NameEN;
     }
 
+    /**
+     * Returns URL of assigned cover image for given movie.
+     * 
+     * @return URL of the cover image
+     */
     public String getCoverImage() {
         return CoverImage;
     }
 
+    /**
+     * Assigns new URL representing cover image for given movie.
+     * 
+     * @param CoverImage new URL of the cover image
+     */
     public void setCoverImage(String CoverImage) {
         this.CoverImage = CoverImage;
     }
@@ -417,7 +444,5 @@ public class Movie {
         }
         return true;
     }
-    
-    
-    
+
 }
