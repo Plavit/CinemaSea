@@ -399,7 +399,6 @@ public class Database {
            e.printStackTrace();
        } finally {
            //finally block used to close resources
-           //finally block used to close resources
            try {
                if (stmt != null) {
                    stmt.close();
@@ -417,6 +416,19 @@ public class Database {
        
    }
 
+   /**
+    * Updates a given {@link Person} object in the database according to passed
+    * parameters.
+    * 
+    * @param name the updated name of the Person object
+    * @param surname the updated surname of the Person object
+    * @param year the updated year of birth of the Person object
+    * @param desc the updated description of the Person object
+    * @param id the unique id of the person being updated
+    * @param Who a supporting parameter determining whether to update the actor 
+    *        table (case 'A'), the director table (case 'D') or 
+    *        the scenarist table (case 'S')
+    */
     public void updatePerson(String name, String surname, String year, String desc, int id, char Who){
        Statement stmt = null;
        try {
@@ -485,7 +497,6 @@ public class Database {
            e.printStackTrace();
        } finally {
            //finally block used to close resources
-           //finally block used to close resources
            try {
                if (stmt != null) {
                    stmt.close();
@@ -502,6 +513,20 @@ public class Database {
        }//end try
     }
     
+   /**
+    * Inserts a given {@link Person} object in the database according to passed
+    * parameters.
+    * 
+    * @param name the updated name of the Person object
+    * @param surname the updated surname of the Person object
+    * @param year the updated year of birth of the Person object
+    * @param desc the updated description of the Person object
+    * @param id the unique id of the person being updated
+    * @param Who a supporting parameter determining whether to update the actor 
+    *        table (case 'A'), the director table (case 'D') or 
+    *        the scenarist table (case 'S')
+    *
+    */
     public void insertPerson(String name, String surname, String year, String desc, int id, char Who){
         Statement stmt = null;
        try {
@@ -645,6 +670,24 @@ public class Database {
        }//end try
     }
     
+    /**
+     * Updates a given {@link Movie} in database according to given parameters.
+     * 
+     * @param movie the movie to be updated, containing the basic information 
+     *        about the movie, such as name, year of first screening, etc.
+     * @param addActors {@link ArrayList} of integer IDs referencing 
+     *        actors to be added to the movie.
+     * @param addDirectors {@link ArrayList} of integer IDs referencing 
+     *        directors to be added to the movie.
+     * @param addScenarists {@link ArrayList} of integer IDs referencing 
+     *        scenarists to be added to the movie.
+     * @param rmActors {@link ArrayList} of integer IDs referencing 
+     *        actors to be removed to the movie.
+     * @param rmDirectors {@link ArrayList} of integer IDs referencing 
+     *        directors to be removed to the movie.
+     * @param rmScenarists {@link ArrayList} of integer IDs referencing 
+     *        scenarists to be removed to the movie.
+     */
     public void updateMovie(Movie movie,ArrayList<Integer> addActors, ArrayList<Integer> addDirectors,
             ArrayList<Integer> addScenarists,ArrayList<Integer> rmActors, ArrayList<Integer> rmDirectors,
             ArrayList<Integer> rmScenarists){
