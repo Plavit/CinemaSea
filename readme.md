@@ -19,6 +19,7 @@ Admin is able to manage the whole database. That includes adding, deleting and u
 * **[SQL Code](https://gitlab.fel.cvut.cz/szelemar/cinemasea/blob/master/Documentation/Database/CINSEA_SQL.sql)**
 * **[All models - PDF](https://gitlab.fel.cvut.cz/szelemar/cinemasea/blob/master/Documentation/Database/All%20Models.pdf)**
 * **[Triggers](https://gitlab.fel.cvut.cz/szelemar/cinemasea/blob/master/Documentation/Database/CINSEA_triggers.sql)**
+
 ### **Used technologies:**
 * **Netbeans**
 * **Maven**
