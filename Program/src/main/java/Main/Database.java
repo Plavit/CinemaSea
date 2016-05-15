@@ -762,7 +762,6 @@ public class Database {
            e.printStackTrace();
        } finally {
            //finally block used to close resources
-           //finally block used to close resources
            try {
                if (stmt != null) {
                    stmt.close();
@@ -777,7 +776,5 @@ public class Database {
                se.printStackTrace();
            }//end finally try
        }//end try
-    }
-    
-    
+    } 
 }
