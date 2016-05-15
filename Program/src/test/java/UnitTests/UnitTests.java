@@ -11,10 +11,16 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import static org.junit.Assert.assertEquals;
+
+//Unit tests
+
 /**
- *
+ * This class consists entirely of unit tests for testing 
+ * the methods in the project.
+ * 
  * @author David Löffler
  */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UnitTests {
     
@@ -26,10 +32,23 @@ public class UnitTests {
     public static void afterClass() {
     }
 
+    /**
+     * Tests the function copying an object.
+     * Creates a dummy object @code testingObject , then makes a copy
+     * of it and then compares the two results.
+     * 
+     */
     @Test
     public void copy_personObject_Test() {
+        /**
+         * {@link boolean} the expected outcome of the test - true.
+         */
+         
         boolean expectedResult = true;
-                
+              
+        /**
+         * {@link Person} the dummy object being tested.
+         */
         Person testingObject = new Person(1);
         testingObject.setDescription("desc");
         testingObject.setFullName("full name");
@@ -37,6 +56,9 @@ public class UnitTests {
         testingObject.setName("nobody");
         testingObject.setYear(2166);
         
+        /**
+         * {@link boolean} the real outcome of the copy method test.
+         */
         Person toCompare = testingObject.copy();
         
         boolean result = toCompare.equals(testingObject);
@@ -44,6 +66,11 @@ public class UnitTests {
         assertEquals(expectedResult,result);        
     }
     
+     /**
+     * Tests the password checking function.
+     * Checks if a request to pass a blank password returns the desired 
+     * error message.
+     */
     @Test
     public void checkPassword_emptyBoth_test(){
         String expectedResult = "You need to choose your password!";         
@@ -51,6 +78,11 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
+     /**
+     * Tests the password checking function.
+     * Checks if a request to pass a blank password returns the desired 
+     * error message.
+     */
     @Test
     public void checkPassword_emptyFirst_test(){
         String expectedResult = "You need to choose your password!";         
@@ -58,6 +90,11 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
+     /**
+     * Tests the password checking function.
+     * Checks if a request to pass a blank confirm password field returns 
+     * the desired error message.
+     */
     @Test
     public void checkPassword_emptySecond_test(){
         String expectedResult = "You need to re-enter your password to proceed.";         
@@ -65,6 +102,11 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
+     /**
+     * Tests the password checking function.
+     * Checks if a request to pass password and confirm password fields 
+     * with different values returns the desired error message.
+     */
     @Test
     public void checkPassword_bothDifferent_test(){
         String expectedResult = "You need to re-enter your password to proceed.";         
@@ -72,6 +114,11 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
+     /**
+     * Tests the password checking function.
+     * Checks if a request to pass password shorter than 8 characters
+     * returns the desired error message.
+     */
     @Test
     public void checkPassword_shorterThan8_test(){
         String expectedResult = "Password too short! Minimum: 8, Given: 2";         
@@ -79,6 +126,10 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
+     /**
+     * Tests the password checking function.
+     * Checks if a request to pass a valid password request succeeds.
+     */
     @Test
     public void checkPassword_bothTheSame_test(){
         String expectedResult = "OK";         
@@ -86,6 +137,11 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
+     /**
+     * Tests the user checking function.
+     * Checks if a request to pass a username that is leaved empty returns
+     * the correct error message.
+     */
     @Test
     public void checkUsername_empty_test(){
         String expectedResult = "You need to choose your username!";         
@@ -93,6 +149,10 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
+     /**
+     * Tests the user checking function.
+     * Checks if a request to pass a valid new username request succeeds.
+     */
     @Test
     public void checkUsername_nonExistUser_test(){
         String expectedResult = "OK";         
@@ -100,7 +160,11 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
-    
+     /**
+     * Tests the user checking function.
+     * Checks if a request to pass a username that is already taken returns
+     * the correct error message.
+     */
     @Test
     public void checkUsername_nameAlreadyInDatabse_test(){
         String expectedResult = "Username already taken!";         
@@ -108,7 +172,11 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
-    
+     /**
+     * Tests the user checking function.
+     * Checks if a request to pass a username that is made of <i>unusual</i> characters
+     * passes the test.
+     */
     @Test
     public void checkUsername_nonSenseText_test(){
         String expectedResult = "OK";         
