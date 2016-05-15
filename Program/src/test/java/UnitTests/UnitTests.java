@@ -10,9 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 /**
  *
  * @author David Löffler
@@ -102,14 +100,14 @@ public class UnitTests {
         assertEquals(expectedResult,realResult);        
     }
     
-    /*
+    
     @Test
     public void checkUsername_nameAlreadyInDatabse_test(){
         String expectedResult = "Username already taken!";         
         String realResult = CheckUsername.checkUsername("admin");
         assertEquals(expectedResult,realResult);        
     }
-    */
+    
     
     @Test
     public void checkUsername_nonSenseText_test(){
