@@ -111,7 +111,6 @@ private String screenwriting;
         coverPanel.setLayout(new BorderLayout());     
         
         GridBagConstraints gbc = new GridBagConstraints();
-        //TODO formatting
         Label moviesInfo = new Label(movieInfoText);
         JTextArea descriptArea = new JTextArea("Description: " + prepareDescription(person.getDescription()));
         descriptArea.setEditable(false);
