@@ -112,13 +112,11 @@ public class Database {
                                         ResultSet.CONCUR_READ_ONLY);
            String sql = "INSERT INTO users (id_user, password, nickname, isadmin) VALUES ('" + idHash +"', '"+ psw +"', '" + nick+"', '" + false + "');";
            
-           // CLOSING THE CONNECTION
-           try ( // COLLECTING OF DATA
-                   ResultSet rs = stmt.executeQuery(sql)) {
+           
                // CLOSING THE CONNECTION
                stmt.close();
                conn.close();
-           }
+           
 
        } catch (SQLException se) {
            System.out.println("FAIL #1 (SQL)");
