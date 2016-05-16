@@ -48,6 +48,7 @@ public class Database {
    static final String USER = "db16_loffldav";
    static final String PASS = "db16_loffldav";
    
+   private PreparedStatement pstmt = null;
    private Connection conn = null;
    
    /**
@@ -97,26 +98,39 @@ public class Database {
     * @return the {@link User} object of the newly registered user
     */
    public User register(String psw, String nick){
-       User user = null;
-       Statement stmt = null;
+       User user = null;       
        //TODO: change to MAX id found + 1
        java.util.Date date= new java.util.Date();
        String idHash=""+date.getTime();
        idHash=idHash.substring(5, 12);
         try {
-           // PREPARING THE SQL REQUEST
-           Class.forName("org.postgresql.Driver");
-           conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            
+            // PREPARING THE SQL REQUEST
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
-                                        ResultSet.CONCUR_READ_ONLY);
-           String sql = "INSERT INTO users (id_user, password, nickname, isadmin) VALUES ('" + idHash +"', '"+ psw +"', '" + nick+"', '" + false + "');";
-           
-           stmt.executeUpdate(sql);
-           
-               // CLOSING THE CONNECTION
-               stmt.close();
-               conn.close();
+            String sqlId = "SELECT MAX(id_user+1) FROM users";
+            pstmt = conn.prepareStatement(sqlId);
+            ResultSet rs = pstmt.executeQuery();
+            int id = 0;
+            if(rs.next()) id = rs.getInt(1);
+            
+            String sql = "INSERT INTO users (id_user, password, nickname, isadmin) VALUES (?, ?, ?, 'false');";
+            pstmt = conn.prepareStatement(sql);
+            if(id == 0){
+                System.out.println("Je to nula");
+                id = Integer.valueOf(idHash);
+            }
+            pstmt.setInt(1, id);
+            pstmt.setString(2, psw);
+            pstmt.setString(3, nick);
+            pstmt.executeUpdate();
+
+            // CLOSING THE CONNECTION
+            pstmt.close();
+            conn.close();
+            rs.close();
+            user = new User(Integer.valueOf(idHash),nick,false);
            
 
        } catch (SQLException se) {
@@ -130,6 +144,9 @@ public class Database {
            try {
                if (conn != null) {
                    conn.close();
+               }
+               if (pstmt != null) {
+                   pstmt.close();
                }
            } catch (SQLException se) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
@@ -149,25 +166,25 @@ public class Database {
      */
    public User login(String psw, String nick){
        User user = null;
-       Statement stmt = null;
        try {
            // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
-                           ResultSet.CONCUR_READ_ONLY);
-           String sql = "SELECT * FROM users WHERE password LIKE '" + psw +"' AND nickname LIKE '" + nick + "'";
+           String sql = "SELECT * FROM users WHERE password LIKE ? AND nickname LIKE ?";
+           pstmt = conn.prepareStatement(sql);
+           pstmt.setString(1, psw);
+           pstmt.setString(2, nick);
            
            // COLLECTING OF DATA
-           ResultSet rs = stmt.executeQuery(sql);
+           ResultSet rs = pstmt.executeQuery();
 
            if(rs.next()){
                user = new User(rs.getInt("id_user"), rs.getString("nickname"), rs.getBoolean("isadmin"));
            }
 
            // CLOSING THE CONNECTION
-           stmt.close();
+           pstmt.close();
            conn.close();
            rs.close();
 
@@ -182,8 +199,8 @@ public class Database {
        } finally {
            //finally block used to close resources
            try {
-               if (stmt != null) {
-                   stmt.close();
+               if (pstmt != null) {
+                   pstmt.close();
                }
            } catch (SQLException se2) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
@@ -208,25 +225,30 @@ public class Database {
      */
     public boolean isUserRegistered(String nick){
        boolean registered = false;
-       Statement stmt = null;
        try {
            // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
-                           ResultSet.CONCUR_READ_ONLY);
-           String sql = "SELECT * FROM users WHERE nickname LIKE '" + nick + "'";
+           /*stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                       ResultSet.CONCUR_READ_ONLY);*/
+           String sql = "SELECT * FROM users WHERE nickname LIKE ?";
+           
+           pstmt = conn.prepareStatement(sql);
+           pstmt.setString(1, nick);
+           
            
            // COLLECTING OF DATA
-           ResultSet rs = stmt.executeQuery(sql);
+           ResultSet rs = pstmt.executeQuery();
 
+           
+           
            if(rs.next()){
                registered = true;
            }
 
            // CLOSING THE CONNECTION
-           stmt.close();
+           pstmt.close();
            conn.close();
            rs.close();
 
@@ -239,8 +261,8 @@ public class Database {
        } finally {
            //finally block used to close resources
            try {
-               if (stmt != null) {
-                   stmt.close();
+               if (pstmt != null) {
+                   pstmt.close();
                }
            } catch (SQLException se2) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
@@ -378,31 +400,32 @@ public class Database {
            if(mv.getId() == id_movie) alreadyRated = true;
        }
        
-       ResultSet rs = null;
-       Statement stmt = null;
        try {
            // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
-                           ResultSet.CONCUR_READ_ONLY);
-                
            String sql = "";
            
            if(alreadyRated){
                sql = "UPDATE rating SET stars = "+ rating.intValue() + "\n" +
         "WHERE (SELECT rr.id_rate FROM rating_related AS rr\n" +
-        "WHERE "+ id_movie +" = rr.id_movie) = id_rate AND id_user = " + user.getId();
-               stmt.executeUpdate(sql);
+        "WHERE ? = rr.id_movie) = id_rate AND id_user = ?";
+               pstmt = conn.prepareStatement(sql);
+               pstmt.setInt(1, id_movie);
+               pstmt.setInt(2, user.getId());
+               pstmt.executeUpdate();
            }else{
-               sql = "INSERT INTO rating VALUES((SELECT MAX(id_rate) FROM rating)+1," + user.getId() + ","+ rating.intValue() +");\n" +
-                    "INSERT INTO rating_related VALUES((SELECT MAX(id_rate) FROM rating),"+ id_movie +");";
-               stmt.executeUpdate(sql);
+               sql = "INSERT INTO rating VALUES((SELECT MAX(id_rate) FROM rating)+1,?,?);\n" +
+                    "INSERT INTO rating_related VALUES((SELECT MAX(id_rate) FROM rating),?);";
+               pstmt = conn.prepareStatement(sql);
+               pstmt.setInt(1, user.getId());
+               pstmt.setInt(2, rating.intValue());
+               pstmt.setInt(3, id_movie);
+               pstmt.executeUpdate();
            }
            
            // CLOSING THE CONNECTION
-           stmt.close();
+           pstmt.close();
            conn.close();           
 
        } catch (SQLException se) {
@@ -416,8 +439,8 @@ public class Database {
        } finally {
            //finally block used to close resources
            try {
-               if (stmt != null) {
-                   stmt.close();
+               if (pstmt != null) {
+                   pstmt.close();
                }
            } catch (SQLException se2) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
@@ -447,64 +470,73 @@ public class Database {
     *        table (case 'A'), the director table (case 'D') or 
     *        the scenarist table (case 'S')
     */
-    public void updatePerson(String name, String surname, String year, String desc, int id, char Who){
-       Statement stmt = null;
+    public void updatePerson(String name, String surname, String year, String desc, int id, char Who){       
        try {
            // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
-           conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
-                           ResultSet.CONCUR_READ_ONLY);
-           
+           conn = DriverManager.getConnection(DB_URL, USER, PASS);           
            String sql = "";
            
            switch (Who) {
                case 'A':
                    if (year != null) {
-                       sql = "UPDATE actor SET name = '" + name
-                               + "', surname = '" + surname
-                               + "', year = " + year + ", description = '" + desc
-                               + "'\nWHERE id_actor = " + id;
+                       sql = "UPDATE actor SET name = ?"
+                               + ", surname = ?"
+                               + ", year = ?, description = ?"
+                               + "\nWHERE id_actor = ?";
                    } else {
-                       sql = "UPDATE actor SET name = '" + name
-                               + "', surname = '" + surname
-                               + "', description = '" + desc
-                               + "'\nWHERE id_actor = " + id;
+                       sql = "UPDATE actor SET name = ?"
+                               + ", surname = ?"
+                               + ", description = ?"
+                               + "\nWHERE id_actor = ?";
                    }
                    break;
                case 'D':
                    if (year != null) {
-                       sql = "UPDATE director SET name = '" + name
-                               + "', surname = '" + surname
-                               + "', year = " + year + ", description = '" + desc
-                               + "'\nWHERE id_director = " + id;
+                       sql = "UPDATE director SET name = ?"
+                               + ", surname = ?"
+                               + ", year = ?, description = ?"
+                               + "\nWHERE id_director = ?";
                    } else {
-                       sql = "UPDATE director SET name = '" + name
-                               + "', surname = '" + surname
-                               + "', description = '" + desc
-                               + "'\nWHERE id_director = " + id;
+                       sql = "UPDATE director SET name = ?"
+                               + ", surname = ?"
+                               + ", description = ?"
+                               + "\nWHERE id_director = ?";
                    }
                    break;
                case 'S':
                    if (year != null) {
-                       sql = "UPDATE scenarist SET name = '" + name
-                               + "', surname = '" + surname
-                               + "', year = " + year + ", description = '" + desc
-                               + "'\nWHERE id_scenarist = " + id;
+                       sql = "UPDATE scenarist SET name = ?"
+                               + ", surname = ?"
+                               + ", year = ?, description = ?"
+                               + "\nWHERE id_scenarist = ?";
                    } else {
-                       sql = "UPDATE scenarist SET name = '" + name
-                               + "', surname = '" + surname
-                               + "', description = '" + desc
-                               + "'\nWHERE id_scenarist = " + id;
+                       sql = "UPDATE scenarist SET name = ?"
+                               + ", surname = ?"
+                               + ", description = ?"
+                               + "\nWHERE id_scenarist = ?";
                    }
                    break;
            }
            
-           stmt.executeUpdate(sql);
+           pstmt = conn.prepareStatement(sql);
+           if(year != null){
+               pstmt.setString(1, name);
+               pstmt.setString(2, surname);
+               pstmt.setInt(3, Integer.valueOf(year));
+               pstmt.setString(4, desc);
+               pstmt.setInt(5, id);
+           }else{
+               pstmt.setString(1, name);
+               pstmt.setString(2, surname);
+               pstmt.setString(3, desc);
+               pstmt.setInt(4, id);
+           }
+           
+           pstmt.executeUpdate();
            
            // CLOSING THE CONNECTION
-           stmt.close();
+           pstmt.close();
            conn.close();           
 
        } catch (SQLException se) {
@@ -518,8 +550,8 @@ public class Database {
        } finally {
            //finally block used to close resources
            try {
-               if (stmt != null) {
-                   stmt.close();
+               if (pstmt != null) {
+                   pstmt.close();
                }
            } catch (SQLException se2) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
@@ -550,14 +582,10 @@ public class Database {
     *
     */
     public void insertPerson(String name, String surname, String year, String desc, int id, char Who){
-        Statement stmt = null;
        try {
            // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-           stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
-                           ResultSet.CONCUR_READ_ONLY);
            
            String sql = "";
            
@@ -565,42 +593,48 @@ public class Database {
                case 'A':
                    if(year != null){
                    sql = "INSERT INTO actor (id_actor, name, surname, year, description)" 
-                           +"VALUES(" + "(SELECT MAX(id_actor)+1 FROM actor)" + ", '" + name
-                           + "', '" + surname + "', " + year + ",'" + desc + "');";
+                           +"VALUES((SELECT MAX(id_actor)+1 FROM actor),?,?,?,?);";
                    }else{
                        sql = "INSERT INTO actor (id_actor, name, surname, description)" 
-                           +"VALUES(" + "(SELECT MAX(id_actor)+1 FROM actor)" + ", '" + name
-                           + "', '" + surname + "', '" + desc + "');";
+                           +"VALUES((SELECT MAX(id_actor)+1 FROM actor),?,?,?);";
                    }                    
                    break;
                case 'D':
                    if(year != null){
                    sql = "INSERT INTO director (id_director, name, surname, year, description)" 
-                           +"VALUES(" + "(SELECT MAX(id_director)+1 FROM director)" + ", '" + name
-                           + "', '" + surname + "', " + year + ",'" + desc + "');";
+                           +"VALUES((SELECT MAX(id_director)+1 FROM director),?,?,?,?);";
                    }else{
                        sql = "INSERT INTO director (id_director, name, surname, description)" 
-                           +"VALUES(" + "(SELECT MAX(id_director)+1 FROM director)" + ", '" + name
-                           + "', '" + surname + "', '" + desc + "');";
+                           +"VALUES((SELECT MAX(id_director)+1 FROM director),?,?,?);";
                    }                   
                    break;
                case 'S':
                    if(year != null){
                    sql = "INSERT INTO scenarist (id_scenarist, name, surname, year, description)" 
-                           +"VALUES(" + "(SELECT MAX(id_scenarist)+1 FROM scenarist)" + ", '" + name
-                           + "', '" + surname + "', " + year + ",'" + desc + "');";
+                           +"VALUES((SELECT MAX(id_scenarist)+1 FROM scenarist),?,?,?,?);";
                    }else{
                        sql = "INSERT INTO scenarist (id_scenarist, name, surname, description)" 
-                           +"VALUES(" + "(SELECT MAX(id_scenarist)+1 FROM scenarist)" + ", '" + name
-                           + "', '" + surname + "', '" + desc + "');";
+                           +"VALUES((SELECT MAX(id_scenarist)+1 FROM scenarist),?,?,?);";
                    }
                    break;
            }
            
-           stmt.executeUpdate(sql);
+           pstmt = conn.prepareStatement(sql);
+           if(year != null){
+               pstmt.setString(1, name);
+               pstmt.setString(2, surname);
+               pstmt.setInt(3, Integer.valueOf(year));
+               pstmt.setString(4, desc);
+           }else{
+               pstmt.setString(1, name);
+               pstmt.setString(2, surname);
+               pstmt.setString(3, desc);
+           }
+           
+           pstmt.executeUpdate();
            
            // CLOSING THE CONNECTION
-           stmt.close();
+           pstmt.close();
            conn.close();           
 
        } catch (SQLException se) {
@@ -615,8 +649,8 @@ public class Database {
            //finally block used to close resources
            //finally block used to close resources
            try {
-               if (stmt != null) {
-                   stmt.close();
+               if (pstmt != null) {
+                   pstmt.close();
                }
            } catch (SQLException se2) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
@@ -647,29 +681,44 @@ public class Database {
                id = rs.getInt(1);               
            }
            
-           sql = "INSERT INTO movie"
-                   + "\nVALUES (" + id + ",'null', '" + nameCZ + "', '" + nameEN + "', " + year
-                   + ", '" + desc + "')";
-           stmt.executeUpdate(sql);
+           sql = "INSERT INTO movie VALUES (?,'null',?,?,?,?)";
+           
+           pstmt = conn.prepareStatement(sql);
+           pstmt.setInt(1, id);
+           pstmt.setString(2, nameCZ);
+           pstmt.setString(3, nameEN);
+           pstmt.setInt(4, Integer.valueOf(year));
+           pstmt.setString(5, desc);
+           pstmt.executeUpdate();
            
            for(int idMan : actors){
-               sql = "INSERT INTO plays VALUES(" + idMan + ", " + id + ");";
-               stmt.executeUpdate(sql);
+               sql = "INSERT INTO plays VALUES(?,?);";
+               pstmt = conn.prepareStatement(sql);
+               pstmt.setInt(1, idMan);
+               pstmt.setInt(2, id);
+               pstmt.executeUpdate();
            }
            
            for(int idMan : directors){
-               sql = "INSERT INTO shoots VALUES(" + idMan + ", " + id + ");";
-               stmt.executeUpdate(sql);
+               sql = "INSERT INTO shoots VALUES(?,?);";
+               pstmt = conn.prepareStatement(sql);
+               pstmt.setInt(1, idMan);
+               pstmt.setInt(2, id);
+               pstmt.executeUpdate();
            }
            
            for(int idMan : scenarists){
-               sql = "INSERT INTO screenplay VALUES(" + idMan + ", " + id + ");";
-               stmt.executeUpdate(sql);
+               sql = "INSERT INTO screenplay VALUES(?,?);";
+               pstmt = conn.prepareStatement(sql);
+               pstmt.setInt(1, idMan);
+               pstmt.setInt(2, id);
+               pstmt.executeUpdate();
            }
            
            // CLOSING THE CONNECTION
            stmt.close();
-           conn.close();           
+           conn.close();
+           pstmt.close();
 
        } catch (SQLException se) {
            System.out.println("FAIL #1");
@@ -685,6 +734,9 @@ public class Database {
            try {
                if (stmt != null) {
                    stmt.close();
+               }
+               if (pstmt != null) {
+                   pstmt.close();
                }
            } catch (SQLException se2) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
@@ -727,16 +779,22 @@ public class Database {
            // PREPARING THE SQL REQUEST
            Class.forName("org.postgresql.Driver");
            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
            stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
                            ResultSet.CONCUR_READ_ONLY);
            
-           sql = "UPDATE movie SET namecz = '" + movie.getNameCZ() + "', "
-                   + "nameen = '" + movie.getNameEN() + "', "
-                   + "year = " + movie.getYear() + ", "
-                   + "description = '" + movie.getDescription() + "'"
-                   + "\nWHERE id_movie = " + movie.getId();
-           stmt.executeUpdate(sql);
+           sql = "UPDATE movie SET namecz = ?, "
+                   + "nameen = ?, "
+                   + "year = ?, "
+                   + "description = ?"
+                   + "\nWHERE id_movie = ?";           
+           
+           pstmt = conn.prepareStatement(sql);
+           pstmt.setString(1, movie.getNameCZ());
+           pstmt.setString(2, movie.getNameEN());
+           pstmt.setInt(3, movie.getYear());
+           pstmt.setString(4, movie.getDescription());
+           pstmt.setInt(5, movie.getId());
+           pstmt.executeUpdate();
            
            if(rmActors.size() > 0){
                for(int rmID : rmActors){
@@ -783,7 +841,7 @@ public class Database {
            // CLOSING THE CONNECTION
            stmt.close();
            conn.close();           
-
+           pstmt.close();
        } catch (SQLException se) {
            System.out.println("FAIL #1");
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
@@ -797,6 +855,9 @@ public class Database {
            try {
                if (stmt != null) {
                    stmt.close();
+               }
+               if (pstmt != null) {
+                   pstmt.close();
                }
            } catch (SQLException se2) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
