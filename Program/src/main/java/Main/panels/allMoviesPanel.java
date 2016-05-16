@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 David Löffler
+ * Copyright (C) 2016 CinemaSea
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,11 +99,11 @@ public class allMoviesPanel extends JPanel{
     
     /**
      * Function that builds whole panel
-     * @param Movies all movies from database
-     * @param isAdmin if user is admin panel will show extra buttons
-     * @param actors all actors that can be added to movie if user is admin
-     * @param directors all directors that can be added to movie if user is admin
-     * @param scenarists all scenarists that can be added to movie if user is admin
+     * @param Movies        all movies from database
+     * @param isAdmin       if user is admin panel will show extra buttons
+     * @param actors        all actors that can be added to movie if user is admin
+     * @param directors     all directors that can be added to movie if user is admin
+     * @param scenarists    all scenarists that can be added to movie if user is admin
      */
     public void passData(Movie[] Movies, boolean isAdmin, Person[] actors, Person[] directors, Person[] scenarists){
         this.isAdmin = isAdmin;
