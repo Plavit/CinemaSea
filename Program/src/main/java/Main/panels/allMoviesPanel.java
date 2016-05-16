@@ -116,8 +116,10 @@ public class allMoviesPanel extends JPanel{
         for(int i = 0; i < Movies.length; i++){
             data[i][0] = Movies[i].getId();
             data[i][1] = Movies[i].getNameCZ();
-            data[i][2] = Movies[i].getNameEN();           
-            data[i][3] = Movies[i].genresToString();
+            data[i][2] = Movies[i].getNameEN();
+            if(!Movies[i].isEmpty('G')){
+                data[i][3] = Movies[i].genresToString();
+            }            
             data[i][4] = Movies[i].getYear();
             data[i][5] = Movies[i].getRating();
         }      
