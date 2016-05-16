@@ -112,6 +112,7 @@ public class Database {
                                         ResultSet.CONCUR_READ_ONLY);
            String sql = "INSERT INTO users (id_user, password, nickname, isadmin) VALUES ('" + idHash +"', '"+ psw +"', '" + nick+"', '" + false + "');";
            
+           stmt.executeUpdate(sql);
            
                // CLOSING THE CONNECTION
                stmt.close();
