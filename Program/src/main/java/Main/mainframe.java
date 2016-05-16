@@ -232,7 +232,12 @@ public class mainframe extends JFrame{
                 int[] tmpId = thUserMovies.getIdMovies();
                 Movie[] userMovieTMP = new Movie[tmpId.length]; 
                 for(int i = 0; i < tmpId.length; i++){
-                    userMovieTMP[i] = allMovies[tmpId[i]-1];                    
+                    for(int k = 0; k < allMovies.length; k++){
+                        if(tmpId[i] == allMovies[k].getId()){
+                            userMovieTMP[i] = allMovies[k];
+                        }
+                    }
+                    //userMovieTMP[i] = allMovies[tmpId[i]-1];                    
                 }
                 
                 user.setRated(userMovieTMP);

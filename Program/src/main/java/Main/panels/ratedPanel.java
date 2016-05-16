@@ -89,7 +89,7 @@ public class ratedPanel extends JPanel{
         this.rated = user.getRated();
         this.user = user;
         data = new Object[rated.length][6];
-        
+                
         for(int i = 0; i < rated.length; i++){
             data[i][0] = rated[i].getId();
             data[i][1] = rated[i].getNameCZ();

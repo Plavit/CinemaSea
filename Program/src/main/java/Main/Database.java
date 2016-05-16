@@ -24,6 +24,8 @@ import java.security.spec.KeySpec;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.swing.JFrame;
@@ -66,6 +68,7 @@ public class Database {
                     "SERVER ERROR",
                     JOptionPane.ERROR_MESSAGE);
            System.out.println(e.toString());
+           Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
        }finally {           
            try {
                if (conn != null) {
@@ -119,8 +122,10 @@ public class Database {
 
        } catch (SQLException se) {
            System.out.println("FAIL #1 (SQL)");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
        } catch (ClassNotFoundException e) {
            System.out.println("FAIL #2");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
        } finally {
            //finally block used to close resources
            try {
@@ -128,6 +133,7 @@ public class Database {
                    conn.close();
                }
            } catch (SQLException se) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
            }//end finally try
        }//end try      
        
@@ -169,9 +175,11 @@ public class Database {
        } catch (SQLException se) {
            System.out.println("FAIL #1");
            se.printStackTrace();
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
        } catch (Exception e) {
            System.out.println("FAIL #2");
            e.printStackTrace();
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
        } finally {
            //finally block used to close resources
            try {
@@ -179,12 +187,14 @@ public class Database {
                    stmt.close();
                }
            } catch (SQLException se2) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
            }// nothing we can do
            try {
                if (conn != null) {
                    conn.close();
                }
            } catch (SQLException se) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
                se.printStackTrace();
            }//end finally try
        }//end try
@@ -223,8 +233,10 @@ public class Database {
 
        } catch (SQLException se) {
            System.out.println("FAIL #1");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
        } catch (ClassNotFoundException e) {
            System.out.println("FAIL #2");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
        } finally {
            //finally block used to close resources
            try {
@@ -232,12 +244,14 @@ public class Database {
                    stmt.close();
                }
            } catch (SQLException se2) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
            }// nothing we can do
            try {
                if (conn != null) {
                    conn.close();
                }
            } catch (SQLException se) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
                se.printStackTrace();
            }//end finally try
        }//end try
@@ -272,9 +286,11 @@ public class Database {
 
        } catch (SQLException se) {
            System.out.println("FAIL #1");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
            se.printStackTrace();
        } catch (Exception e) {
            System.out.println("FAIL #2");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
            e.printStackTrace();
        } finally {
            //finally block used to close resources
@@ -284,12 +300,14 @@ public class Database {
                    stmt.close();
                }
            } catch (SQLException se2) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
            }// nothing we can do
            try {
                if (conn != null) {
                    conn.close();
                }
            } catch (SQLException se) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
                se.printStackTrace();
            }//end finally try
        }//end try       
@@ -390,9 +408,11 @@ public class Database {
 
        } catch (SQLException se) {
            System.out.println("FAIL #1");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
            se.printStackTrace();
        } catch (Exception e) {
            System.out.println("FAIL #2");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
            e.printStackTrace();
        } finally {
            //finally block used to close resources
@@ -401,12 +421,14 @@ public class Database {
                    stmt.close();
                }
            } catch (SQLException se2) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
            }// nothing we can do
            try {
                if (conn != null) {
                    conn.close();
                }
            } catch (SQLException se) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
                se.printStackTrace();
            }//end finally try
        }//end try  
@@ -488,9 +510,11 @@ public class Database {
 
        } catch (SQLException se) {
            System.out.println("FAIL #1");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
            se.printStackTrace();
        } catch (Exception e) {
            System.out.println("FAIL #2");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
            e.printStackTrace();
        } finally {
            //finally block used to close resources
@@ -499,12 +523,14 @@ public class Database {
                    stmt.close();
                }
            } catch (SQLException se2) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
            }// nothing we can do
            try {
                if (conn != null) {
                    conn.close();
                }
            } catch (SQLException se) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
                se.printStackTrace();
            }//end finally try
        }//end try
@@ -580,9 +606,11 @@ public class Database {
 
        } catch (SQLException se) {
            System.out.println("FAIL #1");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
            se.printStackTrace();
        } catch (Exception e) {
            System.out.println("FAIL #2");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
            e.printStackTrace();
        } finally {
            //finally block used to close resources
@@ -592,6 +620,7 @@ public class Database {
                    stmt.close();
                }
            } catch (SQLException se2) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
            }// nothing we can do
            try {
                if (conn != null) {
@@ -599,6 +628,7 @@ public class Database {
                }
            } catch (SQLException se) {
                se.printStackTrace();
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
            }//end finally try
        }//end try
     }
@@ -644,9 +674,11 @@ public class Database {
 
        } catch (SQLException se) {
            System.out.println("FAIL #1");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
            se.printStackTrace();
        } catch (Exception e) {
            System.out.println("FAIL #2");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
            e.printStackTrace();
        } finally {
            //finally block used to close resources
@@ -656,12 +688,14 @@ public class Database {
                    stmt.close();
                }
            } catch (SQLException se2) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
            }// nothing we can do
            try {
                if (conn != null) {
                    conn.close();
                }
            } catch (SQLException se) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
                se.printStackTrace();
            }//end finally try
        }//end try
@@ -753,9 +787,11 @@ public class Database {
 
        } catch (SQLException se) {
            System.out.println("FAIL #1");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
            se.printStackTrace();
        } catch (Exception e) {
            System.out.println("FAIL #2");
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
            e.printStackTrace();
        } finally {
            //finally block used to close resources
@@ -764,12 +800,14 @@ public class Database {
                    stmt.close();
                }
            } catch (SQLException se2) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se2);
            }// nothing we can do
            try {
                if (conn != null) {
                    conn.close();
                }
            } catch (SQLException se) {
+                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, se);
                se.printStackTrace();
            }//end finally try
        }//end try
