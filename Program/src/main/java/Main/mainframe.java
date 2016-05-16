@@ -323,6 +323,9 @@ public class mainframe extends JFrame{
         dirPane.passData(allMovies, user.isIsAdmin(),directors);
     }
     
+    /**
+     * function reloads the data from online database by resetting the mainframe
+     */
     private void reloadFunc() {
         Database db = new Database();
         try {

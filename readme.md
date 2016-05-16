@@ -4,10 +4,18 @@
 A movie management system.
 
 ### User role:
-This tool will provide comfort for managing your movies and serials. The user can search for his favourite movies and rate them. After rating, user will see all his movies in a separate library. 
+This tool will provide comfort for managing your movies and serials. The user can find his favourite movies and rate them. After rating, user will see all his movies in a separate library. 
 
 ### Admin role:
-Admin is able to manage the whole database. That includes adding, deleting and updating data in database. Admin can also add new movies for regular users to rate.
+Admin is able to manage the whole database. That includes adding and updating data in database. Admin can also add new movies for regular users to rate.
+
+### **[Program source](https://gitlab.fel.cvut.cz/szelemar/cinemasea/tree/master/Program)**
+
+### **[User Manual](https://gitlab.fel.cvut.cz/szelemar/cinemasea/raw/master/Documentation/User%20Manuals/CinemaSea_user_manual_1.0.pdf)**
+
+### **[Admin Manual](https://gitlab.fel.cvut.cz/szelemar/cinemasea/raw/master/Documentation/User%20Manuals/CinemaSea_admin_manual_1.0.pdf)**
+
+### **[JavaDoc](https://gitlab.fel.cvut.cz/szelemar/cinemasea/tree/master/Program/target/site/apidocs)**
 
 ### **GUI Draft:**
 * **[Mockup](https://gitlab.fel.cvut.cz/szelemar/cinemasea/blob/master/Documentation/GUI/Concepts/Mockup.pdf)**

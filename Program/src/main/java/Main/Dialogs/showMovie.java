@@ -1,7 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016 CinemaSea
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package Main.Dialogs;
 
@@ -35,15 +46,23 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 /**
+ * Class showing the frame with Movie information
  *
- * @author David Löffler
+ * @author Marek Szeles, David Löffler
  */
 public class showMovie extends JDialog{
         
     private User user;
     private Movie movie;    
     JComboBox rateBox = new JComboBox();
-        
+    
+    /**
+     * Constructor of the dialog
+     * 
+     * @param mv    movie to be shown
+     * @param user  user logged in, used when rating movies
+     * @throws IOException 
+     */
     public showMovie(Movie mv, User user) throws IOException {        
         this.movie = mv;
         this.user = user;
@@ -55,6 +74,11 @@ public class showMovie extends JDialog{
         setIconImage(ImageIO.read(new File(".\\src\\main\\java\\Main\\Resources\\Logo_icon.png")));
     }
     
+    
+    /**
+     * initializing components
+     * @throws IOException 
+     */
     private void initComponents() throws IOException{                
         
         JPanel upperPanel = new JPanel();
@@ -120,7 +144,7 @@ public class showMovie extends JDialog{
         if (!"null".equals(movie.getCoverImage())) {
             try {
                 URL url = new URL(movie.getCoverImage());
-                image = ImageIO.read(url);
+                image = ImageIO.read(url).getScaledInstance(286, 432, Image.SCALE_DEFAULT);
             } catch (IOException e) {
                 Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, e);
             }
