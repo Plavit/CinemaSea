@@ -144,7 +144,7 @@ public class showMovie extends JDialog{
         if (!"null".equals(movie.getCoverImage())) {
             try {
                 URL url = new URL(movie.getCoverImage());
-                image = ImageIO.read(url);
+                image = ImageIO.read(url).getScaledInstance(286, 432, Image.SCALE_DEFAULT);
             } catch (IOException e) {
                 Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, e);
             }
