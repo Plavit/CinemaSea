@@ -138,8 +138,8 @@ public class Database {
     * Attempts to log in a new user by adding a new entry to 
     * the user database.
      * 
-     * @param psw
-     * @param nick
+     * @param psw   password
+     * @param nick  username
      * @return the {@link User} object of the newly logged in user
      */
    public User login(String psw, String nick){

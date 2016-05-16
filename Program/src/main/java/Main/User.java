@@ -19,6 +19,8 @@ package Main;
 import java.util.LinkedList;
 
 /**
+ * Class representing a User object, used for example when logging in 
+ * (and while logged in)
  *
  * @author Löffler David, Szeles Marek
  */
@@ -31,6 +33,13 @@ public class User {
     private Movie[] Rated;
     private LinkedList moviePaths;
 
+    /**
+     * Constructor of a user object
+     * 
+     * @param id id of user
+     * @param Nickname login name
+     * @param isAdmin information, whether user is admin
+     */
     public User(int id, String Nickname, boolean isAdmin) {
         this.Id = id;
         this.Nickname = Nickname;

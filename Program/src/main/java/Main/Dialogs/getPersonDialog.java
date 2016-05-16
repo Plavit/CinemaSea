@@ -34,6 +34,13 @@ public class getPersonDialog extends JDialog{
     private Object[][] data;
     private String[] columnNames = {"ID","Name"}; 
     
+    /** class constructor initializing the dialog
+     * 
+     * @param parent    determines which movieDialog this dialog came from
+     * @param Who       determines class of personality (actor, director, or scenarist)
+     * @param people    the people about to be added
+     * @throws IOException 
+     */
     public getPersonDialog(movieDialog parent, char Who,Person[] people) throws IOException {        
         this.md = parent;
         this.Who = Who;
