@@ -34,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -295,6 +296,9 @@ public class movieDialog extends JDialog{
         try{
             int convert = Integer.parseInt(year);
             valid = true;
+            Calendar now = Calendar.getInstance();   // Gets the current date and time
+            int yearNow = now.get(Calendar.YEAR);
+            if(yearNow < convert || convert < 1900) valid = false;
         }catch(Exception ex){
             valid = false;
         }
