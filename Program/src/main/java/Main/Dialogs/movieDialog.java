@@ -461,6 +461,7 @@ public class movieDialog extends JDialog{
                     "Movie update has been sucesfull!",
                     "Movie updated",
                     JOptionPane.PLAIN_MESSAGE);
+            this.copy = movie.clone();
 
         }else{
             JOptionPane.showMessageDialog(new JFrame(),
