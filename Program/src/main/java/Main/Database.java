@@ -631,6 +631,8 @@ public class Database {
                pstmt.setString(3, desc);
            }
            
+           System.out.println(pstmt.toString());
+           
            pstmt.executeUpdate();
            
            // CLOSING THE CONNECTION

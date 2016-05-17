@@ -163,10 +163,11 @@ create table Tags
 /*==============================================================*/
 create table "User" 
 (
-   ID_User              integer                        not null,
-   Nickname             text                           not null,
-   Password             text                           not null,
-   isAdmin              boolean                        not null,
+   ID_User                    integer                        not null,
+   Nickname                   text                           not null,
+   Password                   text                           not null,
+   isAdmin                    boolean                        not null,
+   registration_time          timestamp without time zone    null,
    constraint PK_USER primary key (ID_User)
 );
 
