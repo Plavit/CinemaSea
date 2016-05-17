@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -238,6 +239,9 @@ public class personDialog extends JDialog{
         try{
             int convert = Integer.parseInt(year);
             valid = true;
+            Calendar now = Calendar.getInstance();   // Gets the current date and time
+            int yearNow = now.get(Calendar.YEAR);
+            if(yearNow < convert || convert < 1900) valid = false;
         }catch(Exception ex){
             valid = false;
         }
