@@ -1,12 +1,22 @@
--- Trigger: update_logger on actor
+-- Trigger: update_log on actor
 
--- DROP TRIGGER update_logger ON actor;
+-- DROP TRIGGER update_log ON actor;
 
-CREATE TRIGGER update_logger
-  BEFORE INSERT OR UPDATE
+CREATE TRIGGER update_log
+  BEFORE UPDATE
   ON actor
   FOR EACH ROW
   EXECUTE PROCEDURE update_log();
+
+-- Trigger: update_log_insert on actor
+
+-- DROP TRIGGER update_log_insert ON actor;
+
+CREATE TRIGGER update_log_insert
+  BEFORE INSERT
+  ON actor
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_log_insert();
 
 -- Trigger: update_log on director
 
@@ -17,6 +27,16 @@ CREATE TRIGGER update_log
   ON director
   FOR EACH ROW
   EXECUTE PROCEDURE update_log();
+
+-- Trigger: update_log_insert on director
+
+-- DROP TRIGGER update_log_insert ON director;
+
+CREATE TRIGGER update_log_insert
+  BEFORE INSERT
+  ON director
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_log_insert();
 
 -- Trigger: update_log on scenarist
 
@@ -30,6 +50,39 @@ CREATE TRIGGER update_log
 
 -- Function: update_log()
 
+-- Trigger: update_log_insert on scenarist
+
+-- DROP TRIGGER update_log_insert ON scenarist;
+
+CREATE TRIGGER update_log_insert
+  BEFORE INSERT
+  ON scenarist
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_log_insert();
+
+-- Trigger: update_log on movie
+
+-- DROP TRIGGER update_log ON movie;
+
+CREATE TRIGGER update_log
+  BEFORE UPDATE
+  ON movie
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_log();
+  
+-- Trigger: update_log_insert on movie
+
+-- DROP TRIGGER update_log_insert ON movie;
+
+CREATE TRIGGER update_log_insert
+  BEFORE INSERT
+  ON movie
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_log_insert();
+
+
+-- Function: update_log()
+
 -- DROP FUNCTION update_log();
 
 CREATE OR REPLACE FUNCTION update_log()
@@ -38,29 +91,47 @@ $BODY$BEGIN
    NEW."last_edited" := NOW();
 
    IF (OLD."edit_count" IS NULL)
-   THEN
-   NEW."edit_count" = 1;
+      THEN
+      NEW."edit_count" = 1;
    ELSE
-   NEW."edit_count" = OLD."edit_count"+1;
+      NEW."edit_count" = OLD."edit_count"+1;
    END IF;
    
    RETURN NEW;
-END
-$BODY$
-  LANGUAGE plpgsql STABLE
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
   COST 100;
 ALTER FUNCTION update_log()
   OWNER TO db16_loffldav;
+  
+-- Function: update_log_insert()
 
--- Trigger: rating_log on rating_related
+-- DROP FUNCTION update_log_insert();
 
--- DROP TRIGGER rating_log ON rating_related;
+CREATE OR REPLACE FUNCTION update_log_insert()
+  RETURNS trigger AS
+$BODY$BEGIN
+   NEW."last_edited" := NOW();
+   NEW."edit_count" = 0;
+   
+   RETURN NEW;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION update_log_insert()
+  OWNER TO db16_loffldav;
 
-CREATE TRIGGER rating_log
+
+-- Trigger: rating_logs on rating_related
+
+-- DROP TRIGGER rating_logs ON rating_related;
+
+CREATE TRIGGER rating_logs
   BEFORE INSERT OR UPDATE
   ON rating_related
   FOR EACH ROW
   EXECUTE PROCEDURE count_rating();
+  
 
 -- Function: count_rating()
 
@@ -86,11 +157,37 @@ BEGIN
    END IF;
 
    RETURN NEW;
-END
-$BODY$
+END$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 ALTER FUNCTION count_rating()
   OWNER TO db16_loffldav;
 
+
+-- Trigger: registration_timestamp on users
+
+-- DROP TRIGGER registration_timestamp ON users;
+
+CREATE TRIGGER registration_timestamp
+  BEFORE INSERT
+  ON users
+  FOR EACH ROW
+  EXECUTE PROCEDURE registration_time();
+
+
+-- Function: registration_time()
+
+-- DROP FUNCTION registration_time();
+
+CREATE OR REPLACE FUNCTION registration_time()
+  RETURNS trigger AS
+$BODY$BEGIN
+NEW."registration_time" := NOW();
+
+RETURN NEW;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION registration_time()
+  OWNER TO db16_loffldav;
 
