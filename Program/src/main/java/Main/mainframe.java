@@ -352,7 +352,10 @@ public class mainframe extends JFrame{
         public void stateChanged(ChangeEvent e) {
             if (mainPanel.getSelectedIndex() == 6) {
                 int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Reload will terminate this window and run new one with long loading procedure. Would you like to continue?", "Reload warning", dialogButton);
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Reload "
+                        + "will terminate this window and run new one with long "
+                        + "loading procedure. Would you like to continue?", 
+                        "Reload warning", dialogButton);
 
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     reloadFunc();
