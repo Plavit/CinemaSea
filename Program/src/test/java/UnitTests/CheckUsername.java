@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
 
 /**
  *
- * @author David Löffler
+ * @author David Löffler, Szeles Marek
  */
 public class CheckUsername {
     

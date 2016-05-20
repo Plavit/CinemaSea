@@ -35,7 +35,7 @@ import static org.junit.Assert.assertEquals;
  * This class consists entirely of unit tests for testing 
  * the methods in the project.
  * 
- * @author David Löffler
+ * @author David Löffler, Szeles Marek
  */
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
