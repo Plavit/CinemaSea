@@ -7,6 +7,8 @@ package IntegrationTests;
 
 import Main.Database;
 import Main.Movie;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -378,4 +380,83 @@ public class CheckDatabase {
         if(failed) fail();
     }
     
+    
+    @Test
+    public void checkUser_Create_test() {
+        if (failed) {
+            fail();
+        }
+
+        Database db = new Database();
+
+        String nick = "integrationTest";
+        String psw = "";
+        try {
+            psw = db.HashPSW("nonenone");
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(CheckDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(CheckDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
+        try {
+            failed = true;
+            // PREPARING THE SQL REQUEST
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                    ResultSet.CONCUR_READ_ONLY);            
+            
+            String sql = "DELETE FROM users WHERE nickname = 'integrationTest'";
+            stmt.executeUpdate(sql);
+            
+            db.register(psw, nick);
+            
+            sql = "SELECT * FROM users WHERE nickname = 'integrationTest'";
+            
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                // CHECKING THE DATABASE DATA
+                assertEquals(nick,rs.getString("nickname"));
+                assertEquals(psw,rs.getString("password"));
+                assertEquals(false,rs.getBoolean("isadmin"));
+                failed = false;
+            }
+            stmt.close();
+            conn.close();
+            rs.close();
+        } catch (SQLException se) {
+            failed = true;
+            fail();
+            Logger.getLogger(CheckDatabase.class.getName()).log(Level.SEVERE, null, se);
+        } catch (Exception e) {
+            failed = true;
+            fail();
+            Logger.getLogger(CheckDatabase.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException se2) {
+                failed = true;
+                fail();
+                Logger.getLogger(CheckDatabase.class.getName()).log(Level.SEVERE, null, se2);
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                failed = true;
+                fail();
+                Logger.getLogger(CheckDatabase.class.getName()).log(Level.SEVERE, null, se);
+
+            }
+        }
+        if(failed) fail();
+
+    }
 }
