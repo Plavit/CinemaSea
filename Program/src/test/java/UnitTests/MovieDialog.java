@@ -83,9 +83,8 @@ public class MovieDialog {
     }
     
     @Test
-    public void movieDialog_findPeopleFunc_firstArrLarger_andSwap_test(){
-        int expectedResult1 = 0;    
-        int expectedResult2 = 1;   
+    public void movieDialog_findPeopleFunc_firstArrLarger_test(){
+        int expectedResult1 = 0;  
         
         Person[] obj1 = {new Person(1),new Person(2),new Person(3)};
         Person[] obj2 = {new Person(1),new Person(2)};
@@ -93,8 +92,19 @@ public class MovieDialog {
         movieDialog dialog = new movieDialog();
         
         int realResult1 = dialog.findPeople(obj1, obj2).size();
-        int realResult2 = dialog.findPeople(obj2, obj1).size();
         assertEquals(expectedResult1,realResult1);
+    }
+    
+     @Test
+    public void movieDialog_findPeopleFunc_secondArrLarger_test(){  
+        int expectedResult2 = 1;   
+        
+        Person[] obj1 = {new Person(1),new Person(2),new Person(3)};
+        Person[] obj2 = {new Person(1),new Person(2)};
+        
+        movieDialog dialog = new movieDialog();
+        
+        int realResult2 = dialog.findPeople(obj2, obj1).size();
         assertEquals(expectedResult2,realResult2);        
     }
     

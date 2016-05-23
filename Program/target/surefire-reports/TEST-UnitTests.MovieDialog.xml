@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="UnitTests.MovieDialog" time="0.156" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="UnitTests.MovieDialog" time="0.153" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_77\jre\bin"/>
@@ -40,13 +40,13 @@
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
     <property name="java.specification.version" value="1.8"/>
     <property name="file.encoding" value="UTF-8"/>
-    <property name="current.jrebel.agent.path" value="C:\Users\LEFFL_~1\AppData\Local\Temp\.jr154BE060C17\jrebel.jar"/>
+    <property name="current.jrebel.agent.path" value="C:\Users\LEFFL_~1\AppData\Local\Temp\.jr154DEC8BFF6\jrebel.jar"/>
     <property name="user.name" value="leffl_000"/>
     <property name="java.class.path" value="D:\Program Files\NetBeans 8.1\java\maven\boot\plexus-classworlds-2.4.jar"/>
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_77\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=UnitTests.CheckPassword,UnitTests.CheckUsername,UnitTests.Movie,UnitTests.MovieDialog -Dmaven.ext.class.path=D:\Program Files\NetBeans 8.1\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 surefire:test -Dcurrent.jrebel.agent.path=C:\Users\LEFFL_~1\AppData\Local\Temp\.jr154BE060C17\jrebel.jar"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=UnitTests.CheckPassword,UnitTests.CheckUsername,UnitTests.Movie,UnitTests.MovieDialog -Dmaven.ext.class.path=D:\Program Files\NetBeans 8.1\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 surefire:test -Dcurrent.jrebel.agent.path=C:\Users\LEFFL_~1\AppData\Local\Temp\.jr154DEC8BFF6\jrebel.jar"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="cs"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -63,10 +63,11 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_secondEmpty_test" time="0.145"/>
-  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_firstEmpty_test" time="0.002"/>
-  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_EmptyArrays_test" time="0.002"/>
-  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_firstArrLarger_andSwap_test" time="0.002"/>
-  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_arrsDifferentData_test" time="0.002"/>
-  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_ArraysSameData_test" time="0.002"/>
+  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_secondEmpty_test" time="0.153"/>
+  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_firstEmpty_test" time="0"/>
+  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_EmptyArrays_test" time="0"/>
+  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_arrsDifferentData_test" time="0"/>
+  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_ArraysSameData_test" time="0"/>
+  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_firstArrLarger_test" time="0"/>
+  <testcase classname="UnitTests.MovieDialog" name="movieDialog_findPeopleFunc_secondArrLarger_test" time="0"/>
 </testsuite>
